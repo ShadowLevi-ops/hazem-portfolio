@@ -17,7 +17,7 @@ export const Header = () => {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center px-6 md:px-10">
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-2 pl-2">
+        <Link href="/" className="flex items-center space-x-2">
           <Image 
             src="/favicon.png" // Assuming logo is same as favicon
             alt="Hazem Logo" 
