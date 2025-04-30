@@ -9,7 +9,7 @@ import Video from "yet-another-react-lightbox/plugins/video";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/captions.css";
-import { Expand, Mail, MapPin, MessageSquare } from 'lucide-react';
+import { Expand, PlayCircle, Mail, MapPin, MessageSquare } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ScrollToTopButton } from '@/components/scroll-to-top-button';
 
@@ -34,6 +34,7 @@ export default function Home() {
       sources: [{ src: item.mediaUrl, type: 'video/mp4' }],
       title: item.title,
       description: `${item.camera ? item.camera + ' | ' : ''}${item.projectDetails || ''}`,
+      poster: item.thumbnailUrl || '/videos/VT-1.png'
     })),
     ...photographyItems.map(item => ({ 
       src: item.mediaUrl,
@@ -103,20 +104,35 @@ export default function Home() {
           columnClassName="px-2"
         >
           {videoItems.length > 0 ? (
-            videoItems.map((item) => {
+            videoItems.map((item, index) => {
+              const slideIndex = index;
               return (
-                <div key={item.id} className="mb-3"> 
-                  <video 
-                    controls 
-                    preload="metadata"
-                    poster={item.thumbnailUrl || '/images/p1.PNG'} 
-                    className="w-full h-auto rounded-lg shadow-sm"
-                    style={{ aspectRatio: '16/9' }}
-                  >
-                    <source src={item.mediaUrl} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
+                <motion.div 
+                  key={item.id} 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  className="mb-3 cursor-pointer group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 group-hover:ring-2 group-hover:ring-purple-500/60 group-hover:ring-offset-2 group-hover:ring-offset-background"
+                  onClick={() => {
+                     console.log("Video card clicked. Calculated slideIndex:", slideIndex);
+                     openLightbox(slideIndex);
+                  }}
+                >
+                  <Image 
+                     src={item.thumbnailUrl || '/images/p1.PNG'}
+                     alt={`Thumbnail for ${item.title}`} 
+                     width={400} 
+                     height={225}
+                     className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
+                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out flex flex-col justify-end p-3">
+                    <h3 className="text-white font-semibold text-base mb-0.5 truncate">{item.title}</h3>
+                    <p className="text-gray-300 text-xs line-clamp-1">{item.camera || ''}</p>
+                    <p className="text-gray-300 text-xs line-clamp-1">{item.projectDetails || ''}</p>
+                    <PlayCircle className="absolute top-2 right-2 h-5 w-5 text-white opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                </motion.div>
               );
             })
           ) : (
