@@ -50,17 +50,17 @@ export const Header = () => {
         </div>
       </div>
       {/* Render Mobile Menu when open */}
-      {isMobileMenuOpen && <MobileNav onLinkClick={toggleMobileMenu} />}
+      {isMobileMenuOpen && <MobileNav />}
     </header>
   );
 };
 
 // Simple Mobile Navigation Component
 interface MobileNavProps {
-  onLinkClick: () => void; // Function to close menu when link is clicked
+  // onLinkClick prop removed
 }
 
-const MobileNav: React.FC<MobileNavProps> = ({ onLinkClick }) => {
+const MobileNav: React.FC<MobileNavProps> = (/* onLinkClick removed */) => {
   return (
     <div className="absolute top-full left-0 w-full border-b bg-background md:hidden">
       <nav className="container flex flex-col space-y-2 py-4">
