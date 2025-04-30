@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
 import Image from 'next/image';
 import Masonry from 'react-masonry-css';
 import { portfolioItems } from '@/data/portfolio-items';
@@ -10,7 +9,7 @@ import Video from "yet-another-react-lightbox/plugins/video";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/captions.css";
-import { Expand, PlayCircle, Mail, Linkedin, Smartphone, MapPin } from 'lucide-react';
+import { Expand, PlayCircle, Mail, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ScrollToTopButton } from '@/components/scroll-to-top-button';
 
