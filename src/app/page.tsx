@@ -34,7 +34,6 @@ export default function Home() {
       sources: [{ src: item.mediaUrl, type: 'video/mp4' }],
       title: item.title,
       description: `${item.camera ? item.camera + ' | ' : ''}${item.projectDetails || ''}`,
-      poster: item.thumbnailUrl || '/videos/VT-1.png'
     })),
     ...photographyItems.map(item => ({ 
       src: item.mediaUrl,
