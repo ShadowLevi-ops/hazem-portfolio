@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider"; // Import ThemeProvider
 import { Layout } from "@/components/layout/Layout"; // Import the Layout component
 import "./globals.css";
+import { cn } from "@/lib/utils"; // Import cn utility
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -29,8 +30,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning> {/* Added suppressHydrationWarning for potential theme issues */}
-      {/* Removed font variables from className */}
-      <body> 
+      <head /> {/* Explicitly add empty head tag */}
+      <body className={cn("min-h-screen bg-background font-sans antialiased")}> {/* Added font-sans */}
         <ThemeProvider
           attribute="class" // Use class for Tailwind dark mode
           defaultTheme="system" // Default to user's system preference

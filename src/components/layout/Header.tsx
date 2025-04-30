@@ -17,7 +17,7 @@ export const Header = () => {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center px-6 md:px-10">
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-2">
+        <Link href="/" className="flex items-center"> {/* Kept no pl-2, no space-x-2 */}
           <Image 
             src="/favicon.png" // Assuming logo is same as favicon
             alt="Hazem Logo" 
@@ -32,13 +32,11 @@ export const Header = () => {
         {/* Desktop Navigation Removed */}
         {/* <nav className="hidden flex-1 items-center space-x-6 text-sm font-medium md:flex"> ... </nav> */}
 
-        {/* Right side: Contact Button (Desktop) & Mobile Menu Toggle */}
+        {/* Right side: Only Mobile Menu Toggle remains here */}
         <div className="flex flex-1 items-center justify-end space-x-4">
-          <nav className="hidden items-center space-x-1 md:flex">
-            <Button variant="outline" size="sm"> {/* Style like screenshot */}
-              Contact {/* TODO: Make this a link or trigger modal? */}
-            </Button>
-          </nav>
+          {/* Desktop Contact Button Removed */}
+          {/* <nav className="hidden items-center space-x-1 md:flex"> ... </nav> */}
+
           {/* Mobile Menu Button */}
           <Button 
             variant="ghost" 
@@ -66,14 +64,13 @@ const MobileNav: React.FC<MobileNavProps> = ({ onLinkClick }) => {
   return (
     <div className="absolute top-full left-0 w-full border-b bg-background md:hidden">
       <nav className="container flex flex-col space-y-2 py-4">
-        {/* Home Link Removed */}
-        {/* Videography Link Removed */}
-        {/* Photography Link Removed */}
+        {/* Navigation Links Removed */}
         
-        {/* Only Contact button remains in mobile nav */}
-        <Button variant="outline" size="sm" className="w-full justify-start mt-2" onClick={onLinkClick}> 
-           Contact {/* TODO: Define action */}
-        </Button>
+        {/* Mobile Contact button Removed */}
+        {/* <Button variant="outline" size="sm" ...> Contact </Button> */}
+
+        {/* Mobile nav is now empty, consider removing if truly empty */}
+        {/* Or add other relevant mobile actions here */}
       </nav>
     </div>
   );

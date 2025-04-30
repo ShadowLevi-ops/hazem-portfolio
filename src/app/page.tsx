@@ -9,7 +9,7 @@ import Video from "yet-another-react-lightbox/plugins/video";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/captions.css";
-import { Expand, PlayCircle, Mail, MapPin } from 'lucide-react';
+import { Expand, PlayCircle, Mail, MapPin, MessageSquare } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ScrollToTopButton } from '@/components/scroll-to-top-button';
 
@@ -67,10 +67,10 @@ export default function Home() {
           I specialize in vertical videography, transforming the 9:16 canvas into immersive narratives for mobile-first audiences. 
         </p>
         
-        {/* Location and Email Row - Left-aligned */}
-        <div className="flex flex-col sm:flex-row sm:justify-start items-start sm:items-center w-full max-w-md text-sm text-muted-foreground gap-x-6">
+        {/* Location, Email, and Contact Row */}
+        <div className="flex flex-col sm:flex-row sm:justify-start items-start sm:items-center w-full max-w-lg text-sm text-muted-foreground gap-y-2 gap-x-4 md:gap-x-6">
           {/* Location */}
-          <div className="flex items-center gap-1.5 mb-2 sm:mb-0">
+          <div className="flex items-center gap-1.5">
             <MapPin className="h-4 w-4" />
             <span>Kuala Lumpur, MY</span>
           </div>
@@ -82,12 +82,22 @@ export default function Home() {
             <Mail className="h-4 w-4" />
             <span>hazem@noveltyventures.uk</span>
           </a>
+          {/* Contact Link (styled like others) */}
+          <a 
+            href="https://wa.me/0173767247"
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 hover:text-primary transition-colors"
+          >
+            <MessageSquare className="h-4 w-4" />
+            <span>Contact</span>
+          </a>
         </div>
 
       </section>
 
       <section id="videography" className="container mx-auto pt-6 md:pt-10 pb-8 md:pb-12 px-6 md:px-10">
-        <h2 className="text-3xl md:text-4xl font-bold mb-5 text-center">Videography & Film</h2>
+        <h2 className="text-2xl md:text-3xl font-bold mb-5 text-center">Videography & Film</h2>
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="flex w-full"
@@ -132,7 +142,7 @@ export default function Home() {
       </section>
 
       <section id="photography" className="container mx-auto pt-6 md:pt-10 pb-8 md:pb-12 px-6 md:px-10">
-        <h2 className="text-3xl md:text-4xl font-bold mb-5 text-center">Photography</h2>
+        <h2 className="text-2xl md:text-3xl font-bold mb-5 text-center">Photography</h2>
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="flex w-full"
