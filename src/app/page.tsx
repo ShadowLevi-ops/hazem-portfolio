@@ -9,7 +9,7 @@ import Video from "yet-another-react-lightbox/plugins/video";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/captions.css";
-import { Expand, PlayCircle, Mail, MapPin, MessageSquare } from 'lucide-react';
+import { Expand, Mail, MapPin, MessageSquare } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ScrollToTopButton } from '@/components/scroll-to-top-button';
 
@@ -103,7 +103,7 @@ export default function Home() {
           columnClassName="px-2"
         >
           {videoItems.length > 0 ? (
-            videoItems.map((item, index) => {
+            videoItems.map((item) => {
               return (
                 <div key={item.id} className="mb-3"> 
                   <video 
