@@ -56,11 +56,7 @@ export const Header = () => {
 };
 
 // Simple Mobile Navigation Component
-interface MobileNavProps {
-  // onLinkClick prop removed
-}
-
-const MobileNav: React.FC<MobileNavProps> = (/* onLinkClick removed */) => {
+const MobileNav = () => {
   return (
     <div className="absolute top-full left-0 w-full border-b bg-background md:hidden">
       <nav className="container flex flex-col space-y-2 py-4">
