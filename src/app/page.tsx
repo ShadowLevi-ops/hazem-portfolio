@@ -1,53 +1,47 @@
 "use client";
 
 import React, { useState } from 'react';
-import Image from 'next/image';
-import { portfolioItems } from '@/data/portfolio-items';
+// import Image from 'next/image'; // Temporarily remove Image
+// import { portfolioItems } from '@/data/portfolio-items'; // Temporarily remove direct portfolioItems import
 import Video from "yet-another-react-lightbox/plugins/video";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/captions.css";
-import { Expand, PlayCircle, Mail, MapPin, MessageSquare } from 'lucide-react';
-import { motion } from 'framer-motion';
+// import { Expand, PlayCircle, Mail, MapPin, MessageSquare } from 'lucide-react'; // Temporarily remove icons
+// import { motion } from 'framer-motion'; // Temporarily remove motion
 import { ScrollToTopButton } from '@/components/scroll-to-top-button';
 import dynamic from 'next/dynamic';
 
-// Dynamically import Masonry and Lightbox with SSR disabled
 const Masonry = dynamic(() => import('react-masonry-css'), { ssr: false });
 const Lightbox = dynamic(() => import('yet-another-react-lightbox'), { ssr: false });
 
-// Masonry configuration (Forcing 4 columns always)
 const breakpointColumnsObj = {
-  default: 4,    // 4 columns on all screen sizes
-  // Removed responsive breakpoints
+  default: 4,
 };
+
+// Sample simplified data to avoid issues with original data source for now
+const sampleItems = [
+  { id: 'v1', type: 'videography', title: "Test Video 1" },
+  { id: 'v2', type: 'videography', title: "Test Video 2" },
+  { id: 'p1', type: 'photography', title: "Test Photo 1" },
+];
+
 
 export default function Home() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  const photographyItems = portfolioItems.filter(item => item.type === 'photography');
-  const videoItems = portfolioItems.filter(
-    (item) => item.type === 'videography' || item.type === 'film'
-  );
+  // Use simplified data
+  const photographyItems = sampleItems.filter(item => item.type === 'photography');
+  const videoItems = sampleItems.filter(item => item.type === 'videography');
 
-  const allSlides = [
-    ...videoItems.map(item => ({
-      type: 'video' as const, 
-      sources: [{ src: item.mediaUrl, type: 'video/mp4' }],
-      title: item.title,
-      description: `${item.camera ? item.camera + ' | ' : ''}${item.projectDetails || ''}`,
-      poster: item.thumbnailUrl || '/videos/VT-1.png'
-    })),
-    ...photographyItems.map(item => ({ 
-      src: item.mediaUrl,
-      title: item.title,
-      description: `${item.camera ? item.camera + ' | ' : ''}${item.projectDetails || ''}`,
-    })),
-  ];
+  // Hardcode allSlides to an empty array or very simple static content
+  const allSlides: any[] = [
+    // { type: 'video', sources: [{ src: '/videos/1.mp4', type: 'video/mp4'}], title: "Test Video Slide", description: "Test Desc", poster: "/videos/VT-1.png" }
+  ]; // COMPLETELY EMPTY FOR NOW
 
   const openLightbox = (index: number) => {
-    console.log("Attempting to open lightbox for index:", index, "Slide:", allSlides[index]);
+    // console.log("Attempting to open lightbox for index:", index, "Slide:", allSlides[index]);
     setLightboxIndex(index);
     setLightboxOpen(true);
   };
@@ -56,51 +50,21 @@ export default function Home() {
     <>
       <section 
         id="home"
-        className="container mx-auto flex flex-col items-start justify-center text-left pt-12 md:pt-16 pb-10 md:pb-12 relative overflow-hidden px-6 md:px-10"
+        // Simplified classes for debugging
+        className="container mx-auto pt-12 pb-10 px-6"
       >
-        <div 
-          aria-hidden="true" 
-          className="absolute inset-0 -z-10"
-        />
-
-        {/* Logo is removed from here - will be added to header */}
-
-        {/* Subtitle - Left-aligned, smaller, italic */}
-        <p className="text-lg md:text-xl italic font-medium text-left max-w-3xl mb-6"> 
-          I specialize in vertical videography, transforming the 9:16 canvas into immersive narratives for mobile-first audiences. 
+        <p className="text-lg"> 
+          Test subtitle.
         </p>
-        
-        {/* Location, Email, and Contact Row */}
-        <div className="flex flex-col sm:flex-row sm:justify-start items-start sm:items-center w-full max-w-lg text-sm text-muted-foreground gap-y-2 gap-x-4 md:gap-x-6">
-          {/* Location */}
-          <div className="flex items-center gap-1.5">
-            <MapPin className="h-4 w-4" />
-            <span>Kuala Lumpur, MY</span>
-          </div>
-          {/* Email */}
-          <a 
-            href="mailto:hazem@noveltyventures.uk"
-            className="flex items-center gap-1.5 hover:text-primary transition-colors"
-          >
-            <Mail className="h-4 w-4" />
-            <span>hazem@noveltyventures.uk</span>
-          </a>
-          {/* Contact Link (styled like others) */}
-          <a 
-            href="https://wa.me/0173767247"
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 hover:text-primary transition-colors"
-          >
-            <MessageSquare className="h-4 w-4" />
-            <span>Contact</span>
-          </a>
+        <div className="flex">
+            <div>Location</div>
+            <div>Email</div>
+            <div>Contact</div>
         </div>
-
       </section>
 
-      <section id="videography" className="container mx-auto pt-6 md:pt-10 pb-8 md:pb-12 px-6 md:px-10">
-        <h2 className="text-2xl md:text-3xl font-bold mb-5 text-center">Videography & Film</h2>
+      <section id="videography" className="container mx-auto pt-6 pb-8 px-6">
+        <h2 className="text-2xl font-bold mb-5 text-center">Videography & Film</h2>
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="flex w-full"
@@ -110,42 +74,25 @@ export default function Home() {
             videoItems.map((item, index) => {
               const slideIndex = index;
               return (
-                <motion.div 
+                // EXTREMELY SIMPLIFIED ITEM FOR DEBUGGING
+                <div 
                   key={item.id} 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  className="mb-3 cursor-pointer group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 group-hover:ring-2 group-hover:ring-purple-500/60 group-hover:ring-offset-2 group-hover:ring-offset-background"
-                  onClick={() => {
-                     console.log("Video card clicked. Calculated slideIndex:", slideIndex);
-                     openLightbox(slideIndex);
-                  }}
+                  className="mb-3 cursor-pointer p-2 border"
+                  onClick={() => openLightbox(slideIndex)}
                 >
-                  <Image 
-                     src={item.thumbnailUrl || '/images/p1.PNG'}
-                     alt={`Thumbnail for ${item.title}`} 
-                     width={400} 
-                     height={225}
-                     className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
-                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out flex flex-col justify-end p-3">
-                    <h3 className="text-white font-semibold text-base mb-0.5 truncate">{item.title}</h3>
-                    <p className="text-gray-300 text-xs line-clamp-1">{item.camera || ''}</p>
-                    <p className="text-gray-300 text-xs line-clamp-1">{item.projectDetails || ''}</p>
-                    <PlayCircle className="absolute top-2 right-2 h-5 w-5 text-white opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </motion.div>
+                  <p>Video: {item.title || item.id}</p> 
+                  {/* <Image src="/videos/VT-1.png" alt="Test" width={100} height={100} /> */}
+                </div>
               );
             })
           ) : (
-            <p className="text-center text-muted-foreground col-span-full">No videography or film projects yet.</p>
+            <p>No videography projects.</p>
           )}
         </Masonry>
       </section>
 
-      <section id="photography" className="container mx-auto pt-6 md:pt-10 pb-8 md:pb-12 px-6 md:px-10">
-        <h2 className="text-2xl md:text-3xl font-bold mb-5 text-center">Photography</h2>
+      <section id="photography" className="container mx-auto pt-6 pb-8 px-6">
+        <h2 className="text-2xl font-bold mb-5 text-center">Photography</h2>
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="flex w-full"
@@ -153,36 +100,21 @@ export default function Home() {
         >
           {photographyItems.length > 0 ? (
             photographyItems.map((item, index) => {
-              const slideIndex = videoItems.length + index;
+              const slideIndex = videoItems.length + index; // This will be wrong if allSlides is empty
               return (
-                <motion.div
+                // EXTREMELY SIMPLIFIED ITEM FOR DEBUGGING
+                <div 
                   key={item.id} 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  className="mb-3 cursor-pointer group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 group-hover:ring-2 group-hover:ring-purple-500/60 group-hover:ring-offset-2 group-hover:ring-offset-background"
-                  onClick={() => {
-                     console.log("Photo card clicked. Index:", slideIndex);
-                     openLightbox(slideIndex);
-                  }}
+                  className="mb-3 cursor-pointer p-2 border"
+                  onClick={() => openLightbox(slideIndex)}
                 >
-                  <Image 
-                     src={item.mediaUrl} 
-                     alt={item.title} 
-                     width={400} 
-                     height={400}
-                     className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
-                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out flex flex-col justify-end p-3">
-                    <h3 className="text-white font-semibold text-base truncate">{item.title}</h3>
-                    <Expand className="absolute top-2 right-2 h-5 w-5 text-white opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </motion.div>
+                  <p>Photo: {item.title || item.id}</p>
+                  {/* <Image src="/images/p1.PNG" alt="Test" width={100} height={100} /> */}
+                </div>
               );
             })
           ) : (
-            <p className="text-center text-muted-foreground col-span-full">No photography projects yet.</p>
+            <p>No photography projects.</p>
           )}
         </Masonry>
       </section>
@@ -191,14 +123,13 @@ export default function Home() {
         open={lightboxOpen}
         close={() => setLightboxOpen(false)}
         index={lightboxIndex}
-        slides={allSlides}
+        slides={allSlides} // Will be empty
         plugins={[Video, Captions]}
         captions={{
           showToggle: true,
           descriptionTextAlign: "center",
         }}
       />
-
       <ScrollToTopButton />
     </>
   );
