@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 // import { portfolioItems } from '@/data/portfolio-items'; // Temporarily remove direct portfolioItems import
 import Video from "yet-another-react-lightbox/plugins/video";
 import Captions from "yet-another-react-lightbox/plugins/captions";
+import type { Slide } from "yet-another-react-lightbox"; // Import Slide type
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/captions.css";
 // import { Expand, PlayCircle, Mail, MapPin, MessageSquare } from 'lucide-react'; // Temporarily remove icons
@@ -35,8 +36,8 @@ export default function Home() {
   const photographyItems = sampleItems.filter(item => item.type === 'photography');
   const videoItems = sampleItems.filter(item => item.type === 'videography');
 
-  // Hardcode allSlides to an empty array or very simple static content
-  const allSlides: any[] = [
+  // Use proper Slide type for allSlides
+  const allSlides: Slide[] = [
     // { type: 'video', sources: [{ src: '/videos/1.mp4', type: 'video/mp4'}], title: "Test Video Slide", description: "Test Desc", poster: "/videos/VT-1.png" }
   ]; // COMPLETELY EMPTY FOR NOW
 
