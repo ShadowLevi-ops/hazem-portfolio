@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState } from 'react';
-import Image from 'next/image'; // Restore Image import
+// import Image from 'next/image'; // Keep Image commented for this step
 import { portfolioItems } from '@/data/portfolio-items';
 import Video from "yet-another-react-lightbox/plugins/video";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import type { Slide } from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/captions.css";
-import { Expand, PlayCircle, Mail, MapPin, MessageSquare } from 'lucide-react'; // Restore icons
-import { motion } from 'framer-motion'; // Restore motion
+// import { Expand, PlayCircle, Mail, MapPin, MessageSquare } from 'lucide-react'; // Keep icons commented
+// import { motion } from 'framer-motion'; // Keep motion commented
 import { ScrollToTopButton } from '@/components/scroll-to-top-button';
 import dynamic from 'next/dynamic';
 
@@ -38,24 +38,11 @@ export default function Home() {
     (item) => item.type === 'videography' || item.type === 'film'
   );
 
-  // Restore allSlides generation
-  const allSlides: Slide[] = [
-    ...videoItems.map(item => ({
-      type: 'video' as const,
-      sources: [{ src: item.mediaUrl, type: 'video/mp4' }],
-      title: item.title,
-      description: `${item.camera ? item.camera + ' | ' : ''}${item.projectDetails || ''}`,
-      poster: item.thumbnailUrl || '/videos/VT-1.png' // Default poster if not specified
-    })),
-    ...photographyItems.map(item => ({ 
-      src: item.mediaUrl,
-      title: item.title,
-      description: `${item.camera ? item.camera + ' | ' : ''}${item.projectDetails || ''}`,
-    })),
-  ];
+  // allSlides remains empty for this step
+  const allSlides: Slide[] = [];
 
   const openLightbox = (index: number) => {
-    console.log("Attempting to open lightbox for index:", index, "Slide:", allSlides[index]);
+    // console.log("Attempting to open lightbox for index:", index, "Slide:", allSlides[index]);
     setLightboxIndex(index);
     setLightboxOpen(true);
   };
@@ -75,14 +62,14 @@ export default function Home() {
         </p>
         <div className="flex flex-col sm:flex-row sm:justify-start items-start sm:items-center w-full max-w-lg text-sm text-muted-foreground gap-y-2 gap-x-4 md:gap-x-6">
           <div className="flex items-center gap-1.5">
-            <MapPin className="h-4 w-4" />
+            {/* <MapPin className="h-4 w-4" /> */}
             <span>Kuala Lumpur, MY</span>
           </div>
           <a 
             href="mailto:hazem@noveltyventures.uk"
             className="flex items-center gap-1.5 hover:text-primary transition-colors"
           >
-            <Mail className="h-4 w-4" />
+            {/* <Mail className="h-4 w-4" /> */}
             <span>hazem@noveltyventures.uk</span>
           </a>
           <a 
@@ -91,7 +78,7 @@ export default function Home() {
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 hover:text-primary transition-colors"
           >
-            <MessageSquare className="h-4 w-4" />
+            {/* <MessageSquare className="h-4 w-4" /> */}
             <span>Contact</span>
           </a>
         </div>
@@ -108,30 +95,16 @@ export default function Home() {
             videoItems.map((item, index) => {
               const slideIndex = index;
               return (
-                // Restore full card structure for videos
-                <motion.div 
+                // Simplified card structure from commit 11616a5
+                <div 
                   key={item.id} 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  className="mb-3 cursor-pointer group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 group-hover:ring-2 group-hover:ring-purple-500/60 group-hover:ring-offset-2 group-hover:ring-offset-background"
+                  className="mb-3 cursor-pointer p-2 border"
                   onClick={() => openLightbox(slideIndex)}
                 >
-                  <Image 
-                     src={item.thumbnailUrl || '/images/p1.PNG'} // Default thumbnail if not specified
-                     alt={`Thumbnail for ${item.title}`} 
-                     width={400} 
-                     height={225}
-                     className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
-                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out flex flex-col justify-end p-3">
-                    <h3 className="text-white font-semibold text-base mb-0.5 truncate">{item.title}</h3>
-                    <p className="text-gray-300 text-xs line-clamp-1">{item.camera || ''}</p>
-                    <p className="text-gray-300 text-xs line-clamp-1">{item.projectDetails || ''}</p>
-                    <PlayCircle className="absolute top-2 right-2 h-5 w-5 text-white opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </motion.div>
+                  <p>Video: {item.title}</p> 
+                  <p>Camera: {item.camera}</p>
+                  <p>Details: {item.projectDetails}</p>
+                </div>
               );
             })
           ) : (
@@ -151,31 +124,16 @@ export default function Home() {
             photographyItems.map((item, index) => {
               const slideIndex = videoItems.length + index;
               return (
-                // Restore full card structure for photos
-                <motion.div
+                // Simplified card structure from commit 11616a5
+                <div 
                   key={item.id} 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  className="mb-3 cursor-pointer group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 group-hover:ring-2 group-hover:ring-purple-500/60 group-hover:ring-offset-2 group-hover:ring-offset-background"
+                  className="mb-3 cursor-pointer p-2 border"
                   onClick={() => openLightbox(slideIndex)}
                 >
-                  <Image 
-                     src={item.mediaUrl} 
-                     alt={item.title} 
-                     width={400} 
-                     height={400} // Assuming photography items might be square or different aspect ratio
-                     className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
-                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out flex flex-col justify-end p-3">
-                    <h3 className="text-white font-semibold text-base truncate">{item.title}</h3>
-                    {/* Photography items might not have camera/projectDetails in overlay, adjust if needed */}
-                    {/* <p className="text-gray-300 text-xs line-clamp-1">{item.camera || ''}</p> */}
-                    {/* <p className="text-gray-300 text-xs line-clamp-1">{item.projectDetails || ''}</p> */}
-                    <Expand className="absolute top-2 right-2 h-5 w-5 text-white opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </motion.div>
+                  <p>Photo: {item.title}</p>
+                  <p>Camera: {item.camera}</p>
+                  <p>Details: {item.projectDetails}</p>
+                </div>
               );
             })
           ) : (
@@ -188,7 +146,7 @@ export default function Home() {
         open={lightboxOpen}
         close={() => setLightboxOpen(false)}
         index={lightboxIndex}
-        slides={allSlides} // Now populated
+        slides={allSlides} // Still empty
         plugins={[Video, Captions]}
         captions={{
           showToggle: true,
