@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning> {/* Added suppressHydrationWarning for potential theme issues */}
+    <html lang="en">
       <head /> {/* Explicitly add empty head tag */}
       <body className={cn("min-h-screen bg-background font-sans antialiased")}> {/* Added font-sans */}
         <ThemeProvider
