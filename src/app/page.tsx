@@ -3,38 +3,24 @@
 import React, { useState } from 'react';
 // import Image from 'next/image'; // For the logo - COMMENTED OUT FOR DEBUGGING
 // import { portfolioItems } from '@/data/portfolio-items'; // Data will be used later, commented out for now
-import Video from "yet-another-react-lightbox/plugins/video";
-import Captions from "yet-another-react-lightbox/plugins/captions";
-import type { Slide } from "yet-another-react-lightbox";
-import "yet-another-react-lightbox/styles.css";
-import "yet-another-react-lightbox/plugins/captions.css";
+// Imports for Lightbox - COMMENTED OUT FOR DEBUGGING
+// import Video from "yet-another-react-lightbox/plugins/video";
+// import Captions from "yet-another-react-lightbox/plugins/captions";
+// import type { Slide } from "yet-another-react-lightbox";
+// import "yet-another-react-lightbox/styles.css";
+// import "yet-another-react-lightbox/plugins/captions.css";
 // import { Mail, MapPin, MessageSquare } from 'lucide-react'; // Icons for Hero - COMMENTED OUT FOR DEBUGGING
-import { ScrollToTopButton } from '@/components/scroll-to-top-button';
-import dynamic from 'next/dynamic';
+// import { ScrollToTopButton } from '@/components/scroll-to-top-button'; // COMMENTED OUT FOR DEBUGGING
+// import dynamic from 'next/dynamic'; // Only needed if dynamically importing
 
-// Lightbox is dynamically imported, keep it for later use
-const Lightbox = dynamic(() => import('yet-another-react-lightbox'), { ssr: false });
-// Masonry will be needed later
-// const Masonry = dynamic(() => import('react-masonry-css'), { ssr: false });
+// Lightbox is dynamically imported, keep it for later use - COMMENTED OUT FOR DEBUGGING
+// const Lightbox = dynamic(() => import('yet-another-react-lightbox'), { ssr: false });
 
 export default function Home() {
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxIndex /*, setLightboxIndex // Commented out as unused for now */] = useState(0);
-
-  // Data processing will be added back later
-  // const photographyItems = portfolioItems.filter(item => item.type === 'photography');
-  // const videoItems = portfolioItems.filter(
-  //   (item) => item.type === 'videography' || item.type === 'film'
-  // );
-
-  // allSlides will be populated later
-  const allSlides: Slide[] = [];
-
-  // openLightbox function will be used later
-  // const openLightbox = (index: number) => {
-  //   setLightboxIndex(index); // This would also be unused if setLightboxIndex is commented
-  //   setLightboxOpen(true);
-  // };
+  // State for Lightbox - COMMENTED OUT FOR DEBUGGING
+  // const [lightboxOpen, setLightboxOpen] = useState(false);
+  // const [lightboxIndex /*, setLightboxIndex */] = useState(0);
+  // const allSlides: Slide[] = [];
 
   return (
     <>
@@ -88,18 +74,20 @@ export default function Home() {
 
       {/* Videography and Photography sections will be rebuilt here later */}
 
-      <Lightbox
+      {/* Lightbox - COMMENTED OUT FOR DEBUGGING */}
+      {/* <Lightbox
         open={lightboxOpen}
         close={() => setLightboxOpen(false)}
         index={lightboxIndex}
-        slides={allSlides} // Empty for now
+        slides={allSlides} 
         plugins={[Video, Captions]}
         captions={{
           showToggle: true,
           descriptionTextAlign: "center",
         }}
-      />
-      <ScrollToTopButton />
+      /> */}
+      {/* ScrollToTopButton - COMMENTED OUT FOR DEBUGGING */}
+      {/* <ScrollToTopButton /> */}
     </>
   );
 }
