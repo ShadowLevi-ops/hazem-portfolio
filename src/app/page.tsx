@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image'; // For the logo
-import { portfolioItems } from '@/data/portfolio-items'; // Data will be used later
+// import { portfolioItems } from '@/data/portfolio-items'; // Data will be used later, commented out for now
 import Video from "yet-another-react-lightbox/plugins/video";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import type { Slide } from "yet-another-react-lightbox";
@@ -19,7 +19,7 @@ const Lightbox = dynamic(() => import('yet-another-react-lightbox'), { ssr: fals
 
 export default function Home() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxIndex /*, setLightboxIndex // Commented out as unused for now */] = useState(0);
 
   // Data processing will be added back later
   // const photographyItems = portfolioItems.filter(item => item.type === 'photography');
@@ -32,7 +32,7 @@ export default function Home() {
 
   // openLightbox function will be used later
   // const openLightbox = (index: number) => {
-  //   setLightboxIndex(index);
+  //   setLightboxIndex(index); // This would also be unused if setLightboxIndex is commented
   //   setLightboxOpen(true);
   // };
 
