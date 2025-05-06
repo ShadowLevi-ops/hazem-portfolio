@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google"; // Keep or remove based on preference/shadcn setup
-import { ThemeProvider } from "@/components/theme-provider"; // Import ThemeProvider
+// import { ThemeProvider } from "@/components/theme-provider"; // Temporarily comment out ThemeProvider import
 import { Layout } from "@/components/layout/Layout"; // Import the Layout component
 import "./globals.css";
 import { cn } from "@/lib/utils"; // Import cn utility
@@ -32,14 +32,14 @@ export default function RootLayout({
     <html lang="en">
       <head /> {/* Explicitly add empty head tag */}
       <body className={cn("min-h-screen bg-background font-sans antialiased")}> {/* Added font-sans */}
-        <ThemeProvider
+        {/* <ThemeProvider
           attribute="class" // Use class for Tailwind dark mode
           defaultTheme="system" // Default to user's system preference
           enableSystem // Enable system preference detection
           disableTransitionOnChange // Optional: Prevent transitions on theme change
-        >
+        > */}
           <Layout>{children}</Layout> {/* Wrap children with Layout */}
-        </ThemeProvider>
+        {/* </ThemeProvider> */}
       </body>
     </html>
   );
