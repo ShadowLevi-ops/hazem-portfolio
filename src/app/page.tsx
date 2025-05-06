@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState } from 'react';
-import Image from 'next/image'; // For the logo
+// import Image from 'next/image'; // For the logo - COMMENTED OUT FOR DEBUGGING
 // import { portfolioItems } from '@/data/portfolio-items'; // Data will be used later, commented out for now
 import Video from "yet-another-react-lightbox/plugins/video";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import type { Slide } from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/captions.css";
-import { Mail, MapPin, MessageSquare } from 'lucide-react'; // Icons for Hero
+// import { Mail, MapPin, MessageSquare } from 'lucide-react'; // Icons for Hero - COMMENTED OUT FOR DEBUGGING
 import { ScrollToTopButton } from '@/components/scroll-to-top-button';
 import dynamic from 'next/dynamic';
 
@@ -43,33 +43,34 @@ export default function Home() {
         id="home"
         className="container mx-auto flex flex-col items-center justify-center text-center pt-16 md:pt-24 pb-12 md:pb-16 relative overflow-hidden px-6 md:px-10"
       >
-        {/* Centered Logo Image */}
-        <div className="mb-8 md:mb-10">
+        {/* Centered Logo Image - COMMENTED OUT FOR DEBUGGING */}
+        {/* <div className="mb-8 md:mb-10">
           <Image 
-            src="/favicon.png" // Using favicon as the logo as previously discussed
+            src="/favicon.png" 
             alt="Hazem Logo"
-            width={128} // Adjusted size for prominence, can be tweaked
-            height={128} // Assuming square logo, can be tweaked
-            priority // Load logo quickly
+            width={128} 
+            height={128} 
+            priority 
           />
-        </div>
+        </div> */}
+        <div>Logo Placeholder</div> {/* Simple placeholder */}
 
-        {/* Subtitle */}
+        {/* Subtitle - SIMPLIFIED FOR DEBUGGING */}
         <p className="text-lg md:text-xl italic font-medium max-w-2xl mx-auto mb-8 md:mb-10"> 
-          I specialize in vertical videography, transforming the 9:16 canvas into immersive narratives for mobile-first audiences. 
+          Test Subtitle
         </p>
         
-        {/* Contact Info Row */}
+        {/* Contact Info Row - ICONS COMMENTED OUT FOR DEBUGGING */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-y-3 gap-x-6 md:gap-x-8 text-sm text-muted-foreground">
           <div className="flex items-center gap-1.5">
-            <MapPin className="h-4 w-4" />
+            {/* <MapPin className="h-4 w-4" /> */}
             <span>Kuala Lumpur, MY</span>
           </div>
           <a 
             href="mailto:hazem@noveltyventures.uk"
             className="flex items-center gap-1.5 hover:text-primary transition-colors"
           >
-            <Mail className="h-4 w-4" />
+            {/* <Mail className="h-4 w-4" /> */}
             <span>hazem@noveltyventures.uk</span>
           </a>
           <a 
@@ -78,7 +79,7 @@ export default function Home() {
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 hover:text-primary transition-colors"
           >
-            <MessageSquare className="h-4 w-4" />
+            {/* <MessageSquare className="h-4 w-4" /> */}
             <span>Contact</span>
           </a>
         </div>
