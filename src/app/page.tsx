@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React/*, { useState }*/ from 'react'; // Comment out useState import
 // import Image from 'next/image'; // For the logo - COMMENTED OUT FOR DEBUGGING
 // import { portfolioItems } from '@/data/portfolio-items'; // Data will be used later, commented out for now
 // Imports for Lightbox - COMMENTED OUT FOR DEBUGGING
