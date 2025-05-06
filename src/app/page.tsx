@@ -65,8 +65,8 @@ export default function Home() {
 
         {/* Logo is removed from here - will be added to header */}
 
-        {/* Subtitle - Left-aligned, larger text */}
-        <p className="text-xl md:text-3xl font-medium text-left max-w-3xl mb-6"> 
+        {/* Subtitle - Left-aligned, smaller, italic */}
+        <p className="text-lg md:text-xl italic font-medium text-left max-w-3xl mb-6"> 
           I specialize in vertical videography, transforming the 9:16 canvas into immersive narratives for mobile-first audiences. 
         </p>
         

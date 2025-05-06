@@ -2,7 +2,7 @@
 
 import React from 'react';
 // import { ThemeProvider } from '../theme-provider'; // Removed redundant ThemeProvider import
-import { Header } from './Header';
+// import { Header } from './Header'; // Remove Header import
 import { motion } from 'framer-motion';
 
 interface LayoutProps {
@@ -13,7 +13,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     // <ThemeProvider attribute="class" defaultTheme="system" enableSystem> // Removed redundant ThemeProvider wrapper
       <div className="relative flex min-h-screen flex-col">
-        <Header />
+        {/* <Header /> */ /* Remove Header component */}
         <motion.main
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
