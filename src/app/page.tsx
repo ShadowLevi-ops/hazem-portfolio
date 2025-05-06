@@ -2,9 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import Masonry from 'react-masonry-css';
 import { portfolioItems } from '@/data/portfolio-items';
-import Lightbox from "yet-another-react-lightbox";
 import Video from "yet-another-react-lightbox/plugins/video";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/styles.css";
@@ -12,6 +10,11 @@ import "yet-another-react-lightbox/plugins/captions.css";
 import { Expand, PlayCircle, Mail, MapPin, MessageSquare } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ScrollToTopButton } from '@/components/scroll-to-top-button';
+import dynamic from 'next/dynamic';
+
+// Dynamically import Masonry and Lightbox with SSR disabled
+const Masonry = dynamic(() => import('react-masonry-css'), { ssr: false });
+const Lightbox = dynamic(() => import('yet-another-react-lightbox'), { ssr: false });
 
 // Masonry configuration (Forcing 4 columns always)
 const breakpointColumnsObj = {
