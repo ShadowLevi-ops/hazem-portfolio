@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { ThemeProvider } from '../theme-provider';
+// import { ThemeProvider } from '../theme-provider'; // Removed redundant ThemeProvider import
 import { Header } from './Header';
 import { motion } from 'framer-motion';
 
@@ -11,7 +11,7 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    // <ThemeProvider attribute="class" defaultTheme="system" enableSystem> // Removed redundant ThemeProvider wrapper
       <div className="relative flex min-h-screen flex-col">
         <Header />
         <motion.main
@@ -28,6 +28,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           {/* TODO: Add social links or other footer content */}
         </footer>
       </div>
-    </ThemeProvider>
+    // </ThemeProvider>
   );
 }; 
