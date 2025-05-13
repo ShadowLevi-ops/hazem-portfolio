@@ -17,7 +17,10 @@ const Masonry = dynamic(() => import('react-masonry-css'), { ssr: false });
 const Lightbox = dynamic(() => import('yet-another-react-lightbox'), { ssr: false });
 
 const breakpointColumnsObj = {
-  default: 4,
+  default: 3,
+  1100: 3,
+  700: 2,
+  500: 1
 };
 
 export default function Home() {
@@ -65,9 +68,12 @@ export default function Home() {
             priority 
           />
         </div>
-        <p className="text-lg md:text-xl italic font-medium max-w-2xl mx-auto mb-8 md:mb-10"> 
-          I specialize in vertical videography, transforming the 9:16 canvas into immersive narratives for mobile-first audiences. 
-        </p>
+        <div className="relative w-full max-w-2xl mx-auto mb-8 md:mb-10">
+          <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800/30 rounded-lg -z-10 transform -rotate-1"></div>
+          <p className="text-lg md:text-xl italic font-medium p-6 md:p-8"> 
+            I specialize in vertical videography, transforming the 9:16 canvas into immersive narratives for mobile-first audiences. 
+          </p>
+        </div>
         
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-y-3 gap-x-6 md:gap-x-8 text-sm text-muted-foreground">
           <div className="flex items-center gap-1.5">
@@ -94,7 +100,10 @@ export default function Home() {
       </section>
 
       <section id="videography" className="container mx-auto pt-6 md:pt-10 pb-8 md:pb-12 px-6 md:px-10">
-        <h2 className="text-2xl md:text-3xl font-bold mb-5 text-center">Videography & Film</h2>
+        <div className="relative mb-8">
+          <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800/30 rounded-lg -z-10 transform -rotate-1"></div>
+          <h2 className="text-2xl md:text-3xl font-bold text-center p-4">Videography & Film</h2>
+        </div>
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="flex w-full"
@@ -136,7 +145,10 @@ export default function Home() {
       </section>
 
       <section id="photography" className="container mx-auto pt-6 md:pt-10 pb-8 md:pb-12 px-6 md:px-10">
-        <h2 className="text-2xl md:text-3xl font-bold mb-5 text-center">Photography</h2>
+        <div className="relative mb-8">
+          <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800/30 rounded-lg -z-10 transform -rotate-1"></div>
+          <h2 className="text-2xl md:text-3xl font-bold text-center p-4">Photography</h2>
+        </div>
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="flex w-full"
