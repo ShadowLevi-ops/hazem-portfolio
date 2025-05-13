@@ -149,10 +149,10 @@ export default function Home() {
 
       <section 
         id="home"
-        className="container mx-auto flex flex-col items-center justify-center text-center pt-32 md:pt-40 pb-12 md:pb-16 relative overflow-hidden px-4 md:px-10"
+        className="container mx-auto flex flex-col items-center justify-center text-center pt-24 md:pt-32 pb-8 md:pb-12 relative overflow-hidden px-4 md:px-8"
       >
         <motion.p 
-          className="text-xs md:text-sm font-medium max-w-3xl mx-auto mb-8 md:mb-10 text-justify italic text-muted-foreground"
+          className="text-xs md:text-sm font-medium max-w-3xl mx-auto mb-6 md:mb-8 text-justify italic text-muted-foreground"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -160,7 +160,7 @@ export default function Home() {
           Commercial-grade vertical stories that stop the scroll. I transform brands with expertly crafted Instagram content that fits perfectly in your audience&apos;s feed. From luxury Parisian moments to Bali&apos;s natural beauty to vibrant music scenes—I deliver professional vertical snippets designed to boost engagement and elevate your brand&apos;s social presence.
         </motion.p>
         <motion.div 
-          className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-xs md:text-sm text-muted-foreground"
+          className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1.5 text-xs md:text-sm text-muted-foreground"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -192,9 +192,9 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <section id="videography" className="container mx-auto pt-6 md:pt-10 pb-8 md:pb-12 px-4 md:px-10">
+      <section id="videography" className="container mx-auto pt-4 md:pt-6 pb-6 md:pb-8 px-4 md:px-8">
         <motion.h2 
-          className="text-xl md:text-2xl font-bold text-center mb-8"
+          className="text-xl md:text-2xl font-bold text-center mb-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -203,18 +203,18 @@ export default function Home() {
           Videography & Film
         </motion.h2>
         {isLoading ? (
-          <div className="w-full h-32 flex items-center justify-center">
+          <div className="w-full h-24 flex items-center justify-center">
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full"
+              className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full"
             />
           </div>
         ) : (
           <Masonry
             breakpointCols={breakpointColumnsObj}
             className="flex w-full"
-            columnClassName="px-1 md:px-2"
+            columnClassName="px-1"
           >
             {videoItems.length > 0 ? (
               videoItems.map((item, index) => {
@@ -227,7 +227,7 @@ export default function Home() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.05 }}
                     whileHover={{ scale: 1.02 }}
-                    className="mb-2 md:mb-3 cursor-pointer group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 group-hover:ring-2 group-hover:ring-purple-500/60 group-hover:ring-offset-2 group-hover:ring-offset-background"
+                    className="mb-1.5 md:mb-2 cursor-pointer group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 group-hover:ring-2 group-hover:ring-purple-500/60 group-hover:ring-offset-2 group-hover:ring-offset-background"
                     onClick={() => openLightbox(slideIndex)}
                   >
                     <Image 
@@ -263,12 +263,20 @@ export default function Home() {
         )}
       </section>
 
-      <section id="photography" className="container mx-auto pt-6 md:pt-10 pb-8 md:pb-12 px-4 md:px-10">
-        <h2 className="text-xl md:text-2xl font-bold text-center mb-8">Photography</h2>
+      <section id="photography" className="container mx-auto pt-4 md:pt-6 pb-6 md:pb-8 px-4 md:px-8">
+        <motion.h2 
+          className="text-xl md:text-2xl font-bold text-center mb-6"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          Photography
+        </motion.h2>
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="flex w-full"
-          columnClassName="px-1 md:px-2"
+          columnClassName="px-1"
         >
           {photographyItems.length > 0 ? (
             photographyItems.map((item, index) => {
@@ -280,7 +288,7 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.05 }}
-                  className="mb-2 md:mb-3 cursor-pointer group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 group-hover:ring-2 group-hover:ring-purple-500/60 group-hover:ring-offset-2 group-hover:ring-offset-background"
+                  className="mb-1.5 md:mb-2 cursor-pointer group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 group-hover:ring-2 group-hover:ring-purple-500/60 group-hover:ring-offset-2 group-hover:ring-offset-background"
                   onClick={() => openLightbox(slideIndex)}
                 >
                   <Image 
