@@ -55,55 +55,57 @@ export default function Home() {
 
   return (
     <>
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
+        <div className="container mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
+          <div className="flex items-center">
+            <Image 
+              src="/favicon.png"
+              alt="Hazem Logo"
+              width={32} 
+              height={32} 
+              priority 
+              className="h-8 w-auto"
+            />
+          </div>
+          <nav className="flex items-center space-x-6 text-sm text-muted-foreground">
+            <div className="flex items-center gap-1.5">
+              <MapPin className="h-3.5 w-3.5" />
+              <span>Kuala Lumpur, MY</span>
+            </div>
+            <a 
+              href="mailto:hazem@noveltyventures.uk"
+              className="flex items-center gap-1.5 hover:text-primary transition-colors"
+            >
+              <Mail className="h-3.5 w-3.5" />
+              <span>hazem@noveltyventures.uk</span>
+            </a>
+            <a 
+              href="https://wa.me/0173767247"
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 hover:text-primary transition-colors"
+            >
+              <MessageSquare className="h-3.5 w-3.5" />
+              <span>Contact</span>
+            </a>
+          </nav>
+        </div>
+      </header>
+
       <section 
         id="home"
-        className="container mx-auto flex flex-col items-center justify-center text-center pt-16 md:pt-24 pb-12 md:pb-16 relative overflow-hidden px-6 md:px-10"
+        className="container mx-auto flex flex-col items-center justify-center text-center pt-32 md:pt-40 pb-12 md:pb-16 relative overflow-hidden px-6 md:px-10"
       >
-        <div className="mb-8 md:mb-10">
-          <Image 
-            src="/favicon.png"
-            alt="Hazem Logo"
-            width={128} 
-            height={128} 
-            priority 
-          />
-        </div>
         <div className="relative w-full max-w-2xl mx-auto mb-8 md:mb-10">
           <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800/30 rounded-lg -z-10 transform -rotate-1"></div>
-          <p className="text-lg md:text-xl italic font-medium p-6 md:p-8"> 
+          <p className="text-base md:text-lg italic font-medium p-6 md:p-8"> 
             I specialize in vertical videography, transforming the 9:16 canvas into immersive narratives for mobile-first audiences. 
           </p>
-        </div>
-        
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-y-3 gap-x-6 md:gap-x-8 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1.5">
-            <MapPin className="h-4 w-4" />
-            <span>Kuala Lumpur, MY</span>
-          </div>
-          <a 
-            href="mailto:hazem@noveltyventures.uk"
-            className="flex items-center gap-1.5 hover:text-primary transition-colors"
-          >
-            <Mail className="h-4 w-4" />
-            <span>hazem@noveltyventures.uk</span>
-          </a>
-          <a 
-            href="https://wa.me/0173767247"
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 hover:text-primary transition-colors"
-          >
-            <MessageSquare className="h-4 w-4" />
-            <span>Contact</span>
-          </a>
         </div>
       </section>
 
       <section id="videography" className="container mx-auto pt-6 md:pt-10 pb-8 md:pb-12 px-6 md:px-10">
-        <div className="relative mb-8">
-          <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800/30 rounded-lg -z-10 transform -rotate-1"></div>
-          <h2 className="text-2xl md:text-3xl font-bold text-center p-4">Videography & Film</h2>
-        </div>
+        <h2 className="text-xl md:text-2xl font-bold text-center mb-8">Videography & Film</h2>
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="flex w-full"
@@ -145,10 +147,7 @@ export default function Home() {
       </section>
 
       <section id="photography" className="container mx-auto pt-6 md:pt-10 pb-8 md:pb-12 px-6 md:px-10">
-        <div className="relative mb-8">
-          <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800/30 rounded-lg -z-10 transform -rotate-1"></div>
-          <h2 className="text-2xl md:text-3xl font-bold text-center p-4">Photography</h2>
-        </div>
+        <h2 className="text-xl md:text-2xl font-bold text-center mb-8">Photography</h2>
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="flex w-full"
