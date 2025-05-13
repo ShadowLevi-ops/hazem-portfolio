@@ -61,10 +61,10 @@ export default function Home() {
             <Image 
               src="/favicon.png"
               alt="Hazem Logo"
-              width={32} 
-              height={32} 
+              width={24} 
+              height={24} 
               priority 
-              className="h-8 w-auto"
+              className="h-6 w-auto"
             />
           </div>
           <nav className="flex items-center space-x-4 md:space-x-6 text-xs md:text-sm text-muted-foreground">
@@ -98,8 +98,8 @@ export default function Home() {
         id="home"
         className="container mx-auto flex flex-col items-center justify-center text-center pt-32 md:pt-40 pb-12 md:pb-16 relative overflow-hidden px-4 md:px-10"
       >
-        <p className="text-base md:text-lg italic font-medium max-w-2xl mx-auto mb-8 md:mb-10"> 
-          I specialize in vertical videography, transforming the 9:16 canvas into immersive narratives for mobile-first audiences. 
+        <p className="text-sm md:text-base font-medium max-w-3xl mx-auto mb-8 md:mb-10 text-justify"> 
+          I create attention-grabbing 5-second videos optimized for today's vertical viewing experience. My commercial work spans global locations from Paris to Bali, delivering professional vertical content that maximizes engagement on Instagram and social platforms. Whether capturing scenic landscapes or high-energy music events, my vertical-first approach ensures your brand message fits perfectly into modern scrolling habits—no awkward cropping, no wasted space.
         </p>
       </section>
 
