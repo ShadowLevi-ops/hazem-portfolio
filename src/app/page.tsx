@@ -19,8 +19,8 @@ const Lightbox = dynamic(() => import('yet-another-react-lightbox'), { ssr: fals
 const breakpointColumnsObj = {
   default: 3,
   1100: 3,
-  700: 2,
-  500: 1
+  700: 3,
+  500: 3
 };
 
 export default function Home() {
@@ -56,7 +56,7 @@ export default function Home() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
-        <div className="container mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
+        <div className="container mx-auto px-4 md:px-10 h-16 flex items-center justify-between">
           <div className="flex items-center">
             <Image 
               src="/favicon.png"
@@ -67,17 +67,19 @@ export default function Home() {
               className="h-8 w-auto"
             />
           </div>
-          <nav className="flex items-center space-x-6 text-sm text-muted-foreground">
+          <nav className="flex items-center space-x-4 md:space-x-6 text-xs md:text-sm text-muted-foreground">
             <div className="flex items-center gap-1.5">
               <MapPin className="h-3.5 w-3.5" />
-              <span>Kuala Lumpur, MY</span>
+              <span className="hidden sm:inline">Kuala Lumpur, MY</span>
+              <span className="sm:hidden">KL, MY</span>
             </div>
             <a 
               href="mailto:hazem@noveltyventures.uk"
               className="flex items-center gap-1.5 hover:text-primary transition-colors"
             >
               <Mail className="h-3.5 w-3.5" />
-              <span>hazem@noveltyventures.uk</span>
+              <span className="hidden sm:inline">hazem@noveltyventures.uk</span>
+              <span className="sm:hidden">Email</span>
             </a>
             <a 
               href="https://wa.me/0173767247"
@@ -94,22 +96,19 @@ export default function Home() {
 
       <section 
         id="home"
-        className="container mx-auto flex flex-col items-center justify-center text-center pt-32 md:pt-40 pb-12 md:pb-16 relative overflow-hidden px-6 md:px-10"
+        className="container mx-auto flex flex-col items-center justify-center text-center pt-32 md:pt-40 pb-12 md:pb-16 relative overflow-hidden px-4 md:px-10"
       >
-        <div className="relative w-full max-w-2xl mx-auto mb-8 md:mb-10">
-          <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800/30 rounded-lg -z-10 transform -rotate-1"></div>
-          <p className="text-base md:text-lg italic font-medium p-6 md:p-8"> 
-            I specialize in vertical videography, transforming the 9:16 canvas into immersive narratives for mobile-first audiences. 
-          </p>
-        </div>
+        <p className="text-base md:text-lg italic font-medium max-w-2xl mx-auto mb-8 md:mb-10"> 
+          I specialize in vertical videography, transforming the 9:16 canvas into immersive narratives for mobile-first audiences. 
+        </p>
       </section>
 
-      <section id="videography" className="container mx-auto pt-6 md:pt-10 pb-8 md:pb-12 px-6 md:px-10">
+      <section id="videography" className="container mx-auto pt-6 md:pt-10 pb-8 md:pb-12 px-4 md:px-10">
         <h2 className="text-xl md:text-2xl font-bold text-center mb-8">Videography & Film</h2>
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="flex w-full"
-          columnClassName="px-2"
+          columnClassName="px-1 md:px-2"
         >
           {videoItems.length > 0 ? (
             videoItems.map((item, index) => {
@@ -121,7 +120,7 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.05 }}
-                  className="mb-3 cursor-pointer group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 group-hover:ring-2 group-hover:ring-purple-500/60 group-hover:ring-offset-2 group-hover:ring-offset-background"
+                  className="mb-2 md:mb-3 cursor-pointer group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 group-hover:ring-2 group-hover:ring-purple-500/60 group-hover:ring-offset-2 group-hover:ring-offset-background"
                   onClick={() => openLightbox(slideIndex)}
                 >
                   <Image 
@@ -131,11 +130,11 @@ export default function Home() {
                      height={225}
                      className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
                    />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out flex flex-col justify-end p-3">
-                    <h3 className="text-white font-semibold text-base mb-0.5 truncate">{item.title}</h3>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out flex flex-col justify-end p-2 md:p-3">
+                    <h3 className="text-white font-semibold text-sm md:text-base mb-0.5 truncate">{item.title}</h3>
                     <p className="text-gray-300 text-xs line-clamp-1">{item.camera || ''}</p>
                     <p className="text-gray-300 text-xs line-clamp-1">{item.projectDetails || ''}</p>
-                    <PlayCircle className="absolute top-2 right-2 h-5 w-5 text-white opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
+                    <PlayCircle className="absolute top-2 right-2 h-4 w-4 md:h-5 md:w-5 text-white opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                 </motion.div>
               );
@@ -146,12 +145,12 @@ export default function Home() {
         </Masonry>
       </section>
 
-      <section id="photography" className="container mx-auto pt-6 md:pt-10 pb-8 md:pb-12 px-6 md:px-10">
+      <section id="photography" className="container mx-auto pt-6 md:pt-10 pb-8 md:pb-12 px-4 md:px-10">
         <h2 className="text-xl md:text-2xl font-bold text-center mb-8">Photography</h2>
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="flex w-full"
-          columnClassName="px-2"
+          columnClassName="px-1 md:px-2"
         >
           {photographyItems.length > 0 ? (
             photographyItems.map((item, index) => {
@@ -163,7 +162,7 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.05 }}
-                  className="mb-3 cursor-pointer group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 group-hover:ring-2 group-hover:ring-purple-500/60 group-hover:ring-offset-2 group-hover:ring-offset-background"
+                  className="mb-2 md:mb-3 cursor-pointer group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 group-hover:ring-2 group-hover:ring-purple-500/60 group-hover:ring-offset-2 group-hover:ring-offset-background"
                   onClick={() => openLightbox(slideIndex)}
                 >
                   <Image 
@@ -173,9 +172,9 @@ export default function Home() {
                      height={400}
                      className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
                    />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out flex flex-col justify-end p-3">
-                    <h3 className="text-white font-semibold text-base truncate">{item.title}</h3>
-                    <Expand className="absolute top-2 right-2 h-5 w-5 text-white opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out flex flex-col justify-end p-2 md:p-3">
+                    <h3 className="text-white font-semibold text-sm md:text-base truncate">{item.title}</h3>
+                    <Expand className="absolute top-2 right-2 h-4 w-4 md:h-5 md:w-5 text-white opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                 </motion.div>
               );
