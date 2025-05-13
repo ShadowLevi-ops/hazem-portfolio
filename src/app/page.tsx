@@ -101,6 +101,32 @@ export default function Home() {
         <p className="text-sm md:text-base font-medium max-w-3xl mx-auto mb-8 md:mb-10 text-justify"> 
           I create attention-grabbing 5-second videos optimized for today&apos;s vertical viewing experience. My commercial work spans global locations from Paris to Bali, delivering professional vertical content that maximizes engagement on Instagram and social platforms. Whether capturing scenic landscapes or high-energy music events, my vertical-first approach ensures your brand message fits perfectly into modern scrolling habits—no awkward cropping, no wasted space.
         </p>
+        <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-xs md:text-sm text-muted-foreground">
+          <div className="flex items-center gap-1.5">
+            <MapPin className="h-3.5 w-3.5" />
+            <span>Kuala Lumpur, MY</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <Mail className="h-3.5 w-3.5" />
+            <a 
+              href="mailto:hazem@noveltyventures.uk"
+              className="hover:text-primary transition-colors"
+            >
+              hazem@noveltyventures.uk
+            </a>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <MessageSquare className="h-3.5 w-3.5" />
+            <a 
+              href="https://wa.me/0173767247"
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-primary transition-colors"
+            >
+              +60 17-376 7247
+            </a>
+          </div>
+        </div>
       </section>
 
       <section id="videography" className="container mx-auto pt-6 md:pt-10 pb-8 md:pb-12 px-4 md:px-10">
