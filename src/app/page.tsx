@@ -8,7 +8,7 @@ import Captions from "yet-another-react-lightbox/plugins/captions";
 import type { Slide } from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/captions.css";
-import { Expand, PlayCircle, Mail, MapPin, MessageSquare, ChevronDown } from 'lucide-react';
+import { Expand, PlayCircle, Mail, MapPin, MessageSquare, Menu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollToTopButton } from '@/components/scroll-to-top-button';
 import dynamic from 'next/dynamic';
@@ -102,31 +102,15 @@ export default function Home() {
               className="h-6 w-auto"
             />
           </motion.div>
-          <nav className="flex items-center space-x-4 md:space-x-6 text-xs md:text-sm text-muted-foreground">
-            <motion.div 
-              className="flex items-center gap-1.5"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <MapPin className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Kuala Lumpur, MY</span>
-              <span className="sm:hidden">KL, MY</span>
-            </motion.div>
+          <nav className="flex items-center">
             <div className="relative dropdown-container">
               <motion.button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center gap-1.5 hover:text-primary transition-colors"
+                className="flex items-center gap-1.5 hover:text-primary transition-colors p-2 rounded-full hover:bg-accent/10"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <span>Contact</span>
-                <motion.div
-                  animate={{ rotate: isDropdownOpen ? 180 : 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <ChevronDown className="h-3.5 w-3.5" />
-                </motion.div>
+                <Menu className="h-5 w-5" />
               </motion.button>
               <AnimatePresence>
                 {isDropdownOpen && (
@@ -168,7 +152,7 @@ export default function Home() {
         className="container mx-auto flex flex-col items-center justify-center text-center pt-32 md:pt-40 pb-12 md:pb-16 relative overflow-hidden px-4 md:px-10"
       >
         <motion.p 
-          className="text-sm md:text-base font-medium max-w-3xl mx-auto mb-8 md:mb-10 text-justify"
+          className="text-xs md:text-sm font-medium max-w-3xl mx-auto mb-8 md:mb-10 text-justify italic text-muted-foreground"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
