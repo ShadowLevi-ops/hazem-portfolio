@@ -99,7 +99,7 @@ export default function Home() {
         className="container mx-auto flex flex-col items-center justify-center text-center pt-32 md:pt-40 pb-12 md:pb-16 relative overflow-hidden px-4 md:px-10"
       >
         <p className="text-sm md:text-base font-medium max-w-3xl mx-auto mb-8 md:mb-10 text-justify"> 
-          I create attention-grabbing 5-second videos optimized for today's vertical viewing experience. My commercial work spans global locations from Paris to Bali, delivering professional vertical content that maximizes engagement on Instagram and social platforms. Whether capturing scenic landscapes or high-energy music events, my vertical-first approach ensures your brand message fits perfectly into modern scrolling habits—no awkward cropping, no wasted space.
+          I create attention-grabbing 5-second videos optimized for today&apos;s vertical viewing experience. My commercial work spans global locations from Paris to Bali, delivering professional vertical content that maximizes engagement on Instagram and social platforms. Whether capturing scenic landscapes or high-energy music events, my vertical-first approach ensures your brand message fits perfectly into modern scrolling habits—no awkward cropping, no wasted space.
         </p>
       </section>
 
