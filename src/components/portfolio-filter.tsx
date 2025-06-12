@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
 import { Camera, Video, Film, Grid } from "lucide-react";
 
 interface FilterButtonProps {
