@@ -1,29 +1,17 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { InteractiveCursor } from '../interactive-cursor';
+
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkDevice = () => {
-      setIsMobile(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
-    };
-    
-    checkDevice();
-    window.addEventListener('resize', checkDevice);
-    return () => window.removeEventListener('resize', checkDevice);
-  }, []);
 
   return (
-    <div className={`relative flex min-h-screen flex-col ${!isMobile ? 'cursor-none' : ''}`}>
-      {!isMobile && <InteractiveCursor />}
+    <div className="relative flex min-h-screen flex-col">
       <motion.main
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
