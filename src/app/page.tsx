@@ -11,6 +11,9 @@ import "yet-another-react-lightbox/plugins/captions.css";
 import { Expand, PlayCircle, Mail, MapPin, MessageSquare, Menu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollToTopButton } from '@/components/scroll-to-top-button';
+import { AnimatedBackground } from '@/components/animated-background';
+import { AnimatedHero } from '@/components/animated-hero';
+import { PortfolioFilter } from '@/components/portfolio-filter';
 import dynamic from 'next/dynamic';
 
 const Masonry = dynamic(() => import('react-masonry-css'), { 
@@ -35,6 +38,7 @@ export default function Home() {
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeFilter, setActiveFilter] = useState('all');
 
   useEffect(() => {
     // Simulate initial loading
@@ -57,10 +61,25 @@ export default function Home() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Filter portfolio items based on active filter
+  const getFilteredItems = () => {
+    if (activeFilter === 'all') return portfolioItems;
+    return portfolioItems.filter(item => item.type === activeFilter);
+  };
+
+  const filteredItems = getFilteredItems();
   const photographyItems = portfolioItems.filter(item => item.type === 'photography');
   const videoItems = portfolioItems.filter(
     (item) => item.type === 'videography' || item.type === 'film'
   );
+
+  // Calculate counts for filter buttons
+  const filterCounts = {
+    all: portfolioItems.length,
+    photography: photographyItems.length,
+    videography: portfolioItems.filter(item => item.type === 'videography').length,
+    film: portfolioItems.filter(item => item.type === 'film').length,
+  };
 
   const allSlides: Slide[] = [
     ...videoItems.map(item => ({
@@ -85,6 +104,8 @@ export default function Home() {
 
   return (
     <>
+      <AnimatedBackground />
+      
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
         <div className="container mx-auto px-4 md:px-10 h-16 flex items-center justify-between">
           <motion.div 
@@ -147,61 +168,28 @@ export default function Home() {
         </div>
       </header>
 
-      <section 
-        id="home"
-        className="container mx-auto flex flex-col items-center justify-center text-center pt-24 md:pt-32 pb-8 md:pb-12 relative overflow-hidden px-4 md:px-8"
-      >
-        <motion.p 
-          className="text-xs md:text-sm font-medium max-w-3xl mx-auto mb-6 md:mb-8 text-justify italic text-muted-foreground"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        > 
-          Commercial-grade vertical stories that stop the scroll. I transform brands with expertly crafted Instagram content that fits perfectly in your audience&apos;s feed. From luxury Parisian moments to Bali&apos;s natural beauty to vibrant music scenes—I deliver professional vertical snippets designed to boost engagement and elevate your brand&apos;s social presence.
-        </motion.p>
-        <motion.div 
-          className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1.5 text-xs md:text-sm text-muted-foreground"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <div className="flex items-center gap-1.5">
-            <MapPin className="h-3.5 w-3.5" />
-            <span>Kuala Lumpur, MY</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <Mail className="h-3.5 w-3.5" />
-            <a 
-              href="mailto:hazem@noveltyventures.uk"
-              className="hover:text-primary transition-colors"
-            >
-              hazem@noveltyventures.uk
-            </a>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <MessageSquare className="h-3.5 w-3.5" />
-            <a 
-              href="https://wa.me/0173767247"
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hover:text-primary transition-colors"
-            >
-              +60 17-376 7247
-            </a>
-          </div>
-        </motion.div>
-      </section>
+      <AnimatedHero />
 
-      <section id="videography" className="container mx-auto pt-4 md:pt-6 pb-6 md:pb-8 px-4 md:px-8">
+      {/* Portfolio Section with Filter */}
+      <section id="portfolio" className="container mx-auto pt-8 md:pt-12 pb-6 md:pb-8 px-4 md:px-8 relative z-10">
         <motion.h2 
-          className="text-xl md:text-2xl font-bold text-center mb-6"
+          className="text-2xl md:text-3xl font-bold text-center mb-8"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          Videography & Film
+          <span className="bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
+            My Work
+          </span>
         </motion.h2>
+
+        <PortfolioFilter 
+          activeFilter={activeFilter}
+          onFilterChange={setActiveFilter}
+          counts={filterCounts}
+        />
+
         {isLoading ? (
           <div className="w-full h-24 flex items-center justify-center">
             <motion.div
@@ -211,104 +199,135 @@ export default function Home() {
             />
           </div>
         ) : (
-          <Masonry
-            breakpointCols={breakpointColumnsObj}
-            className="flex w-full"
-            columnClassName="px-1"
-          >
-            {videoItems.length > 0 ? (
-              videoItems.map((item, index) => {
-                const slideIndex = index;
-                return (
-                  <motion.div 
-                    key={item.id} 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.05 }}
-                    whileHover={{ scale: 1.02 }}
-                    className="mb-1.5 md:mb-2 cursor-pointer group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 group-hover:ring-2 group-hover:ring-purple-500/60 group-hover:ring-offset-2 group-hover:ring-offset-background"
-                    onClick={() => openLightbox(slideIndex)}
-                  >
-                    <Image 
-                      src={item.thumbnailUrl || '/images/p1.PNG'} 
-                      alt={`Thumbnail for ${item.title}`} 
-                      width={400} 
-                      height={225}
-                      loading="lazy"
-                      className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
-                    />
-                    <motion.div 
-                      className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out flex flex-col justify-end p-2 md:p-3"
-                      initial={{ opacity: 0 }}
-                      whileHover={{ opacity: 1 }}
-                    >
-                      <h3 className="text-white font-semibold text-sm md:text-base mb-0.5 truncate">{item.title}</h3>
-                      <p className="text-gray-300 text-xs line-clamp-1">{item.camera || ''}</p>
-                      <p className="text-gray-300 text-xs line-clamp-1">{item.projectDetails || ''}</p>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeFilter}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Masonry
+                breakpointCols={breakpointColumnsObj}
+                className="flex w-full"
+                columnClassName="px-1"
+              >
+                {filteredItems.length > 0 ? (
+                  filteredItems.map((item, index) => {
+                    const isVideo = item.type === 'videography' || item.type === 'film';
+                    const slideIndex = isVideo ? 
+                      videoItems.findIndex(v => v.id === item.id) :
+                      videoItems.length + photographyItems.findIndex(p => p.id === item.id);
+                    
+                    return (
                       <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
+                        key={item.id} 
+                        layout
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ 
+                          duration: 0.3, 
+                          delay: index * 0.05,
+                          layout: { duration: 0.3 }
+                        }}
+                        whileHover={{ 
+                          scale: 1.02,
+                          rotateY: 5,
+                          rotateX: 5,
+                        }}
+                        className="mb-1.5 md:mb-2 cursor-pointer group relative overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform-gpu"
+                        style={{
+                          transformStyle: 'preserve-3d',
+                        }}
+                        onClick={() => openLightbox(slideIndex)}
                       >
-                        <PlayCircle className="absolute top-2 right-2 h-4 w-4 md:h-5 md:w-5 text-white opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
-                      </motion.div>
-                    </motion.div>
-                  </motion.div>
-                );
-              })
-            ) : (
-              <p className="text-center text-muted-foreground col-span-full">No videography or film projects yet.</p>
-            )}
-          </Masonry>
-        )}
-      </section>
+                        <Image 
+                          src={isVideo ? (item.thumbnailUrl || '/images/p1.PNG') : item.mediaUrl} 
+                          alt={`${item.title}`} 
+                          width={400} 
+                          height={isVideo ? 225 : 400}
+                          loading="lazy"
+                          className="object-cover w-full h-full transition-transform duration-500 ease-out group-hover:scale-110"
+                        />
+                        
+                        {/* Enhanced overlay with gradient and blur effect */}
+                        <motion.div 
+                          className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 backdrop-blur-[1px] flex flex-col justify-end p-3"
+                          initial={{ opacity: 0 }}
+                          whileHover={{ opacity: 1 }}
+                        >
+                          <motion.h3 
+                            className="text-white font-semibold text-sm md:text-base mb-1 truncate"
+                            initial={{ y: 10, opacity: 0 }}
+                            whileHover={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.1 }}
+                          >
+                            {item.title}
+                          </motion.h3>
+                          <motion.p 
+                            className="text-gray-300 text-xs line-clamp-1"
+                            initial={{ y: 10, opacity: 0 }}
+                            whileHover={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.15 }}
+                          >
+                            {item.camera || ''}
+                          </motion.p>
+                          <motion.p 
+                            className="text-gray-300 text-xs line-clamp-1"
+                            initial={{ y: 10, opacity: 0 }}
+                            whileHover={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.2 }}
+                          >
+                            {item.projectDetails || ''}
+                          </motion.p>
+                          
+                          {/* Icon with enhanced animation */}
+                          <motion.div
+                            className="absolute top-3 right-3"
+                            whileHover={{ 
+                              scale: 1.2,
+                              rotate: isVideo ? 360 : 0,
+                            }}
+                            whileTap={{ scale: 0.9 }}
+                            transition={{ type: "spring", stiffness: 300 }}
+                          >
+                            {isVideo ? (
+                              <PlayCircle className="h-5 w-5 text-white drop-shadow-lg" />
+                            ) : (
+                              <Expand className="h-5 w-5 text-white drop-shadow-lg" />
+                            )}
+                          </motion.div>
+                        </motion.div>
 
-      <section id="photography" className="container mx-auto pt-4 md:pt-6 pb-6 md:pb-8 px-4 md:px-8">
-        <motion.h2 
-          className="text-xl md:text-2xl font-bold text-center mb-6"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          Photography
-        </motion.h2>
-        <Masonry
-          breakpointCols={breakpointColumnsObj}
-          className="flex w-full"
-          columnClassName="px-1"
-        >
-          {photographyItems.length > 0 ? (
-            photographyItems.map((item, index) => {
-              const slideIndex = videoItems.length + index;
-              return (
-                <motion.div
-                  key={item.id} 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  className="mb-1.5 md:mb-2 cursor-pointer group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 group-hover:ring-2 group-hover:ring-purple-500/60 group-hover:ring-offset-2 group-hover:ring-offset-background"
-                  onClick={() => openLightbox(slideIndex)}
-                >
-                  <Image 
-                     src={item.mediaUrl} 
-                     alt={item.title} 
-                     width={400} 
-                     height={400}
-                     className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
-                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out flex flex-col justify-end p-2 md:p-3">
-                    <h3 className="text-white font-semibold text-sm md:text-base truncate">{item.title}</h3>
-                    <Expand className="absolute top-2 right-2 h-4 w-4 md:h-5 md:w-5 text-white opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </motion.div>
-              );
-            })
-          ) : (
-            <p className="text-center text-muted-foreground col-span-full">No photography projects yet.</p>
-          )}
-        </Masonry>
+                        {/* Shimmer effect on hover */}
+                        <motion.div
+                          className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none"
+                          initial={{ x: '-100%' }}
+                          whileHover={{ 
+                            x: '100%',
+                            transition: { duration: 0.6, ease: "easeInOut" }
+                          }}
+                        >
+                          <div className="h-full w-1/3 bg-gradient-to-r from-transparent via-white/20 to-transparent transform skew-x-12" />
+                        </motion.div>
+                      </motion.div>
+                    );
+                  })
+                ) : (
+                  <motion.p 
+                    className="text-center text-muted-foreground col-span-full py-12"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    No {activeFilter === 'all' ? '' : activeFilter} projects yet.
+                  </motion.p>
+                )}
+              </Masonry>
+            </motion.div>
+          </AnimatePresence>
+        )}
       </section>
 
       <Lightbox
