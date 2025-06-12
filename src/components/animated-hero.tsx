@@ -179,20 +179,9 @@ export function AnimatedHero() {
               whileHover={{ scale: 1.1 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <motion.div 
-                className="flex justify-center mb-2 text-primary group-hover:text-purple-500 transition-colors"
-                animate={{ 
-                  rotateY: [0, 360],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  delay: index * 0.5,
-                  ease: "easeInOut"
-                }}
-              >
+              <div className="flex justify-center mb-2 text-primary group-hover:text-purple-500 transition-colors">
                 {stat.icon}
-              </motion.div>
+              </div>
               <motion.div 
                 className="text-xl md:text-2xl font-bold text-foreground"
                 initial={{ scale: 0 }}
@@ -215,7 +204,7 @@ export function AnimatedHero() {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-16 left-1/2 transform -translate-x-1/2"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 3, duration: 0.5 }}

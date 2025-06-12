@@ -17,7 +17,7 @@ export function AnimatedBackground() {
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
-    const particleCount = 50;
+    const particleCount = 20; // Reduced from 50 to 20
     const newParticles: Particle[] = [];
 
     for (let i = 0; i < particleCount; i++) {
@@ -26,9 +26,9 @@ export function AnimatedBackground() {
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
         size: Math.random() * 3 + 1,
-        speedX: (Math.random() - 0.5) * 0.5,
-        speedY: (Math.random() - 0.5) * 0.5,
-        opacity: Math.random() * 0.5 + 0.1,
+        speedX: (Math.random() - 0.5) * 0.3, // Reduced speed
+        speedY: (Math.random() - 0.5) * 0.3, // Reduced speed
+        opacity: Math.random() * 0.3 + 0.1, // Reduced opacity
       });
     }
 
@@ -42,7 +42,7 @@ export function AnimatedBackground() {
           y: (particle.y + particle.speedY + window.innerHeight) % window.innerHeight,
         }))
       );
-    }, 50);
+    }, 100); // Reduced frequency from 50ms to 100ms
 
     return () => clearInterval(interval);
   }, []);

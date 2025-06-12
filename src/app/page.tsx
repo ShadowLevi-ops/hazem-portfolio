@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Image from 'next/image';
 import { portfolioItems } from '@/data/portfolio-items';
 import Video from "yet-another-react-lightbox/plugins/video";
@@ -11,7 +11,6 @@ import "yet-another-react-lightbox/plugins/captions.css";
 import { Expand, PlayCircle, Mail, MessageSquare, Menu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollToTopButton } from '@/components/scroll-to-top-button';
-import { AnimatedBackground } from '@/components/animated-background';
 import { AnimatedHero } from '@/components/animated-hero';
 import { PortfolioFilter } from '@/components/portfolio-filter';
 import dynamic from 'next/dynamic';
@@ -37,16 +36,8 @@ export default function Home() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [activeFilter, setActiveFilter] = useState('all');
-
-  useEffect(() => {
-    // Simulate initial loading
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -61,27 +52,35 @@ export default function Home() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Filter portfolio items based on active filter
-  const getFilteredItems = () => {
+  // Memoized filtered items for better performance
+  const filteredItems = useMemo(() => {
     if (activeFilter === 'all') return portfolioItems;
     return portfolioItems.filter(item => item.type === activeFilter);
-  };
+  }, [activeFilter]);
 
-  const filteredItems = getFilteredItems();
-  const photographyItems = portfolioItems.filter(item => item.type === 'photography');
-  const videoItems = portfolioItems.filter(
-    (item) => item.type === 'videography' || item.type === 'film'
-  );
+  // Memoized categorized items
+  const { photographyItems, videoItems, filterCounts } = useMemo(() => {
+    const photography = portfolioItems.filter(item => item.type === 'photography');
+    const video = portfolioItems.filter(
+      (item) => item.type === 'videography' || item.type === 'film'
+    );
+    
+    const counts = {
+      all: portfolioItems.length,
+      photography: photography.length,
+      videography: portfolioItems.filter(item => item.type === 'videography').length,
+      film: portfolioItems.filter(item => item.type === 'film').length,
+    };
 
-  // Calculate counts for filter buttons
-  const filterCounts = {
-    all: portfolioItems.length,
-    photography: photographyItems.length,
-    videography: portfolioItems.filter(item => item.type === 'videography').length,
-    film: portfolioItems.filter(item => item.type === 'film').length,
-  };
+    return {
+      photographyItems: photography,
+      videoItems: video,
+      filterCounts: counts
+    };
+  }, []);
 
-  const allSlides: Slide[] = [
+  // Memoized slides array
+  const allSlides: Slide[] = useMemo(() => [
     ...videoItems.map(item => ({
       type: 'video' as const,
       sources: [{ src: item.mediaUrl, type: 'video/mp4' }],
@@ -94,17 +93,21 @@ export default function Home() {
       title: item.title,
       description: `${item.camera ? item.camera + ' | ' : ''}${item.projectDetails || ''}`,
     })),
-  ];
+  ], [videoItems, photographyItems]);
 
-  const openLightbox = (index: number) => {
+  // Memoized lightbox function
+  const openLightbox = useCallback((index: number) => {
     console.log("Attempting to open lightbox for index:", index, "Slide:", allSlides[index]);
     setLightboxIndex(index);
     setLightboxOpen(true);
-  };
+  }, [allSlides]);
 
   return (
     <>
-      <AnimatedBackground />
+      {/* Lightweight background - CSS only */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 dark:from-primary/10 dark:to-secondary/10" />
+      </div>
       
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
         <div className="container mx-auto px-4 md:px-10 h-16 flex items-center justify-between">
@@ -247,7 +250,11 @@ export default function Home() {
                           alt={`${item.title}`} 
                           width={400} 
                           height={isVideo ? 225 : 400}
-                          loading="lazy"
+                          loading={index < 6 ? "eager" : "lazy"} // Load first 6 images eagerly
+                          priority={index < 3} // Prioritize first 3 images
+                          quality={85} // Balanced quality/performance
+                          placeholder="blur"
+                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                           className="object-cover w-full h-full transition-transform duration-500 ease-out group-hover:scale-110"
                         />
                         
