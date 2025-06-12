@@ -36,7 +36,6 @@ export default function Home() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [activeFilter, setActiveFilter] = useState('all');
 
   // Close dropdown when clicking outside
@@ -193,16 +192,7 @@ export default function Home() {
           counts={filterCounts}
         />
 
-        {isLoading ? (
-          <div className="w-full h-24 flex items-center justify-center">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full"
-            />
-          </div>
-        ) : (
-          <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait">
             <motion.div
               key={activeFilter}
               initial={{ opacity: 0, y: 20 }}
@@ -334,7 +324,6 @@ export default function Home() {
               </Masonry>
             </motion.div>
           </AnimatePresence>
-        )}
       </section>
 
       <Lightbox
