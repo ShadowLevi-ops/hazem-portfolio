@@ -65,8 +65,7 @@ interface PortfolioFilterProps {
   counts: {
     all: number;
     photography: number;
-    videography: number;
-    film: number;
+    video: number;
   };
 }
 
@@ -74,8 +73,7 @@ export function PortfolioFilter({ activeFilter, onFilterChange, counts }: Portfo
   const filters = [
     { key: 'all', label: 'All Work', icon: <Grid className="h-4 w-4" />, count: counts.all },
     { key: 'photography', label: 'Photography', icon: <Camera className="h-4 w-4" />, count: counts.photography },
-    { key: 'videography', label: 'Videography', icon: <Video className="h-4 w-4" />, count: counts.videography },
-    { key: 'film', label: 'Film', icon: <Film className="h-4 w-4" />, count: counts.film },
+    { key: 'video', label: 'Video', icon: <Video className="h-4 w-4" />, count: counts.video },
   ];
 
   return (

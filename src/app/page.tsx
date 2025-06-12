@@ -54,6 +54,9 @@ export default function Home() {
   // Memoized filtered items for better performance
   const filteredItems = useMemo(() => {
     if (activeFilter === 'all') return portfolioItems;
+    if (activeFilter === 'video') {
+      return portfolioItems.filter(item => item.type === 'videography' || item.type === 'film');
+    }
     return portfolioItems.filter(item => item.type === activeFilter);
   }, [activeFilter]);
 
@@ -67,8 +70,7 @@ export default function Home() {
     const counts = {
       all: portfolioItems.length,
       photography: photography.length,
-      videography: portfolioItems.filter(item => item.type === 'videography').length,
-      film: portfolioItems.filter(item => item.type === 'film').length,
+      video: video.length,
     };
 
     return {
@@ -318,7 +320,7 @@ export default function Home() {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5 }}
                   >
-                    No {activeFilter === 'all' ? '' : activeFilter} projects yet.
+                    No {activeFilter === 'all' ? '' : activeFilter === 'video' ? 'video' : activeFilter} projects yet.
                   </motion.p>
                 )}
               </Masonry>
