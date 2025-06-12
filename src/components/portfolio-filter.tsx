@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Camera, Video, Film, Grid } from "lucide-react";
+import { Camera, Video, Grid } from "lucide-react";
 
 interface FilterButtonProps {
   label: string;
