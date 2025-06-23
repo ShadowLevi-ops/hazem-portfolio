@@ -8,7 +8,7 @@ import Captions from "yet-another-react-lightbox/plugins/captions";
 import type { Slide } from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/captions.css";
-import { Expand, PlayCircle, Mail, MessageSquare, Menu } from 'lucide-react';
+import { Mail, MessageSquare, Menu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollToTopButton } from '@/components/scroll-to-top-button';
 import { AnimatedHero } from '@/components/animated-hero';
