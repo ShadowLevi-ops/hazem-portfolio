@@ -23,8 +23,8 @@ export function VerticalCarousel({
   const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [direction, setDirection] = useState(1);
 
-  // Masonry with slow auto-scroll
-  const visibleItems = 6; // Show more items in masonry
+  // Grid with slow vertical auto-scroll
+  const visibleItems = 6; // Show 6 items in grid
   const scrollStep = 1; // Slow scroll one item at a time
 
   useEffect(() => {
@@ -71,14 +71,14 @@ export function VerticalCarousel({
     );
   }
 
-  // Calculate visible items for masonry
+  // Calculate visible items for grid
   const visibleItemsArray = items.slice(currentIndex, currentIndex + visibleItems);
 
   return (
     <div className="relative w-full max-w-6xl mx-auto">
-      {/* Masonry grid container with overflow hidden for carousel effect */}
+      {/* Grid container with overflow hidden for vertical carousel effect */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-background/50 to-background/80 backdrop-blur-sm border">
-        {/* Auto-scrolling masonry grid */}
+        {/* Auto-scrolling grid with uniform card sizes */}
         <motion.div
           key={currentIndex}
           initial={{ y: 20, opacity: 0 }}
@@ -92,20 +92,16 @@ export function VerticalCarousel({
           }}
           className="p-4"
         >
-          {/* Masonry grid using CSS Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 auto-rows-[200px]">
+          {/* Uniform grid - consistent card sizes */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {visibleItemsArray.map((item, index) => {
               const isVideo = item.type === 'videography' || item.type === 'film';
               const actualIndex = currentIndex + index;
               
-              // Create varied heights for masonry effect
-              const heights = ['row-span-1', 'row-span-2', 'row-span-1', 'row-span-2', 'row-span-1', 'row-span-1'];
-              const heightClass = heights[index % heights.length];
-              
               return (
                 <motion.div
                   key={`${item.id}-${actualIndex}`}
-                  className={`relative cursor-pointer group rounded-xl overflow-hidden border border-border/50 ${heightClass}`}
+                  className="relative cursor-pointer group rounded-xl overflow-hidden border border-border/50 aspect-[4/3]"
                   whileHover={{ scale: 1.02, zIndex: 10 }}
                   onClick={() => onItemClick(actualIndex)}
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -199,7 +195,7 @@ export function VerticalCarousel({
           </div>
         </motion.div>
         
-        {/* Control buttons */}
+        {/* Vertical control buttons */}
         <div className="absolute right-4 top-1/2 transform -translate-y-1/2 flex flex-col gap-2 z-20">
           <motion.button
             onClick={handlePrevious}
