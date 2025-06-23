@@ -4,8 +4,8 @@ import { motion, useAnimation, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { MapPin, Mail, MessageSquare, Camera, Video, Award } from "lucide-react";
 
-const titleWords = ["Commercial-grade", "vertical", "stories", "that", "stop", "the", "scroll."];
-const description = "I transform brands with expertly crafted Instagram content that fits perfectly in your audience's feed. From luxury Parisian moments to Bali's natural beauty to vibrant music scenes—I deliver professional vertical snippets designed to boost engagement and elevate your brand's social presence.";
+const titleWords = ["Commercial-Grade", "Stuff", "That", "Just", "Works."];
+const description = "Content that converts. Visuals that captivate. Results that matter.";
 
 export function AnimatedHero() {
   const [typedText, setTypedText] = useState("");
@@ -123,7 +123,7 @@ export function AnimatedHero() {
 
         {/* Description with fade-in effect */}
         <motion.p 
-          className="text-sm md:text-base font-medium max-w-3xl mx-auto mb-8 text-justify italic text-muted-foreground leading-relaxed"
+          className="text-lg md:text-xl font-semibold max-w-2xl mx-auto mb-8 text-center text-muted-foreground leading-relaxed"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: showDescription ? 1 : 0, y: showDescription ? 0 : 30 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
