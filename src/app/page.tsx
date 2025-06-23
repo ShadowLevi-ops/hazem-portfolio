@@ -13,24 +13,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollToTopButton } from '@/components/scroll-to-top-button';
 import { AnimatedHero } from '@/components/animated-hero';
 import { PortfolioFilter } from '@/components/portfolio-filter';
+import { VerticalCarousel } from '@/components/vertical-carousel';
 import dynamic from 'next/dynamic';
-
-const Masonry = dynamic(() => import('react-masonry-css'), { 
-  ssr: false,
-  loading: () => <div className="w-full h-32 flex items-center justify-center">Loading...</div>
-});
 
 const Lightbox = dynamic(() => import('yet-another-react-lightbox'), { 
   ssr: false,
   loading: () => <div className="w-full h-32 flex items-center justify-center">Loading...</div>
 });
-
-const breakpointColumnsObj = {
-  default: 3,
-  1100: 3,
-  700: 3,
-  500: 3
-};
 
 export default function Home() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -202,128 +191,19 @@ export default function Home() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <Masonry
-                breakpointCols={breakpointColumnsObj}
-                className="flex w-full"
-                columnClassName="px-1"
-              >
-                {filteredItems.length > 0 ? (
-                  filteredItems.map((item, index) => {
-                    const isVideo = item.type === 'videography' || item.type === 'film';
-                    const slideIndex = isVideo ? 
-                      videoItems.findIndex(v => v.id === item.id) :
-                      videoItems.length + photographyItems.findIndex(p => p.id === item.id);
-                    
-                    return (
-                      <motion.div
-                        key={item.id} 
-                        layout
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        transition={{ 
-                          duration: 0.3, 
-                          delay: index * 0.05,
-                          layout: { duration: 0.3 }
-                        }}
-                        whileHover={{ 
-                          scale: 1.02,
-                          rotateY: 5,
-                          rotateX: 5,
-                        }}
-                        className="mb-1.5 md:mb-2 cursor-pointer group relative overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform-gpu"
-                        style={{
-                          transformStyle: 'preserve-3d',
-                        }}
-                        onClick={() => openLightbox(slideIndex)}
-                      >
-                        <Image 
-                          src={isVideo ? (item.thumbnailUrl || '/images/p1.PNG') : item.mediaUrl} 
-                          alt={`${item.title}`} 
-                          width={400} 
-                          height={isVideo ? 225 : 400}
-                          loading={index < 6 ? "eager" : "lazy"} // Load first 6 images eagerly
-                          priority={index < 3} // Prioritize first 3 images
-                          quality={85} // Balanced quality/performance
-                          placeholder="blur"
-                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                          className="object-cover w-full h-full transition-transform duration-500 ease-out group-hover:scale-110"
-                        />
-                        
-                        {/* Enhanced overlay with gradient and blur effect */}
-                        <motion.div 
-                          className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 backdrop-blur-[1px] flex flex-col justify-end p-3"
-                          initial={{ opacity: 0 }}
-                          whileHover={{ opacity: 1 }}
-                        >
-                          <motion.h3 
-                            className="text-white font-semibold text-sm md:text-base mb-1 truncate"
-                            initial={{ y: 10, opacity: 0 }}
-                            whileHover={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.1 }}
-                          >
-                            {item.title}
-                          </motion.h3>
-                          <motion.p 
-                            className="text-gray-300 text-xs line-clamp-1"
-                            initial={{ y: 10, opacity: 0 }}
-                            whileHover={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.15 }}
-                          >
-                            {item.camera || ''}
-                          </motion.p>
-                          <motion.p 
-                            className="text-gray-300 text-xs line-clamp-1"
-                            initial={{ y: 10, opacity: 0 }}
-                            whileHover={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.2 }}
-                          >
-                            {item.projectDetails || ''}
-                          </motion.p>
-                          
-                          {/* Icon with enhanced animation */}
-                          <motion.div
-                            className="absolute top-3 right-3"
-                            whileHover={{ 
-                              scale: 1.2,
-                              rotate: isVideo ? 360 : 0,
-                            }}
-                            whileTap={{ scale: 0.9 }}
-                            transition={{ type: "spring", stiffness: 300 }}
-                          >
-                            {isVideo ? (
-                              <PlayCircle className="h-5 w-5 text-white drop-shadow-lg" />
-                            ) : (
-                              <Expand className="h-5 w-5 text-white drop-shadow-lg" />
-                            )}
-                          </motion.div>
-                        </motion.div>
-
-                        {/* Shimmer effect on hover */}
-                        <motion.div
-                          className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none"
-                          initial={{ x: '-100%' }}
-                          whileHover={{ 
-                            x: '100%',
-                            transition: { duration: 0.6, ease: "easeInOut" }
-                          }}
-                        >
-                          <div className="h-full w-1/3 bg-gradient-to-r from-transparent via-white/20 to-transparent transform skew-x-12" />
-                        </motion.div>
-                      </motion.div>
-                    );
-                  })
-                ) : (
-                  <motion.p 
-                    className="text-center text-muted-foreground col-span-full py-12"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    No {activeFilter === 'all' ? '' : activeFilter === 'video' ? 'video' : activeFilter} projects yet.
-                  </motion.p>
-                )}
-              </Masonry>
+              <VerticalCarousel 
+                items={filteredItems}
+                onItemClick={(index) => {
+                  const item = filteredItems[index];
+                  const isVideo = item.type === 'videography' || item.type === 'film';
+                  const slideIndex = isVideo ? 
+                    videoItems.findIndex(v => v.id === item.id) :
+                    videoItems.length + photographyItems.findIndex(p => p.id === item.id);
+                  openLightbox(slideIndex);
+                }}
+                autoPlay={true}
+                interval={5000}
+              />
             </motion.div>
           </AnimatePresence>
       </section>
