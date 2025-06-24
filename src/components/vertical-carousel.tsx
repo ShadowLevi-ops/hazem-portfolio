@@ -17,15 +17,15 @@ export function VerticalCarousel({
   items, 
   onItemClick, 
   autoPlay = true, 
-  interval = 6000 
+  interval = 8000 // Slower interval for better viewing
 }: VerticalCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [direction, setDirection] = useState(1);
 
-  // Grid with slow vertical auto-scroll
-  const visibleItems = 6; // Show 6 items in grid
-  const scrollStep = 1; // Slow scroll one item at a time
+  // Grid with slow vertical auto-scroll - Three wheel layout
+  const visibleItems = 6; // Show 6 items in 3x2 grid
+  const scrollStep = 3; // Scroll 3 items at a time (one row)
 
   useEffect(() => {
     if (!isPlaying || items.length <= visibleItems) return;
@@ -75,118 +75,164 @@ export function VerticalCarousel({
   const visibleItemsArray = items.slice(currentIndex, currentIndex + visibleItems);
 
   return (
-    <div className="relative w-full max-w-6xl mx-auto">
+    <div className="relative w-full max-w-7xl mx-auto">
       {/* Grid container with overflow hidden for vertical carousel effect */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-background/50 to-background/80 backdrop-blur-sm border">
-        {/* Auto-scrolling grid with uniform card sizes */}
+        {/* Auto-scrolling grid with full-scale masonry 9:16 ratio */}
         <motion.div
           key={currentIndex}
-          initial={{ y: 20, opacity: 0 }}
+          initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -20, opacity: 0 }}
+          exit={{ y: -30, opacity: 0 }}
           transition={{ 
             type: "spring", 
-            stiffness: 300, 
-            damping: 30,
-            duration: 0.8
+            stiffness: 200, 
+            damping: 25,
+            duration: 1.2
           }}
-          className="p-4"
+          className="p-6"
         >
-          {/* Uniform grid - consistent card sizes */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {/* Three-wheel layout - Full-scale masonry with 9:16 aspect ratio */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
             {visibleItemsArray.map((item, index) => {
               const isVideo = item.type === 'videography' || item.type === 'film';
               const actualIndex = currentIndex + index;
               
+              // Subtle staggered animation for continuous flow
+              const staggerDelay = index * 0.15;
+              
               return (
                 <motion.div
                   key={`${item.id}-${actualIndex}`}
-                  className="relative cursor-pointer group rounded-xl overflow-hidden border border-border/50 aspect-[4/3]"
-                  whileHover={{ scale: 1.02, zIndex: 10 }}
+                  className="relative cursor-pointer group rounded-xl overflow-hidden border border-border/50 aspect-[9/16] shadow-lg hover:shadow-2xl"
+                  whileHover={{ 
+                    scale: 1.03, 
+                    zIndex: 10,
+                    transition: { duration: 0.3 }
+                  }}
                   onClick={() => onItemClick(actualIndex)}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ 
+                    opacity: 0, 
+                    scale: 0.95,
+                    y: 40
+                  }}
+                  animate={{ 
+                    opacity: 1, 
+                    scale: 1,
+                    y: 0
+                  }}
                   transition={{ 
-                    duration: 0.5, 
-                    delay: index * 0.1,
+                    duration: 0.8, 
+                    delay: staggerDelay,
                     type: "spring",
-                    stiffness: 300
+                    stiffness: 200,
+                    damping: 20
                   }}
                 >
-                  <Image
-                    src={isVideo ? (item.thumbnailUrl || '/images/p1.PNG') : item.mediaUrl}
-                    alt={item.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-                  />
+                  {/* Subtle continuous scroll animation on the image */}
+                  <motion.div
+                    className="relative w-full h-full"
+                    animate={{
+                      y: [0, -2, 0],
+                    }}
+                    transition={{
+                      duration: 6 + (index * 0.5), // Vary duration for organic feel
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: staggerDelay
+                    }}
+                  >
+                    <Image
+                      src={isVideo ? (item.thumbnailUrl || '/images/p1.PNG') : item.mediaUrl}
+                      alt={item.title}
+                      fill
+                      className="object-cover transition-all duration-700 group-hover:scale-105"
+                      sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 28vw"
+                    />
+                  </motion.div>
                   
-                  {/* Original overlay styling */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+                  {/* Enhanced overlay with subtle gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 via-transparent to-black/20 opacity-85 group-hover:opacity-95 transition-opacity duration-300" />
                   
-                  <div className="absolute inset-0 flex flex-col justify-between p-4">
-                    {/* Top section - Type badge */}
+                  <div className="absolute inset-0 flex flex-col justify-between p-5">
+                    {/* Top section - Type badge with animation */}
                     <div className="flex justify-end">
                       <motion.div
-                        className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${isVideo 
-                          ? 'bg-red-500/20 text-red-300 border border-red-500/30' 
-                          : 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-sm ${isVideo 
+                          ? 'bg-red-500/25 text-red-200 border border-red-400/40' 
+                          : 'bg-blue-500/25 text-blue-200 border border-blue-400/40'
                         }`}
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.3 + index * 0.1, type: "spring" }}
+                        initial={{ scale: 0, rotate: -10 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ 
+                          delay: 0.3 + staggerDelay, 
+                          type: "spring",
+                          stiffness: 300
+                        }}
+                        whileHover={{ scale: 1.05 }}
                       >
                         {isVideo ? <Play className="h-3 w-3" /> : <Expand className="h-3 w-3" />}
                         {item.type}
                       </motion.div>
                     </div>
                     
-                    {/* Center section - Play button for videos */}
+                    {/* Center section - Enhanced play button for videos */}
                     {isVideo && (
                       <div className="flex justify-center items-center flex-1">
                         <motion.div
-                          className="flex items-center justify-center w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 group-hover:bg-white/20 transition-all duration-300"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
+                          className="flex items-center justify-center w-14 h-14 rounded-full bg-white/15 backdrop-blur-md border border-white/25 group-hover:bg-white/25 transition-all duration-300 shadow-lg"
+                          whileHover={{ scale: 1.15 }}
+                          whileTap={{ scale: 0.95 }}
+                          animate={{
+                            scale: [1, 1.05, 1],
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: staggerDelay
+                          }}
                         >
-                          <Play className="h-5 w-5 text-white ml-1" />
+                          <Play className="h-6 w-6 text-white ml-1" />
                         </motion.div>
                       </div>
                     )}
                     
-                    {/* Bottom section - Title and details */}
-                    <div className="space-y-1">
+                    {/* Bottom section - Enhanced title and details */}
+                    <div className="space-y-2">
                       <motion.h3 
-                        className="text-white font-bold text-sm leading-tight"
+                        className="text-white font-bold text-base leading-tight"
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.4 + index * 0.1 }}
+                        transition={{ delay: 0.4 + staggerDelay }}
                       >
                         {item.title}
                       </motion.h3>
                       
                       <motion.div 
-                        className="space-y-0.5"
+                        className="space-y-1"
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.5 + index * 0.1 }}
+                        transition={{ delay: 0.5 + staggerDelay }}
                       >
                         {item.camera && (
-                          <p className="text-gray-300 text-xs truncate">{item.camera}</p>
+                          <p className="text-gray-200 text-sm truncate">{item.camera}</p>
                         )}
                         {item.projectDetails && (
-                          <p className="text-gray-400 text-xs truncate">{item.projectDetails}</p>
+                          <p className="text-gray-300 text-sm truncate">{item.projectDetails}</p>
                         )}
                       </motion.div>
                     </div>
                     
-                    {/* Hover expand indicator */}
+                    {/* Enhanced hover expand indicator */}
                     <motion.div
-                      className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      className="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-all duration-300"
                       initial={{ scale: 0 }}
-                      whileHover={{ scale: 1.1 }}
+                      whileHover={{ scale: 1.2, rotate: 5 }}
                     >
-                      <Expand className="h-4 w-4 text-white" />
+                      <div className="p-2 rounded-full bg-white/20 backdrop-blur-sm">
+                        <Expand className="h-4 w-4 text-white" />
+                      </div>
                     </motion.div>
                   </div>
                 </motion.div>
@@ -195,50 +241,58 @@ export function VerticalCarousel({
           </div>
         </motion.div>
         
-        {/* Vertical control buttons */}
-        <div className="absolute right-4 top-1/2 transform -translate-y-1/2 flex flex-col gap-2 z-20">
+        {/* Enhanced vertical control buttons */}
+        <div className="absolute right-4 top-1/2 transform -translate-y-1/2 flex flex-col gap-3 z-20">
           <motion.button
             onClick={handlePrevious}
             disabled={currentIndex === 0}
-            className="p-2 rounded-full bg-black/60 text-white border border-white/30 backdrop-blur-sm disabled:opacity-30 disabled:cursor-not-allowed"
-            whileHover={{ scale: 1.1, backgroundColor: "rgba(0,0,0,0.8)" }}
+            className="p-3 rounded-full bg-black/70 text-white border border-white/40 backdrop-blur-md disabled:opacity-30 disabled:cursor-not-allowed shadow-lg"
+            whileHover={{ scale: 1.1, backgroundColor: "rgba(0,0,0,0.85)" }}
             whileTap={{ scale: 0.9 }}
           >
-            <ChevronUp className="h-4 w-4" />
+            <ChevronUp className="h-5 w-5" />
           </motion.button>
           
           <motion.button
             onClick={togglePlayPause}
-            className="p-2 rounded-full bg-black/60 text-white border border-white/30 backdrop-blur-sm"
-            whileHover={{ scale: 1.1, backgroundColor: "rgba(0,0,0,0.8)" }}
+            className="p-3 rounded-full bg-black/70 text-white border border-white/40 backdrop-blur-md shadow-lg"
+            whileHover={{ scale: 1.1, backgroundColor: "rgba(0,0,0,0.85)" }}
             whileTap={{ scale: 0.9 }}
+            animate={isPlaying ? {
+              scale: [1, 1.05, 1],
+            } : {}}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
           >
-            {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+            {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
           </motion.button>
           
           <motion.button
             onClick={handleNext}
             disabled={currentIndex >= items.length - visibleItems}
-            className="p-2 rounded-full bg-black/60 text-white border border-white/30 backdrop-blur-sm disabled:opacity-30 disabled:cursor-not-allowed"
-            whileHover={{ scale: 1.1, backgroundColor: "rgba(0,0,0,0.8)" }}
+            className="p-3 rounded-full bg-black/70 text-white border border-white/40 backdrop-blur-md disabled:opacity-30 disabled:cursor-not-allowed shadow-lg"
+            whileHover={{ scale: 1.1, backgroundColor: "rgba(0,0,0,0.85)" }}
             whileTap={{ scale: 0.9 }}
           >
-            <ChevronDown className="h-4 w-4" />
+            <ChevronDown className="h-5 w-5" />
           </motion.button>
         </div>
       </div>
       
-      {/* Progress indicators */}
-      <div className="flex justify-center mt-6 gap-1">
-        {Array.from({ length: Math.max(1, items.length - visibleItems + 1) }).map((_, index) => (
+      {/* Enhanced progress indicators */}
+      <div className="flex justify-center mt-8 gap-2">
+        {Array.from({ length: Math.max(1, Math.ceil((items.length - visibleItems + 1) / scrollStep)) }).map((_, index) => (
           <motion.button
             key={index}
-            onClick={() => setCurrentIndex(index)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${index === currentIndex 
-              ? 'w-6 bg-primary shadow-md shadow-primary/50' 
-              : 'w-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/50'
+            onClick={() => setCurrentIndex(index * scrollStep)}
+            className={`h-2 rounded-full transition-all duration-300 ${Math.floor(currentIndex / scrollStep) === index 
+              ? 'w-8 bg-primary shadow-lg shadow-primary/50' 
+              : 'w-2 bg-muted-foreground/40 hover:bg-muted-foreground/60'
             }`}
-            whileHover={{ scale: 1.2 }}
+            whileHover={{ scale: 1.3 }}
             whileTap={{ scale: 0.9 }}
           />
         ))}
