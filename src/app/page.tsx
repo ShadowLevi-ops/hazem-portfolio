@@ -201,8 +201,6 @@ export default function Home() {
                     videoItems.length + photographyItems.findIndex(p => p.id === item.id);
                   openLightbox(slideIndex);
                 }}
-                autoPlay={true}
-                interval={5000}
               />
             </motion.div>
           </AnimatePresence>
