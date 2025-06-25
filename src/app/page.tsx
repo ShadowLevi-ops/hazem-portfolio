@@ -87,7 +87,6 @@ export default function Home() {
 
   // Memoized lightbox function
   const openLightbox = useCallback((index: number) => {
-    console.log("Attempting to open lightbox for index:", index, "Slide:", allSlides[index]);
     setLightboxIndex(index);
     setLightboxOpen(true);
   }, [allSlides]);
@@ -195,6 +194,8 @@ export default function Home() {
                 items={filteredItems}
                 onItemClick={(index) => {
                   const item = filteredItems[index];
+                  if (!item) return;
+                  
                   const isVideo = item.type === 'videography' || item.type === 'film';
                   const slideIndex = isVideo ? 
                     videoItems.findIndex(v => v.id === item.id) :

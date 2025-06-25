@@ -3,7 +3,7 @@
 // Types for analytics events
 export interface AnalyticsEvent {
   name: string;
-  properties?: Record<string, any>;
+  properties?: Record<string, unknown>;
 }
 
 export interface PerformanceMetric {
@@ -20,7 +20,7 @@ class Analytics {
   // Track custom events
   track(event: AnalyticsEvent) {
     if (!this.isClient || !this.isProduction) {
-      console.log('Analytics Event:', event);
+      // Development mode tracking
       return;
     }
 
@@ -60,7 +60,7 @@ class Analytics {
   // Track performance metrics
   trackPerformance(metric: PerformanceMetric) {
     if (!this.isClient || !this.isProduction) {
-      console.log('Performance Metric:', metric);
+      // Development mode tracking
       return;
     }
 
@@ -87,54 +87,6 @@ class Analytics {
       },
     });
   }
-}
-
-// Web Vitals tracking
-export function trackWebVitals() {
-  if (typeof window === 'undefined') return;
-
-  // Track Core Web Vitals
-  import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
-    getCLS((metric) => {
-      analytics.trackPerformance({
-        name: 'CLS',
-        value: metric.value,
-        label: metric.id,
-      });
-    });
-
-    getFID((metric) => {
-      analytics.trackPerformance({
-        name: 'FID',
-        value: metric.value,
-        label: metric.id,
-      });
-    });
-
-    getFCP((metric) => {
-      analytics.trackPerformance({
-        name: 'FCP',
-        value: metric.value,
-        label: metric.id,
-      });
-    });
-
-    getLCP((metric) => {
-      analytics.trackPerformance({
-        name: 'LCP',
-        value: metric.value,
-        label: metric.id,
-      });
-    });
-
-    getTTFB((metric) => {
-      analytics.trackPerformance({
-        name: 'TTFB',
-        value: metric.value,
-        label: metric.id,
-      });
-    });
-  });
 }
 
 // Export singleton instance
@@ -166,13 +118,13 @@ if (typeof window !== 'undefined' && 'PerformanceObserver' in window) {
           // Track page load time
           analytics.trackPerformance({
             name: 'page_load_time',
-            value: navEntry.loadEventEnd - navEntry.navigationStart,
+            value: navEntry.loadEventEnd - navEntry.fetchStart,
           });
 
           // Track DOM content loaded time
           analytics.trackPerformance({
             name: 'dom_content_loaded',
-            value: navEntry.domContentLoadedEventEnd - navEntry.navigationStart,
+            value: navEntry.domContentLoadedEventEnd - navEntry.fetchStart,
           });
         }
       });
@@ -183,7 +135,8 @@ if (typeof window !== 'undefined' && 'PerformanceObserver' in window) {
     // Observe resource timing for large resources
     const resourceObserver = new PerformanceObserver((list) => {
       list.getEntries().forEach((entry) => {
-        if (entry.transferSize && entry.transferSize > 50000) {
+        const resourceEntry = entry as PerformanceResourceTiming;
+        if (resourceEntry.transferSize && resourceEntry.transferSize > 50000) {
           analytics.trackPerformance({
             name: 'large_resource_load',
             value: entry.duration,
@@ -199,9 +152,26 @@ if (typeof window !== 'undefined' && 'PerformanceObserver' in window) {
   }
 }
 
+// Web Vitals tracking (simplified)
+export function trackWebVitals() {
+  if (typeof window === 'undefined') return;
+
+  // Basic performance tracking without web-vitals dependency
+  window.addEventListener('load', () => {
+    const navigationTiming = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+    
+    if (navigationTiming) {
+      analytics.trackPerformance({
+        name: 'page_load_time',
+        value: navigationTiming.loadEventEnd - navigationTiming.fetchStart,
+      });
+    }
+  });
+}
+
 // Declare global gtag function for TypeScript
 declare global {
   interface Window {
-    gtag?: (...args: any[]) => void;
+    gtag?: (...args: unknown[]) => void;
   }
 } 
