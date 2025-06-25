@@ -89,7 +89,7 @@ export default function Home() {
   const openLightbox = useCallback((index: number) => {
     setLightboxIndex(index);
     setLightboxOpen(true);
-  }, [allSlides]);
+  }, []);
 
   return (
     <>

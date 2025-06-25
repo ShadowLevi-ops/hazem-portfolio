@@ -34,6 +34,8 @@ export function AnimatedHero() {
       }, 500);
       return () => clearTimeout(timer);
     }
+    // Return undefined when no cleanup needed
+    return undefined;
   }, [currentWordIndex, showDescription]);
 
   const containerVariants = {
