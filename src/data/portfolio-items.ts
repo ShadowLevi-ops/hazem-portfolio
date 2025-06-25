@@ -1,4 +1,4 @@
-import { PortfolioItem } from '@/types/portfolio';
+import type { PortfolioItem } from '@/types/portfolio';
 
 // Reordered items: Photos first, then Videos sorted by ID
 export const portfolioItems: PortfolioItem[] = [
