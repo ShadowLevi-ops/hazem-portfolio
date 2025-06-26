@@ -106,7 +106,7 @@ export function AnimatedHero() {
         {/* Main Title */}
         <motion.div variants={itemVariants} className="space-y-3 md:space-y-4">
           <motion.h1
-            className="text-center text-2xl font-bold sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl"
+            className="text-center text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl"
             variants={itemVariants}
           >
             <span className="from-primary bg-gradient-to-r via-purple-500 to-pink-500 bg-clip-text text-transparent">
@@ -116,7 +116,7 @@ export function AnimatedHero() {
 
           {/* Subtitle */}
           <motion.h2
-            className="text-muted-foreground text-center text-sm font-semibold sm:text-base md:text-xl lg:text-2xl xl:text-3xl"
+            className="text-muted-foreground text-center text-sm font-semibold sm:text-base md:text-lg lg:text-xl xl:text-2xl"
             variants={itemVariants}
           >
             <span className="whitespace-nowrap">
@@ -124,16 +124,6 @@ export function AnimatedHero() {
             </span>
           </motion.h2>
         </motion.div>
-
-        {/* Description */}
-        <motion.p
-          className="text-muted-foreground mx-auto max-w-2xl text-center text-sm leading-relaxed sm:text-base md:text-lg lg:text-xl"
-          variants={itemVariants}
-        >
-          Capturing moments that matter through the lens of creativity and
-          passion. Specializing in photography and videography that tells your
-          unique story.
-        </motion.p>
 
         {/* Contact info */}
         <motion.div
