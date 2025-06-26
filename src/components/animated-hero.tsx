@@ -27,21 +27,19 @@ export function AnimatedHero() {
     visible: {
       opacity: 1,
       transition: {
-        delayChildren: 0.2,
-        staggerChildren: 0.1,
+        duration: 0.6,
+        staggerChildren: 0.2,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
+    hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
-        type: 'spring',
-        stiffness: 100,
-        damping: 12,
+        duration: 0.5,
       },
     },
   };
@@ -119,9 +117,7 @@ export function AnimatedHero() {
             className="text-muted-foreground text-center text-sm font-semibold sm:text-base md:text-lg lg:text-xl xl:text-2xl"
             variants={itemVariants}
           >
-            <span className="whitespace-nowrap">
-              I just make visuals that just feels good
-            </span>
+            <span>I just make visuals that just feels good</span>
           </motion.h2>
         </motion.div>
 
@@ -130,68 +126,45 @@ export function AnimatedHero() {
           className="text-muted-foreground flex flex-col flex-wrap items-center justify-center gap-4 text-sm sm:flex-row md:gap-6 md:text-base"
           variants={itemVariants}
         >
-          <motion.div
-            className="hover:text-primary flex cursor-pointer items-center gap-2 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
+          <div className="hover:text-primary flex cursor-pointer items-center gap-2 transition-colors">
             <MapPin className="h-4 w-4" />
             <span>Kuala Lumpur, MY</span>
-          </motion.div>
-          <motion.a
+          </div>
+          <a
             href="mailto:hazem@noveltyventures.uk"
             className="hover:text-primary flex items-center gap-2 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             <Mail className="h-4 w-4" />
             <span>hazem@noveltyventures.uk</span>
-          </motion.a>
-          <motion.a
+          </a>
+          <a
             href="https://wa.me/0173767247"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-primary flex items-center gap-2 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             <MessageSquare className="h-4 w-4" />
             <span>+60 17-376 7247</span>
-          </motion.a>
+          </a>
         </motion.div>
 
-        {/* Animated stats */}
+        {/* Simplified stats */}
         <motion.div
           className="mx-auto grid max-w-sm grid-cols-3 gap-4 pt-4 md:max-w-md md:gap-8 md:pt-6"
-          variants={containerVariants}
+          variants={itemVariants}
         >
-          {stats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              className="group text-center"
-              variants={itemVariants}
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: 'spring', stiffness: 300 }}
-            >
-              <div className="text-primary mb-2 flex justify-center transition-colors group-hover:text-purple-500">
+          {stats.map(stat => (
+            <div key={stat.label} className="group text-center">
+              <div className="text-primary mb-2 flex justify-center transition-colors">
                 {stat.icon}
               </div>
-              <motion.div
-                className="text-foreground text-xl font-bold md:text-2xl"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 200,
-                  delay: 0.5 + index * 0.1,
-                }}
-              >
+              <div className="text-foreground text-xl font-bold md:text-2xl">
                 {stat.value}
-              </motion.div>
+              </div>
               <div className="text-muted-foreground mt-1 text-xs md:text-sm">
                 {stat.label}
               </div>
-            </motion.div>
+            </div>
           ))}
         </motion.div>
       </motion.div>

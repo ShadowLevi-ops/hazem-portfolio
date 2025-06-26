@@ -6,17 +6,49 @@ import Video from 'yet-another-react-lightbox/plugins/video';
 import type { Slide } from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ScrollToTopButton } from '@/components/scroll-to-top-button';
 import { AnimatedHero } from '@/components/animated-hero';
-import { PortfolioFilter } from '@/components/portfolio-filter';
-import { VerticalCarousel } from '@/components/vertical-carousel';
 import dynamic from 'next/dynamic';
+
+// Dynamic imports for performance
+const PortfolioFilter = dynamic(
+  () =>
+    import('@/components/portfolio-filter').then(mod => ({
+      default: mod.PortfolioFilter,
+    })),
+  {
+    loading: () => (
+      <div className="bg-muted/20 h-16 w-full animate-pulse rounded-lg" />
+    ),
+  }
+);
+
+const VerticalCarousel = dynamic(
+  () =>
+    import('@/components/vertical-carousel').then(mod => ({
+      default: mod.VerticalCarousel,
+    })),
+  {
+    loading: () => (
+      <div className="bg-muted/20 h-96 w-full animate-pulse rounded-lg" />
+    ),
+  }
+);
+
+const ScrollToTopButton = dynamic(
+  () =>
+    import('@/components/scroll-to-top-button').then(mod => ({
+      default: mod.ScrollToTopButton,
+    })),
+  {
+    ssr: false,
+  }
+);
 
 const Lightbox = dynamic(() => import('yet-another-react-lightbox'), {
   ssr: false,
   loading: () => (
-    <div className="flex h-32 w-full items-center justify-center">
-      Loading...
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
+      <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-white" />
     </div>
   ),
 });
