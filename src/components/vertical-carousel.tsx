@@ -74,10 +74,10 @@ export function VerticalCarousel({
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                   <div className="absolute inset-0 flex flex-col justify-between p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:p-4 lg:p-5">
-                    {/* Expand indicator */}
-                    <div className="absolute top-2 left-2 md:top-3 md:left-3">
-                      <div className="rounded-full bg-white/20 p-1.5 backdrop-blur-sm md:p-2">
-                        <Expand className="h-3 w-3 text-white md:h-4 md:w-4" />
+                    {/* Expand indicator - optimized for mobile */}
+                    <div className="absolute top-1.5 right-1.5 md:top-2 md:right-2">
+                      <div className="rounded-full bg-white/20 p-1 backdrop-blur-sm md:p-1.5">
+                        <Expand className="h-2.5 w-2.5 text-white md:h-3 md:w-3" />
                       </div>
                     </div>
                   </div>

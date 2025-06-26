@@ -65,7 +65,7 @@ export function AnimatedHero() {
   return (
     <section
       ref={ref}
-      className="relative container mx-auto flex min-h-[75vh] flex-col items-center justify-center overflow-hidden px-4 pt-20 pb-12 text-center md:min-h-[85vh] md:px-8 md:pt-28 md:pb-16"
+      className="relative container mx-auto flex min-h-[75vh] flex-col items-center justify-center overflow-hidden px-4 pt-8 pb-12 text-center md:min-h-[85vh] md:px-8 md:pt-28 md:pb-16"
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 -z-10">
