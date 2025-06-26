@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { motion, AnimatePresence } from "framer-motion";
-import { Camera, Video, Grid } from "lucide-react";
+import { motion, AnimatePresence } from 'framer-motion';
+import { Camera, Video, Grid } from 'lucide-react';
 
 interface FilterButtonProps {
   label: string;
@@ -11,46 +11,50 @@ interface FilterButtonProps {
   count: number;
 }
 
-function FilterButton({ label, isActive, onClick, icon, count }: FilterButtonProps) {
+function FilterButton({
+  label,
+  isActive,
+  onClick,
+  icon,
+  count,
+}: FilterButtonProps) {
   return (
     <motion.button
       onClick={onClick}
-      className={`
-        relative flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300
-        ${isActive 
-          ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/25' 
-          : 'bg-background/80 backdrop-blur-sm border-border hover:border-primary/50 hover:bg-accent/50'
-        }
-      `}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
+      className={`relative flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-all duration-300 md:gap-2 md:px-4 md:py-2 ${
+        isActive
+          ? 'bg-primary text-primary-foreground border-primary shadow-primary/25 shadow-lg'
+          : 'bg-background/80 border-border hover:border-primary/50 hover:bg-accent/50 backdrop-blur-sm'
+      } `}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      {icon}
-      <span className="font-medium text-sm">{label}</span>
-      <motion.span 
-        className={`
-          text-xs px-1.5 py-0.5 rounded-full
-          ${isActive 
-            ? 'bg-primary-foreground/20 text-primary-foreground' 
+      <span className="flex items-center text-xs md:text-sm">{icon}</span>
+      <span className="text-xs font-medium whitespace-nowrap md:text-sm">
+        {label}
+      </span>
+      <motion.span
+        className={`rounded-full px-1 py-0.5 text-xs md:px-1.5 ${
+          isActive
+            ? 'bg-primary-foreground/20 text-primary-foreground'
             : 'bg-muted text-muted-foreground'
-          }
-        `}
+        } `}
         key={count}
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
       >
         {count}
       </motion.span>
-      
+
       {isActive && (
         <motion.div
-          className="absolute inset-0 rounded-full border-2 border-primary/30"
+          className="border-primary/30 absolute inset-0 rounded-full border-2"
           initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1.1, opacity: 1 }}
+          animate={{ scale: 1.05, opacity: 1 }}
           exit={{ scale: 0.8, opacity: 0 }}
           transition={{ duration: 0.3 }}
         />
@@ -69,16 +73,35 @@ interface PortfolioFilterProps {
   };
 }
 
-export function PortfolioFilter({ activeFilter, onFilterChange, counts }: PortfolioFilterProps) {
+export function PortfolioFilter({
+  activeFilter,
+  onFilterChange,
+  counts,
+}: PortfolioFilterProps) {
   const filters = [
-    { key: 'all', label: 'All Work', icon: <Grid className="h-4 w-4" />, count: counts.all },
-    { key: 'photography', label: 'Photography', icon: <Camera className="h-4 w-4" />, count: counts.photography },
-    { key: 'video', label: 'Video', icon: <Video className="h-4 w-4" />, count: counts.video },
+    {
+      key: 'all',
+      label: 'All Work',
+      icon: <Grid className="h-3 w-3 md:h-4 md:w-4" />,
+      count: counts.all,
+    },
+    {
+      key: 'photography',
+      label: 'Photography',
+      icon: <Camera className="h-3 w-3 md:h-4 md:w-4" />,
+      count: counts.photography,
+    },
+    {
+      key: 'video',
+      label: 'Video',
+      icon: <Video className="h-3 w-3 md:h-4 md:w-4" />,
+      count: counts.video,
+    },
   ];
 
   return (
-    <motion.div 
-      className="flex flex-wrap justify-center gap-2 mb-8"
+    <motion.div
+      className="mb-4 flex flex-wrap justify-center gap-1.5 px-2 md:mb-6 md:gap-2"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
@@ -89,7 +112,7 @@ export function PortfolioFilter({ activeFilter, onFilterChange, counts }: Portfo
             key={filter.key}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
+            transition={{ duration: 0.3, delay: index * 0.05 }}
           >
             <FilterButton
               label={filter.label}
@@ -103,4 +126,4 @@ export function PortfolioFilter({ activeFilter, onFilterChange, counts }: Portfo
       </AnimatePresence>
     </motion.div>
   );
-} 
+}

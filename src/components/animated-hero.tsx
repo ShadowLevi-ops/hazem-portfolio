@@ -1,81 +1,78 @@
-"use client";
+'use client';
 
-import { motion, useAnimation, useInView } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { MapPin, Mail, MessageSquare, Camera, Video, Award } from "lucide-react";
-
-const titleWords = ["Commercial-Grade", "Stuff", "That", "Just", "Works."];
-const description = "Content that converts. Visuals that captivate. Results that matter.";
+import { useEffect, useRef } from 'react';
+import { motion, useAnimation, useInView } from 'framer-motion';
+import {
+  Camera,
+  Video,
+  Award,
+  MapPin,
+  Mail,
+  MessageSquare,
+} from 'lucide-react';
 
 export function AnimatedHero() {
-  const [typedText, setTypedText] = useState("");
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [showDescription, setShowDescription] = useState(false);
-  const controls = useAnimation();
   const ref = useRef(null);
-  const isInView = useInView(ref);
+  const isInView = useInView(ref, { once: true });
+  const controls = useAnimation();
 
   useEffect(() => {
     if (isInView) {
-      controls.start("visible");
+      controls.start('visible');
     }
   }, [controls, isInView]);
-
-  useEffect(() => {
-    if (currentWordIndex < titleWords.length) {
-      const timer = setTimeout(() => {
-        setTypedText(prev => prev + (prev ? " " : "") + titleWords[currentWordIndex]);
-        setCurrentWordIndex(prev => prev + 1);
-      }, 300);
-      return () => clearTimeout(timer);
-    } else if (!showDescription) {
-      const timer = setTimeout(() => {
-        setShowDescription(true);
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-    // Return undefined when no cleanup needed
-    return undefined;
-  }, [currentWordIndex, showDescription]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.2
-      }
-    }
+        delayChildren: 0.2,
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
-        type: "spring",
-        stiffness: 100
-      }
-    }
+        type: 'spring',
+        stiffness: 100,
+        damping: 12,
+      },
+    },
   };
 
   const stats = [
-    { icon: <Camera className="h-5 w-5" />, label: "Photography", value: "50+" },
-    { icon: <Video className="h-5 w-5" />, label: "Video Projects", value: "30+" },
-    { icon: <Award className="h-5 w-5" />, label: "Happy Clients", value: "100+" },
+    {
+      icon: <Camera className="h-4 w-4 md:h-5 md:w-5" />,
+      label: 'Photography',
+      value: '50+',
+    },
+    {
+      icon: <Video className="h-4 w-4 md:h-5 md:w-5" />,
+      label: 'Video Projects',
+      value: '30+',
+    },
+    {
+      icon: <Award className="h-4 w-4 md:h-5 md:w-5" />,
+      label: 'Happy Clients',
+      value: '100+',
+    },
   ];
 
   return (
-    <section 
+    <section
       ref={ref}
-      className="container mx-auto flex flex-col items-center justify-center text-center pt-24 md:pt-32 pb-12 md:pb-16 relative overflow-hidden px-4 md:px-8 min-h-[80vh]"
+      className="relative container mx-auto flex min-h-[75vh] flex-col items-center justify-center overflow-hidden px-4 pt-20 pb-12 text-center md:min-h-[85vh] md:px-8 md:pt-28 md:pb-16"
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 -z-10">
         <motion.div
-          className="absolute top-20 left-10 w-20 h-20 rounded-full bg-gradient-to-r from-purple-400/20 to-pink-400/20 blur-xl"
+          className="absolute top-10 left-5 h-16 w-16 rounded-full bg-gradient-to-r from-purple-400/20 to-pink-400/20 blur-xl md:top-20 md:left-10 md:h-20 md:w-20"
           animate={{
             scale: [1, 1.2, 1],
             rotate: [0, 180, 360],
@@ -83,11 +80,11 @@ export function AnimatedHero() {
           transition={{
             duration: 8,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: 'easeInOut',
           }}
         />
         <motion.div
-          className="absolute bottom-20 right-10 w-32 h-32 rounded-full bg-gradient-to-r from-blue-400/20 to-cyan-400/20 blur-xl"
+          className="absolute right-5 bottom-10 h-24 w-24 rounded-full bg-gradient-to-r from-blue-400/20 to-cyan-400/20 blur-xl md:right-10 md:bottom-20 md:h-32 md:w-32"
           animate={{
             scale: [1.2, 1, 1.2],
             rotate: [360, 180, 0],
@@ -95,7 +92,7 @@ export function AnimatedHero() {
           transition={{
             duration: 10,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: 'easeInOut',
           }}
         />
       </div>
@@ -104,62 +101,67 @@ export function AnimatedHero() {
         variants={containerVariants}
         initial="hidden"
         animate={controls}
-        className="max-w-4xl mx-auto"
+        className="mx-auto w-full max-w-4xl space-y-6 md:space-y-8"
       >
-        {/* Main title with typing effect */}
-        <motion.h1 
-          className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 min-h-[2em] flex items-center justify-center"
+        {/* Main Title */}
+        <motion.div variants={itemVariants} className="space-y-3 md:space-y-4">
+          <motion.h1
+            className="text-center text-2xl font-bold whitespace-nowrap sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl"
+            variants={itemVariants}
+          >
+            <span className="from-primary bg-gradient-to-r via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              Hazem Designs
+            </span>
+          </motion.h1>
+
+          {/* Subtitle */}
+          <motion.h2
+            className="text-muted-foreground text-center text-sm font-semibold sm:text-base md:text-xl lg:text-2xl xl:text-3xl"
+            variants={itemVariants}
+          >
+            <span className="whitespace-nowrap">
+              Visual Storyteller & Creative Director
+            </span>
+          </motion.h2>
+        </motion.div>
+
+        {/* Description */}
+        <motion.p
+          className="text-muted-foreground mx-auto max-w-2xl text-center text-sm leading-relaxed sm:text-base md:text-lg lg:text-xl"
           variants={itemVariants}
         >
-          <span className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            {typedText}
-          </span>
-          {currentWordIndex < titleWords.length && (
-            <motion.span
-              className="inline-block w-1 h-8 md:h-12 lg:h-16 bg-primary ml-2"
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{ duration: 1, repeat: Infinity }}
-            />
-          )}
-        </motion.h1>
-
-        {/* Description with fade-in effect */}
-        <motion.p 
-          className="text-lg md:text-xl font-semibold max-w-2xl mx-auto mb-8 text-center text-muted-foreground leading-relaxed"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: showDescription ? 1 : 0, y: showDescription ? 0 : 30 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        > 
-          {description}
+          Capturing moments that matter through the lens of creativity and
+          passion. Specializing in photography and videography that tells your
+          unique story.
         </motion.p>
 
-        {/* Contact info with staggered animation */}
-        <motion.div 
-          className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 text-sm md:text-base text-muted-foreground mb-8"
+        {/* Contact info */}
+        <motion.div
+          className="text-muted-foreground flex flex-col flex-wrap items-center justify-center gap-4 text-sm sm:flex-row md:gap-6 md:text-base"
           variants={itemVariants}
         >
-          <motion.div 
-            className="flex items-center gap-2 hover:text-primary transition-colors cursor-pointer"
+          <motion.div
+            className="hover:text-primary flex cursor-pointer items-center gap-2 transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <MapPin className="h-4 w-4" />
             <span>Kuala Lumpur, MY</span>
           </motion.div>
-          <motion.a 
+          <motion.a
             href="mailto:hazem@noveltyventures.uk"
-            className="flex items-center gap-2 hover:text-primary transition-colors"
+            className="hover:text-primary flex items-center gap-2 transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <Mail className="h-4 w-4" />
             <span>hazem@noveltyventures.uk</span>
           </motion.a>
-          <motion.a 
+          <motion.a
             href="https://wa.me/0173767247"
-            target="_blank" 
+            target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:text-primary transition-colors"
+            className="hover:text-primary flex items-center gap-2 transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -169,34 +171,34 @@ export function AnimatedHero() {
         </motion.div>
 
         {/* Animated stats */}
-        <motion.div 
-          className="grid grid-cols-3 gap-4 md:gap-8 max-w-md mx-auto"
+        <motion.div
+          className="mx-auto grid max-w-sm grid-cols-3 gap-4 pt-4 md:max-w-md md:gap-8 md:pt-6"
           variants={containerVariants}
         >
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
-              className="text-center group"
+              className="group text-center"
               variants={itemVariants}
-              whileHover={{ scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 300 }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: 'spring', stiffness: 300 }}
             >
-              <div className="flex justify-center mb-2 text-primary group-hover:text-purple-500 transition-colors">
+              <div className="text-primary mb-2 flex justify-center transition-colors group-hover:text-purple-500">
                 {stat.icon}
               </div>
-              <motion.div 
-                className="text-xl md:text-2xl font-bold text-foreground"
+              <motion.div
+                className="text-foreground text-xl font-bold md:text-2xl"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 200, 
-                  delay: 1 + index * 0.2 
+                transition={{
+                  type: 'spring',
+                  stiffness: 200,
+                  delay: 0.5 + index * 0.1,
                 }}
               >
                 {stat.value}
               </motion.div>
-              <div className="text-xs md:text-sm text-muted-foreground">
+              <div className="text-muted-foreground mt-1 text-xs md:text-sm">
                 {stat.label}
               </div>
             </motion.div>
@@ -206,36 +208,36 @@ export function AnimatedHero() {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-16 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 transform md:bottom-12"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 3, duration: 0.5 }}
+        transition={{ delay: 1, duration: 0.5 }}
       >
         <motion.div
-          className="w-6 h-10 border-2 border-muted-foreground/50 rounded-full flex justify-center"
-          animate={{ 
-            scale: [1, 1.1, 1],
+          className="border-muted-foreground/30 flex h-10 w-6 justify-center rounded-full border-2"
+          animate={{
+            scale: [1, 1.05, 1],
           }}
           transition={{
             duration: 2,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: 'easeInOut',
           }}
         >
           <motion.div
-            className="w-1 h-3 bg-muted-foreground/50 rounded-full mt-2"
-            animate={{ 
+            className="bg-muted-foreground/50 mt-2 h-3 w-1 rounded-full"
+            animate={{
               y: [0, 12, 0],
-              opacity: [1, 0.3, 1]
+              opacity: [1, 0.3, 1],
             }}
             transition={{
               duration: 2,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: 'easeInOut',
             }}
           />
         </motion.div>
       </motion.div>
     </section>
   );
-} 
+}
