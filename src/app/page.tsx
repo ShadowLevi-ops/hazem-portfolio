@@ -1,13 +1,11 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import Image from 'next/image';
+import React, { useState, useMemo, useCallback } from 'react';
 import { portfolioItems } from '@/data/portfolio-items';
 import Video from 'yet-another-react-lightbox/plugins/video';
 import type { Slide } from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
-import { Mail, MessageSquare, Menu } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ScrollToTopButton } from '@/components/scroll-to-top-button';
 import { AnimatedHero } from '@/components/animated-hero';
 import { PortfolioFilter } from '@/components/portfolio-filter';
@@ -26,21 +24,7 @@ const Lightbox = dynamic(() => import('yet-another-react-lightbox'), {
 export default function Home() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState('all');
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (!target.closest('.dropdown-container')) {
-        setIsDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   // Memoized filtered items for better performance
   const filteredItems = useMemo(() => {
@@ -102,73 +86,6 @@ export default function Home() {
 
   return (
     <>
-      {/* Lightweight background - CSS only */}
-      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="from-primary/5 to-secondary/5 dark:from-primary/10 dark:to-secondary/10 absolute inset-0 bg-gradient-to-br via-transparent" />
-      </div>
-
-      <header className="bg-background/80 fixed top-0 right-0 left-0 z-50 border-b backdrop-blur-sm">
-        <div className="container mx-auto flex h-14 items-center justify-between px-3 md:h-16 md:px-6 lg:px-10">
-          <motion.div
-            className="flex items-center"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Image
-              src="/favicon.png"
-              alt="Hazem Logo"
-              width={20}
-              height={20}
-              className="md:h-6 md:w-6"
-              priority
-            />
-          </motion.div>
-          <nav className="flex items-center">
-            <div className="dropdown-container relative">
-              <motion.button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="hover:text-primary hover:bg-accent/10 flex items-center gap-1.5 rounded-full p-2 transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Menu className="h-4 w-4 md:h-5 md:w-5" />
-              </motion.button>
-              <AnimatePresence>
-                {isDropdownOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                    className="bg-background absolute right-0 z-50 mt-2 w-44 rounded-md border py-1 shadow-lg md:w-48"
-                  >
-                    <motion.a
-                      href="mailto:hazem@noveltyventures.uk"
-                      className="hover:bg-accent hover:text-accent-foreground flex items-center gap-1.5 px-3 py-2 text-sm transition-colors md:px-4"
-                      whileHover={{ x: 5 }}
-                    >
-                      <Mail className="h-3 w-3 md:h-3.5 md:w-3.5" />
-                      <span>Email</span>
-                    </motion.a>
-                    <motion.a
-                      href="https://wa.me/0173767247"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:bg-accent hover:text-accent-foreground flex items-center gap-1.5 px-3 py-2 text-sm transition-colors md:px-4"
-                      whileHover={{ x: 5 }}
-                    >
-                      <MessageSquare className="h-3 w-3 md:h-3.5 md:w-3.5" />
-                      <span>WhatsApp</span>
-                    </motion.a>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </nav>
-        </div>
-      </header>
-
       <AnimatedHero />
 
       {/* Portfolio Section with Filter */}

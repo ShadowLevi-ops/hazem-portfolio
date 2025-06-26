@@ -106,11 +106,11 @@ export function AnimatedHero() {
         {/* Main Title */}
         <motion.div variants={itemVariants} className="space-y-3 md:space-y-4">
           <motion.h1
-            className="text-center text-2xl font-bold whitespace-nowrap sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl"
+            className="text-center text-2xl font-bold sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl"
             variants={itemVariants}
           >
             <span className="from-primary bg-gradient-to-r via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              Hazem Designs
+              Commercial Grade Vertical Films That Just Works
             </span>
           </motion.h1>
 
@@ -120,7 +120,7 @@ export function AnimatedHero() {
             variants={itemVariants}
           >
             <span className="whitespace-nowrap">
-              Visual Storyteller & Creative Director
+              I just make visuals that just feels good
             </span>
           </motion.h2>
         </motion.div>
