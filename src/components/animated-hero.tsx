@@ -2,14 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { motion, useAnimation, useInView } from 'framer-motion';
-import {
-  Camera,
-  Video,
-  Award,
-  MapPin,
-  Mail,
-  MessageSquare,
-} from 'lucide-react';
+import { Camera, Video, Award, MapPin, Mail } from 'lucide-react';
 
 export function AnimatedHero() {
   const ref = useRef(null);
@@ -136,15 +129,6 @@ export function AnimatedHero() {
           >
             <Mail className="h-4 w-4" />
             <span>hazem@noveltyventures.uk</span>
-          </a>
-          <a
-            href="https://wa.me/0173767247"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-primary flex items-center gap-2 transition-colors"
-          >
-            <MessageSquare className="h-4 w-4" />
-            <span>+60 17-376 7247</span>
           </a>
         </motion.div>
 
