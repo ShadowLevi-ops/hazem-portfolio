@@ -2,7 +2,7 @@ import type { PortfolioItem } from '@/types/portfolio';
 
 // Reordered items: Photos first, then Videos sorted by ID
 export const portfolioItems: PortfolioItem[] = [
-  // --- Photography Items --- 
+  // --- Photography Items ---
   {
     id: 'photo-1',
     title: 'Urban Exploration',
@@ -36,7 +36,7 @@ export const portfolioItems: PortfolioItem[] = [
     camera: 'Camera Used',
     projectDetails: 'Seascape',
   },
-  // --- Video Items (Sorted video-1 to video-9) --- 
+  // --- Video Items (Sorted video-1 to video-9) ---
   {
     id: 'video-1',
     title: 'Short Film: The Wait',
@@ -122,4 +122,13 @@ export const portfolioItems: PortfolioItem[] = [
     camera: '24mm f2.8',
     projectDetails: 'Cinematic Snippet',
   },
-]; 
+  {
+    id: 'video-10',
+    title: 'Video: New Project',
+    type: 'videography',
+    mediaUrl: '/videos/10.mp4',
+    thumbnailUrl: '/videos/VT-10.png',
+    camera: '35mm f1.8',
+    projectDetails: 'Creative Film',
+  },
+];
