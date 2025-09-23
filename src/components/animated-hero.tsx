@@ -101,7 +101,7 @@ export function AnimatedHero() {
             <img
               src="/giltmedia2.svg"
               alt="Gilt Media Logo"
-              className="h-32 w-auto sm:h-40 md:h-48 lg:h-56 xl:h-64"
+              className="h-48 w-auto sm:h-56 md:h-64 lg:h-72 xl:h-80"
             />
           </motion.div>
 
