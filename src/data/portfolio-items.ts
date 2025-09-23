@@ -36,6 +36,30 @@ export const portfolioItems: PortfolioItem[] = [
     camera: 'Camera Used',
     projectDetails: 'Seascape',
   },
+  {
+    id: 'photo-5',
+    title: 'New Photography',
+    type: 'photography',
+    mediaUrl: '/images/p5.JPEG',
+    camera: 'Camera Used',
+    projectDetails: 'Portrait',
+  },
+  {
+    id: 'photo-6',
+    title: 'Creative Shot',
+    type: 'photography',
+    mediaUrl: '/images/p6.JPEG',
+    camera: 'Camera Used',
+    projectDetails: 'Creative',
+  },
+  {
+    id: 'photo-7',
+    title: 'Latest Shot',
+    type: 'photography',
+    mediaUrl: '/images/p7.jpg',
+    camera: 'Camera Used',
+    projectDetails: 'Photography',
+  },
   // --- Video Items (Sorted video-1 to video-9) ---
   {
     id: 'video-1',
