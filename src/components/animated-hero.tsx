@@ -94,8 +94,17 @@ export function AnimatedHero() {
         animate={controls}
         className="mx-auto w-full max-w-4xl space-y-6 md:space-y-8"
       >
-        {/* Main Title */}
-        <motion.div variants={itemVariants} className="space-y-3 md:space-y-4">
+        {/* Logo and Title */}
+        <motion.div variants={itemVariants} className="space-y-4 md:space-y-6">
+          {/* Logo */}
+          <motion.div className="flex justify-center" variants={itemVariants}>
+            <img
+              src="/giltmedia2.svg"
+              alt="Gilt Media Logo"
+              className="h-16 w-auto sm:h-20 md:h-24 lg:h-28"
+            />
+          </motion.div>
+
           <motion.h1
             className="text-center text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl"
             variants={itemVariants}
@@ -110,7 +119,7 @@ export function AnimatedHero() {
             className="text-muted-foreground text-center text-sm font-semibold sm:text-base md:text-lg lg:text-xl xl:text-2xl"
             variants={itemVariants}
           >
-            <span>I just make visuals that just feels good</span>
+            <span>I also made this website from scratch, so yeah.</span>
           </motion.h2>
         </motion.div>
 
