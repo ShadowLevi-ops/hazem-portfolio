@@ -27,10 +27,10 @@ export function VerticalCarousel({
       {/* Optimized container */}
       <div className="from-background/50 to-background/80 relative overflow-hidden rounded-xl border bg-gradient-to-b backdrop-blur-sm md:rounded-2xl">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="p-3 md:p-6"
+          initial={{ opacity: 0, transform: 'translate3d(0,0,0)' }}
+          animate={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+          className="p-3 will-change-transform md:p-6"
         >
           {/* Optimized grid layout */}
           <div className="grid grid-cols-3 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-4 lg:gap-6">
@@ -41,20 +41,21 @@ export function VerticalCarousel({
               return (
                 <motion.div
                   key={item.id}
-                  className="group border-border/50 relative aspect-[9/16] cursor-pointer overflow-hidden rounded-lg border shadow-lg hover:shadow-2xl md:rounded-xl"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  className="group border-border/50 relative aspect-[9/16] cursor-pointer overflow-hidden rounded-lg border shadow-lg will-change-transform hover:shadow-2xl md:rounded-xl"
+                  whileHover={{ scale: 1.02, transition: { duration: 0.15 } }}
+                  whileTap={{ scale: 0.98, transition: { duration: 0.1 } }}
                   onClick={() => onItemClick(index)}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  initial={{ opacity: 0, transform: 'translate3d(0,0,0)' }}
+                  animate={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
                   transition={{
-                    duration: 0.4,
-                    delay: Math.min(index * 0.03, 0.5), // Cap delay
+                    duration: 0.3,
+                    delay: Math.min(index * 0.02, 0.3),
+                    ease: 'easeOut',
                   }}
-                  layoutId={`item-${item.id}`} // For smooth transitions
+                  style={{ transform: 'translate3d(0,0,0)' }}
                 >
                   {/* Optimized image */}
-                  <div className="relative h-full w-full">
+                  <div className="relative h-full w-full will-change-transform">
                     <Image
                       src={
                         isVideo
@@ -63,10 +64,13 @@ export function VerticalCarousel({
                       }
                       alt={item.title}
                       fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="object-cover transition-transform duration-200 ease-out will-change-transform group-hover:scale-105"
                       sizes="(max-width: 768px) 33vw, (max-width: 1200px) 25vw, 20vw"
-                      loading={index < 8 ? 'eager' : 'lazy'} // Prioritize first 8 images
-                      quality={index < 4 ? 90 : 75} // Higher quality for above-fold
+                      loading={index < 6 ? 'eager' : 'lazy'}
+                      quality={index < 4 ? 85 : 70}
+                      priority={index < 4}
+                      placeholder="blur"
+                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                     />
                   </div>
 

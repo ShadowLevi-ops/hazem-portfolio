@@ -20,19 +20,22 @@ export function AnimatedHero() {
     visible: {
       opacity: 1,
       transition: {
-        duration: 0.6,
-        staggerChildren: 0.2,
+        duration: 0.4,
+        staggerChildren: 0.1,
+        ease: 'easeOut',
       },
     },
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 15, opacity: 0, transform: 'translate3d(0,0,0)' },
     visible: {
       y: 0,
       opacity: 1,
+      transform: 'translate3d(0,0,0)',
       transition: {
-        duration: 0.5,
+        duration: 0.3,
+        ease: 'easeOut',
       },
     },
   };
@@ -60,31 +63,33 @@ export function AnimatedHero() {
       ref={ref}
       className="relative container mx-auto flex min-h-[75vh] flex-col items-center justify-center overflow-hidden px-4 pt-8 pb-12 text-center md:min-h-[85vh] md:px-8 md:pt-28 md:pb-16"
     >
-      {/* Animated background elements */}
+      {/* Optimized background elements */}
       <div className="absolute inset-0 -z-10">
         <motion.div
-          className="absolute top-10 left-5 h-16 w-16 rounded-full bg-gradient-to-r from-purple-400/20 to-pink-400/20 blur-xl md:top-20 md:left-10 md:h-20 md:w-20"
+          className="absolute top-10 left-5 h-16 w-16 rounded-full bg-gradient-to-r from-purple-400/15 to-pink-400/15 blur-xl will-change-transform md:top-20 md:left-10 md:h-20 md:w-20"
           animate={{
-            scale: [1, 1.2, 1],
+            scale: [1, 1.1, 1],
             rotate: [0, 180, 360],
           }}
           transition={{
-            duration: 8,
+            duration: 12,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: 'linear',
           }}
+          style={{ transform: 'translate3d(0,0,0)' }}
         />
         <motion.div
-          className="absolute right-5 bottom-10 h-24 w-24 rounded-full bg-gradient-to-r from-blue-400/20 to-cyan-400/20 blur-xl md:right-10 md:bottom-20 md:h-32 md:w-32"
+          className="absolute right-5 bottom-10 h-24 w-24 rounded-full bg-gradient-to-r from-blue-400/15 to-cyan-400/15 blur-xl will-change-transform md:right-10 md:bottom-20 md:h-32 md:w-32"
           animate={{
-            scale: [1.2, 1, 1.2],
+            scale: [1.1, 1, 1.1],
             rotate: [360, 180, 0],
           }}
           transition={{
-            duration: 10,
+            duration: 15,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: 'linear',
           }}
+          style={{ transform: 'translate3d(0,0,0)' }}
         />
       </div>
 
@@ -92,16 +97,22 @@ export function AnimatedHero() {
         variants={containerVariants}
         initial="hidden"
         animate={controls}
-        className="mx-auto w-full max-w-4xl space-y-6 md:space-y-8"
+        className="mx-auto w-full max-w-4xl space-y-6 will-change-transform md:space-y-8"
       >
         {/* Logo and Title */}
         <motion.div variants={itemVariants} className="space-y-4 md:space-y-6">
           {/* Logo */}
-          <motion.div className="flex justify-center" variants={itemVariants}>
+          <motion.div
+            className="flex justify-center will-change-transform"
+            variants={itemVariants}
+          >
             <img
               src="/giltmedia2.svg"
               alt="Gilt Media Logo"
-              className="h-56 w-auto sm:h-64 md:h-72 lg:h-80 xl:h-96"
+              className="h-56 w-auto will-change-transform sm:h-64 md:h-72 lg:h-80 xl:h-96"
+              loading="eager"
+              decoding="async"
+              style={{ transform: 'translate3d(0,0,0)' }}
             />
           </motion.div>
 
