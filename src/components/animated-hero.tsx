@@ -101,12 +101,12 @@ export function AnimatedHero() {
             <img
               src="/giltmedia2.svg"
               alt="Gilt Media Logo"
-              className="h-16 w-auto sm:h-20 md:h-24 lg:h-28"
+              className="h-32 w-auto sm:h-40 md:h-48 lg:h-56 xl:h-64"
             />
           </motion.div>
 
           <motion.h1
-            className="text-center text-xl font-bold sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl"
+            className="text-center text-lg font-bold sm:text-xl md:text-2xl lg:text-3xl"
             variants={itemVariants}
           >
             <span className="from-primary bg-gradient-to-r via-purple-500 to-pink-500 bg-clip-text text-transparent">
@@ -116,7 +116,7 @@ export function AnimatedHero() {
 
           {/* Subtitle */}
           <motion.h2
-            className="text-muted-foreground text-center text-sm font-semibold sm:text-base md:text-lg lg:text-xl xl:text-2xl"
+            className="text-muted-foreground text-center text-xs font-semibold sm:text-sm md:text-base lg:text-lg"
             variants={itemVariants}
           >
             <span>I also made this website from scratch, so yeah.</span>
