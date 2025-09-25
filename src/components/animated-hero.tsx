@@ -1,19 +1,17 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { motion, useAnimation, useInView } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 import { Camera, Video, Award, MapPin, Mail } from 'lucide-react';
 
 export function AnimatedHero() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
   const controls = useAnimation();
 
   useEffect(() => {
-    if (isInView) {
-      controls.start('visible');
-    }
-  }, [controls, isInView]);
+    // Start animation immediately for faster perceived loading
+    controls.start('visible');
+  }, [controls]);
 
   const containerVariants = {
     hidden: { opacity: 0 },

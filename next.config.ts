@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   output: 'export',
@@ -15,7 +15,13 @@ const nextConfig: NextConfig = {
   compress: true,
   // Enable experimental features for better performance
   experimental: {
-    optimizePackageImports: ['framer-motion', 'lucide-react'],
+    optimizePackageImports: [
+      'framer-motion',
+      'lucide-react',
+      'yet-another-react-lightbox',
+    ],
+    optimizeCss: true,
+    webpackBuildWorker: true,
   },
   // Security headers
   async headers() {

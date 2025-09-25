@@ -141,19 +141,28 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        {/* Critical resource preloading for faster initial load */}
+        <link
+          rel="preload"
+          href="/giltmedia2.svg"
+          as="image"
+          type="image/svg+xml"
         />
-        {/* Preload critical resources */}
+        <link rel="preload" href="/images/p1.PNG" as="image" type="image/png" />
+        <link rel="preload" href="/images/p2.PNG" as="image" type="image/png" />
+        <link rel="preload" href="/images/p3.PNG" as="image" type="image/png" />
+        <link rel="preload" href="/images/p4.PNG" as="image" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        <link rel="preload" href="/favicon.png" as="image" type="image/png" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         <meta name="color-scheme" content="light dark" />
       </head>
       <body className={cn('bg-background min-h-screen font-sans antialiased')}>
