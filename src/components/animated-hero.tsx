@@ -59,7 +59,7 @@ export function AnimatedHero() {
   return (
     <section
       ref={ref}
-      className="relative container mx-auto flex min-h-[75vh] flex-col items-center justify-center overflow-hidden px-4 pt-8 pb-12 text-center md:min-h-[85vh] md:px-8 md:pt-28 md:pb-16"
+      className="relative container mx-auto flex min-h-[60vh] flex-col items-center justify-center overflow-hidden px-4 pt-6 pb-8 text-center md:min-h-[70vh] md:px-8 md:pt-16 md:pb-12"
     >
       {/* Optimized background elements */}
       <div className="absolute inset-0 -z-10">
@@ -95,10 +95,10 @@ export function AnimatedHero() {
         variants={containerVariants}
         initial="hidden"
         animate={controls}
-        className="mx-auto w-full max-w-4xl space-y-6 will-change-transform md:space-y-8"
+        className="mx-auto w-full max-w-4xl space-y-4 will-change-transform md:space-y-6"
       >
         {/* Logo and Title */}
-        <motion.div variants={itemVariants} className="space-y-4 md:space-y-6">
+        <motion.div variants={itemVariants} className="space-y-3 md:space-y-4">
           {/* Logo */}
           <motion.div
             className="flex justify-center will-change-transform"
@@ -107,7 +107,7 @@ export function AnimatedHero() {
             <img
               src="/giltmedia2.svg"
               alt="Gilt Media Logo"
-              className="h-56 w-auto will-change-transform sm:h-64 md:h-72 lg:h-80 xl:h-96"
+              className="h-40 w-auto will-change-transform sm:h-48 md:h-56 lg:h-64 xl:h-72"
               loading="eager"
               decoding="async"
               style={{ transform: 'translate3d(0,0,0)' }}
@@ -134,7 +134,7 @@ export function AnimatedHero() {
 
         {/* Contact info */}
         <motion.div
-          className="text-muted-foreground flex flex-col flex-wrap items-center justify-center gap-4 text-sm sm:flex-row md:gap-6 md:text-base"
+          className="text-muted-foreground flex flex-col flex-wrap items-center justify-center gap-3 text-sm sm:flex-row md:gap-4 md:text-base"
           variants={itemVariants}
         >
           <div className="hover:text-primary flex cursor-pointer items-center gap-2 transition-colors">
@@ -152,7 +152,7 @@ export function AnimatedHero() {
 
         {/* Simplified stats */}
         <motion.div
-          className="mx-auto grid max-w-sm grid-cols-3 gap-4 pt-4 md:max-w-md md:gap-8 md:pt-6"
+          className="mx-auto grid max-w-sm grid-cols-3 gap-4 pt-2 md:max-w-md md:gap-6 md:pt-4"
           variants={itemVariants}
         >
           {stats.map(stat => (
@@ -173,7 +173,7 @@ export function AnimatedHero() {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 transform md:bottom-12"
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 transform md:bottom-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.5 }}
