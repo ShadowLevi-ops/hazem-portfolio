@@ -20,7 +20,7 @@ const nextConfig: NextConfig = {
       'lucide-react',
       'yet-another-react-lightbox',
     ],
-    optimizeCss: true,
+    // optimizeCss: true, // Disabled to avoid critters dependency issues
     webpackBuildWorker: true,
   },
   // Security headers
