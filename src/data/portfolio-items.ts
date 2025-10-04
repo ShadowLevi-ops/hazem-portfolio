@@ -155,4 +155,13 @@ export const portfolioItems: PortfolioItem[] = [
     camera: '35mm f1.8',
     projectDetails: 'Creative Film',
   },
+  {
+    id: 'video-11',
+    title: 'Video: Latest Work',
+    type: 'videography',
+    mediaUrl: '/videos/11.mp4',
+    thumbnailUrl: '/videos/VT-11.png',
+    camera: '50mm f1.4',
+    projectDetails: 'Creative Video',
+  },
 ];
