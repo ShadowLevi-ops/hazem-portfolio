@@ -24,7 +24,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         {children}
       </motion.main>
       <footer className="bg-background text-muted-foreground border-t p-3 text-center text-sm">
-        © 2024 Hazem Portfolio. All rights reserved.
+        © 2025 GiltMedia Studios. All rights reserved.
       </footer>
     </div>
   );
