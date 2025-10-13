@@ -82,10 +82,23 @@ export default function Home() {
     () => [
       ...videoItems.map(item => ({
         type: 'video' as const,
-        sources: [{ src: item.mediaUrl, type: 'video/mp4' }],
+        sources: [
+          {
+            src: item.mediaUrl,
+            type: 'video/mp4',
+            // Add color space attributes to prevent oversaturation
+            colorSpace: 'srgb',
+            colorGamut: 'srgb',
+          },
+        ],
         title: item.title,
         description: `${item.camera ? item.camera + ' | ' : ''}${item.projectDetails || ''}`,
         poster: item.thumbnailUrl || '/videos/VT-1.png',
+        // Add video attributes for proper color handling
+        attributes: {
+          style: 'color-scheme: light dark; color-interpolation-filters: sRGB;',
+          'data-color-space': 'srgb',
+        },
       })),
       ...photographyItems.map(item => ({
         src: item.mediaUrl,

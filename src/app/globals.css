@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -138,31 +138,54 @@
 
 /* Enhanced animations and visual effects */
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes glow {
-  0%, 100% { box-shadow: 0 0 5px currentColor; }
-  50% { box-shadow: 0 0 20px currentColor, 0 0 30px currentColor; }
+  0%,
+  100% {
+    box-shadow: 0 0 5px currentColor;
+  }
+  50% {
+    box-shadow:
+      0 0 20px currentColor,
+      0 0 30px currentColor;
+  }
 }
 
 @keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes pulse-ring {
   0% {
     transform: scale(0.33);
   }
-  80%, 100% {
+  80%,
+  100% {
     opacity: 0;
   }
 }
@@ -238,7 +261,11 @@
 
 /* Text gradient utilities */
 .text-gradient-primary {
-  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.7));
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary)),
+    hsl(var(--primary) / 0.7)
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -253,5 +280,27 @@
 
 /* Enhanced focus states */
 .focus-ring {
-  @apply focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background;
+  @apply focus:ring-primary/50 focus:ring-offset-background focus:ring-2 focus:ring-offset-2 focus:outline-none;
+}
+
+/* Video color space and quality preservation */
+video {
+  color-scheme: light dark;
+  color-interpolation-filters: sRGB;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Prevent video oversaturation */
+video::-webkit-media-controls {
+  color-scheme: light dark;
+}
+
+/* Ensure proper color space for video elements */
+.video-container video {
+  color-scheme: light dark;
+  color-interpolation-filters: sRGB;
+  image-rendering: auto;
+  filter: none;
+  -webkit-filter: none;
 }
