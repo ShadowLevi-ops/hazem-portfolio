@@ -68,6 +68,14 @@ export const portfolioItems: PortfolioItem[] = [
     camera: 'Camera Used',
     projectDetails: 'Creative Photography',
   },
+  {
+    id: 'photo-9',
+    title: 'Latest Photography',
+    type: 'photography',
+    mediaUrl: '/images/p9.jpeg',
+    camera: 'Camera Used',
+    projectDetails: 'Portrait Photography',
+  },
   // --- Video Items (Sorted video-1 to video-9) ---
   {
     id: 'video-1',
@@ -171,5 +179,14 @@ export const portfolioItems: PortfolioItem[] = [
     thumbnailUrl: '/videos/VT-11.png',
     camera: '50mm f1.4',
     projectDetails: 'Creative Video',
+  },
+  {
+    id: 'video-12',
+    title: 'Video: New Project',
+    type: 'videography',
+    mediaUrl: '/videos/12.mp4',
+    thumbnailUrl: '/videos/VT-12.jpg',
+    camera: '35mm f1.8',
+    projectDetails: 'Creative Film',
   },
 ];
