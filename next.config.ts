@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   distDir: 'out',
   basePath: '',
-  // Enable compression
+  // Enable compression for text files only, preserve video quality
   compress: true,
   // Enable experimental features for better performance
   experimental: {
@@ -47,6 +47,20 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      // Preserve video quality - prevent compression for video files
+      {
+        source: '/videos/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+          {
+            key: 'Content-Encoding',
+            value: 'identity',
+          },
+        ],
+      },
     ];
   },
   // Webpack configuration for better performance
@@ -57,6 +71,16 @@ const nextConfig: NextConfig = {
         fs: false,
       };
     }
+
+    // Preserve video quality - don't compress video files
+    config.module.rules.push({
+      test: /\.(mp4|webm|ogg)$/,
+      type: 'asset/resource',
+      generator: {
+        filename: 'videos/[name][ext]',
+      },
+    });
+
     return config;
   },
   // Power pack for better performance
