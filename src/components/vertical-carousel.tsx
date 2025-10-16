@@ -77,6 +77,13 @@ export function VerticalCarousel({
                   {/* Simplified overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
+                  {/* Project Details Label - Always visible */}
+                  <div className="absolute top-1.5 left-1.5 md:top-2 md:left-2">
+                    <div className="rounded-md bg-black/60 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm md:px-2.5 md:py-1.5 md:text-xs">
+                      {item.projectDetails || item.type}
+                    </div>
+                  </div>
+
                   <div className="absolute inset-0 flex flex-col justify-between p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:p-4 lg:p-5">
                     {/* Expand indicator - optimized for mobile */}
                     <div className="absolute top-1.5 right-1.5 md:top-2 md:right-2">
