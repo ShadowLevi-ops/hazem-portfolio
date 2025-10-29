@@ -113,7 +113,7 @@ export function PortfolioFilter({
 
   return (
     <motion.div
-      className="supports-[backdrop-filter]:bg-background/60 sticky top-0 z-20 mb-4 flex flex-col gap-2 px-2 backdrop-blur md:mb-6"
+      className="sticky top-0 z-20 mb-4 flex flex-col gap-2 px-2 md:mb-6"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
