@@ -8,11 +8,13 @@ import type { PortfolioItem } from '@/types/portfolio';
 interface VerticalCarouselProps {
   items: PortfolioItem[];
   onItemClick: (index: number) => void;
+  onDetailsClick?: (item: PortfolioItem) => void;
 }
 
 export function VerticalCarousel({
   items,
   onItemClick,
+  onDetailsClick,
 }: VerticalCarouselProps) {
   const showLabels = process.env.NEXT_PUBLIC_SHOW_LABELS === 'true';
   if (items.length === 0) {
@@ -57,7 +59,7 @@ export function VerticalCarousel({
                   }}
                   style={{ transform: 'translate3d(0,0,0)' }}
                 >
-                  {/* Optimized image */}
+                  {/* Optimized image with optional video hover preview */}
                   <div className="relative h-full w-full will-change-transform">
                     <Image
                       src={
@@ -75,6 +77,29 @@ export function VerticalCarousel({
                       placeholder="blur"
                       blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                     />
+
+                    {isVideo && (
+                      <video
+                        className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100"
+                        muted
+                        loop
+                        playsInline
+                        preload="none"
+                        poster={item.thumbnailUrl || '/images/p1.PNG'}
+                        onMouseEnter={e => {
+                          const v = e.currentTarget;
+                          // Start playback on hover without blocking
+                          v.play().catch(() => {});
+                        }}
+                        onMouseLeave={e => {
+                          const v = e.currentTarget;
+                          v.pause();
+                          v.currentTime = 0;
+                        }}
+                      >
+                        <source src={item.mediaUrl} type="video/mp4" />
+                      </video>
+                    )}
                   </div>
 
                   {/* Simplified overlay */}
@@ -108,6 +133,22 @@ export function VerticalCarousel({
                         <Expand className="h-2.5 w-2.5 text-white md:h-3 md:w-3" />
                       </div>
                     </div>
+
+                    {/* Details chip */}
+                    {onDetailsClick && (
+                      <div className="absolute bottom-1.5 left-1.5 md:bottom-2 md:left-2">
+                        <button
+                          type="button"
+                          className="rounded-full border border-white/30 bg-black/40 px-2 py-1 text-[10px] font-medium text-white backdrop-blur-sm transition-colors hover:bg-black/60 md:px-3 md:py-1.5 md:text-xs"
+                          onClick={e => {
+                            e.stopPropagation();
+                            onDetailsClick(item);
+                          }}
+                        >
+                          Details
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               );
