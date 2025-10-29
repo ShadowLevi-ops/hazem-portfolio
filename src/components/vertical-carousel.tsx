@@ -137,8 +137,8 @@ export function VerticalCarousel({
                   {isOngoingProject && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm">
                       <div className="text-center">
-                        <div className="rounded-lg border border-white/30 bg-white/20 px-2.5 py-1.5 backdrop-blur-sm">
-                          <div className="text-xs font-bold tracking-wide text-white">
+                        <div className="rounded-lg border border-white/30 bg-white/20 px-2 py-1 backdrop-blur-sm">
+                          <div className="text-[10px] font-bold tracking-wide text-white">
                             ONGOING PROJECT
                           </div>
                         </div>
