@@ -112,41 +112,43 @@ export function PortfolioFilter({
   );
 
   return (
-    <motion.div
-      className="fixed top-14 right-0 left-0 z-30 flex flex-col items-center gap-2 bg-transparent px-2 py-2"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
-    >
-      <div className="flex flex-wrap justify-center gap-1.5 md:gap-2">
-        <AnimatePresence mode="wait">
-          {filters.map((filter, index) => (
-            <motion.div
-              key={filter.key}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
-            >
-              <FilterButton
-                label={filter.label}
-                isActive={activeFilter === filter.key}
-                onClick={() => onFilterChange(filter.key)}
-                icon={filter.icon}
-                count={filter.count}
-              />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
+    <div className="fixed top-14 right-0 left-0 z-30 flex flex-col items-center gap-2 bg-transparent px-2 py-2">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="flex w-full flex-col items-center gap-2"
+      >
+        <div className="flex flex-wrap justify-center gap-1.5 md:gap-2">
+          <AnimatePresence mode="wait">
+            {filters.map((filter, index) => (
+              <motion.div
+                key={filter.key}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+              >
+                <FilterButton
+                  label={filter.label}
+                  isActive={activeFilter === filter.key}
+                  onClick={() => onFilterChange(filter.key)}
+                  icon={filter.icon}
+                  count={filter.count}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
 
-      <div className="bg-muted mx-auto h-1 w-full max-w-3xl overflow-hidden rounded-full">
-        <motion.div
-          className="bg-primary h-full"
-          initial={{ width: 0 }}
-          animate={{ width: `${Math.round(ratio * 100)}%` }}
-          transition={{ duration: 0.3 }}
-        />
-      </div>
-    </motion.div>
+        <div className="bg-muted mx-auto h-1 w-full max-w-3xl overflow-hidden rounded-full">
+          <motion.div
+            className="bg-primary h-full"
+            initial={{ width: 0 }}
+            animate={{ width: `${Math.round(ratio * 100)}%` }}
+            transition={{ duration: 0.3 }}
+          />
+        </div>
+      </motion.div>
+    </div>
   );
 }

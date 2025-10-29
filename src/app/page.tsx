@@ -121,7 +121,20 @@ export default function Home() {
     <>
       <AnimatedHero />
 
-      {/* Portfolio Section with Filter */}
+      {/* Fixed Filter Buttons - Outside section for true viewport positioning */}
+      <PortfolioFilter
+        activeFilter={activeFilter}
+        onFilterChange={filter => {
+          setActiveFilter(filter);
+          analytics.track({
+            name: 'filter_change',
+            properties: { filter },
+          });
+        }}
+        counts={filterCounts}
+      />
+
+      {/* Portfolio Section */}
       <Suspense fallback={<div className="h-96 w-full bg-transparent" />}>
         <section
           id="portfolio"
@@ -138,18 +151,6 @@ export default function Home() {
               My Work
             </span>
           </motion.h2>
-
-          <PortfolioFilter
-            activeFilter={activeFilter}
-            onFilterChange={filter => {
-              setActiveFilter(filter);
-              analytics.track({
-                name: 'filter_change',
-                properties: { filter },
-              });
-            }}
-            counts={filterCounts}
-          />
 
           {/* Spacer for fixed filter buttons */}
           <div className="h-20 md:h-24" />
