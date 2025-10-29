@@ -202,13 +202,20 @@ export default function Home() {
         }}
       />
 
-      {/* Floating booking button */}
+      {/* Floating booking button -> WhatsApp */}
       <a
-        href={`${process.env.NEXT_PUBLIC_BOOKING_URL || 'https://cal.com/'}?context=${encodeURIComponent(selectedTitle)}`}
+        href={`https://wa.me/60173767247?text=${encodeURIComponent(
+          `Hi Hazem, I'm interested in ${selectedTitle} — can we book?`
+        )}`}
         target="_blank"
         rel="noopener noreferrer"
         className="bg-primary text-primary-foreground fixed right-4 bottom-4 z-40 rounded-full px-4 py-2 text-sm font-medium shadow-lg transition-transform hover:scale-105"
-        onClick={() => analytics.track({ name: 'cta_book_click' })}
+        onClick={() =>
+          analytics.track({
+            name: 'cta_book_click',
+            properties: { channel: 'whatsapp' },
+          })
+        }
       >
         Book a shoot
       </a>
