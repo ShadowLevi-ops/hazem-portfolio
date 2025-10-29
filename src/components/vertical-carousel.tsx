@@ -38,6 +38,8 @@ export function VerticalCarousel({
             {items.map((item, index) => {
               const isVideo =
                 item.type === 'videography' || item.type === 'film';
+              const isOngoingProject =
+                item.projectDetails === 'ONGOING PROJECT';
 
               return (
                 <motion.div
@@ -78,7 +80,20 @@ export function VerticalCarousel({
                   {/* Simplified overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-                  {showLabels && (
+                  {/* Ongoing Project Overlay */}
+                  {isOngoingProject && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+                      <div className="text-center">
+                        <div className="rounded-lg border border-white/30 bg-white/20 px-4 py-2 backdrop-blur-sm">
+                          <div className="text-sm font-bold tracking-wide text-white md:text-base">
+                            ONGOING PROJECT
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {showLabels && !isOngoingProject && (
                     <div className="absolute top-1.5 left-1.5 md:top-2 md:left-2">
                       <div className="rounded-md bg-black/60 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm md:px-2.5 md:py-1.5 md:text-xs">
                         {item.projectDetails || item.type}

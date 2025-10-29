@@ -92,6 +92,30 @@ export const portfolioItems: PortfolioItem[] = [
     camera: 'Camera Used',
     projectDetails: 'Photography',
   },
+  {
+    id: 'photo-12',
+    title: 'Ongoing Project 1',
+    type: 'photography',
+    mediaUrl: '/images/p12.jpg',
+    camera: 'Camera Used',
+    projectDetails: 'ONGOING PROJECT',
+  },
+  {
+    id: 'photo-13',
+    title: 'Ongoing Project 2',
+    type: 'photography',
+    mediaUrl: '/images/p13.jpg',
+    camera: 'Camera Used',
+    projectDetails: 'ONGOING PROJECT',
+  },
+  {
+    id: 'photo-14',
+    title: 'Ongoing Project 3',
+    type: 'photography',
+    mediaUrl: '/images/p14.jpg',
+    camera: 'Camera Used',
+    projectDetails: 'ONGOING PROJECT',
+  },
   // --- Video Items (Sorted video-1 to video-9) ---
   {
     id: 'video-1',
