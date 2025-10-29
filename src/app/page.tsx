@@ -43,8 +43,6 @@ export default function Home() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [activeFilter, setActiveFilter] = useState('all');
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
 
   // Memoized filtered items for better performance
   const filteredItems = useMemo(() => {
@@ -117,22 +115,6 @@ export default function Home() {
     setLightboxOpen(true);
   }, []);
 
-  const openDrawer = useCallback((itemId: string) => {
-    setSelectedItemId(itemId);
-    setDrawerOpen(true);
-  }, []);
-
-  const closeDrawer = useCallback(() => {
-    setDrawerOpen(false);
-    setSelectedItemId(null);
-  }, []);
-
-  const selectedItem = useMemo(() => {
-    return selectedItemId
-      ? portfolioItems.find(i => i.id === selectedItemId) || null
-      : null;
-  }, [selectedItemId]);
-
   return (
     <>
       <AnimatedHero />
@@ -183,7 +165,6 @@ export default function Home() {
                       photographyItems.findIndex(p => p.id === item.id);
                   openLightbox(slideIndex);
                 }}
-                onDetailsClick={item => openDrawer(item.id)}
               />
             </motion.div>
           </AnimatePresence>
@@ -198,94 +179,6 @@ export default function Home() {
         plugins={[Video]}
       />
 
-      {/* Quick-view drawer */}
-      <div
-        className={`fixed inset-x-0 bottom-0 z-40 transform transition-transform duration-300 ${
-          drawerOpen ? 'translate-y-0' : 'translate-y-full'
-        }`}
-        aria-hidden={!drawerOpen}
-      >
-        <div className="container mx-auto px-4 pt-4 pb-6 md:px-6 lg:px-8">
-          <div className="bg-background/95 rounded-t-2xl border p-4 shadow-xl backdrop-blur md:p-6">
-            <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-base font-semibold md:text-lg">
-                Project Details
-              </h3>
-              <button
-                type="button"
-                className="border-border hover:bg-accent rounded-md border px-2 py-1 text-sm"
-                onClick={closeDrawer}
-              >
-                Close
-              </button>
-            </div>
-            {selectedItem && (
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                <div className="md:col-span-2">
-                  <div className="text-muted-foreground text-sm">Title</div>
-                  <div className="text-base font-medium">
-                    {selectedItem.title}
-                  </div>
-                  {selectedItem.projectDetails && (
-                    <div className="mt-3">
-                      <div className="text-muted-foreground text-sm">
-                        Project
-                      </div>
-                      <div className="text-base">
-                        {selectedItem.projectDetails}
-                      </div>
-                    </div>
-                  )}
-                  {selectedItem.client && (
-                    <div className="mt-3">
-                      <div className="text-muted-foreground text-sm">
-                        Client
-                      </div>
-                      <div className="text-base">{selectedItem.client}</div>
-                    </div>
-                  )}
-                  {selectedItem.camera && (
-                    <div className="mt-3">
-                      <div className="text-muted-foreground text-sm">
-                        Camera
-                      </div>
-                      <div className="text-base">{selectedItem.camera}</div>
-                    </div>
-                  )}
-                  {selectedItem.date && (
-                    <div className="mt-3">
-                      <div className="text-muted-foreground text-sm">Date</div>
-                      <div className="text-base">{selectedItem.date}</div>
-                    </div>
-                  )}
-                </div>
-                <div className="">
-                  <div className="text-muted-foreground text-sm">Preview</div>
-                  <div className="relative mt-2 aspect-video w-full overflow-hidden rounded-lg border">
-                    {selectedItem.type === 'videography' ||
-                    selectedItem.type === 'film' ? (
-                      <video
-                        className="h-full w-full object-cover"
-                        src={selectedItem.mediaUrl}
-                        poster={selectedItem.thumbnailUrl || '/videos/VT-1.png'}
-                        controls
-                        playsInline
-                      />
-                    ) : (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={selectedItem.mediaUrl}
-                        alt={selectedItem.title}
-                        className="h-full w-full object-cover"
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
       <ScrollToTopButton />
     </>
   );

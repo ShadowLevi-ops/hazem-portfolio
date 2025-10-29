@@ -8,13 +8,11 @@ import type { PortfolioItem } from '@/types/portfolio';
 interface VerticalCarouselProps {
   items: PortfolioItem[];
   onItemClick: (index: number) => void;
-  onDetailsClick?: (item: PortfolioItem) => void;
 }
 
 export function VerticalCarousel({
   items,
   onItemClick,
-  onDetailsClick,
 }: VerticalCarouselProps) {
   const showLabels = process.env.NEXT_PUBLIC_SHOW_LABELS === 'true';
   if (items.length === 0) {
@@ -133,22 +131,6 @@ export function VerticalCarousel({
                         <Expand className="h-2.5 w-2.5 text-white md:h-3 md:w-3" />
                       </div>
                     </div>
-
-                    {/* Details chip */}
-                    {onDetailsClick && (
-                      <div className="absolute bottom-1.5 left-1.5 md:bottom-2 md:left-2">
-                        <button
-                          type="button"
-                          className="rounded-full border border-white/30 bg-black/40 px-2 py-1 text-[10px] font-medium text-white backdrop-blur-sm transition-colors hover:bg-black/60 md:px-3 md:py-1.5 md:text-xs"
-                          onClick={e => {
-                            e.stopPropagation();
-                            onDetailsClick(item);
-                          }}
-                        >
-                          Details
-                        </button>
-                      </div>
-                    )}
                   </div>
                 </motion.div>
               );
