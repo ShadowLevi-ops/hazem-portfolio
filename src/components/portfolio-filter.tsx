@@ -21,7 +21,7 @@ function FilterButton({
   return (
     <motion.button
       onClick={onClick}
-      className={`relative flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-all duration-300 md:gap-2 md:px-4 md:py-2 ${
+      className={`relative flex items-center gap-1 rounded-full border px-2 py-1 text-xs transition-all duration-300 md:gap-2 md:px-4 md:py-2 md:text-sm ${
         isActive
           ? 'bg-primary text-primary-foreground border-primary shadow-primary/25 shadow-lg'
           : 'bg-background/80 border-border hover:border-primary/50 hover:bg-accent/50 backdrop-blur-sm'
@@ -32,12 +32,12 @@ function FilterButton({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <span className="flex items-center text-xs md:text-sm">{icon}</span>
-      <span className="text-xs font-medium whitespace-nowrap md:text-sm">
+      <span className="flex items-center text-[10px] md:text-sm">{icon}</span>
+      <span className="text-[10px] font-medium whitespace-nowrap md:text-sm">
         {label}
       </span>
       <motion.span
-        className={`rounded-full px-1 py-0.5 text-xs md:px-1.5 ${
+        className={`rounded-full px-0.5 py-0.5 text-[10px] md:px-1.5 md:text-xs ${
           isActive
             ? 'bg-primary-foreground/20 text-primary-foreground'
             : 'bg-muted text-muted-foreground'
@@ -82,19 +82,19 @@ export function PortfolioFilter({
     {
       key: 'all',
       label: 'All Work',
-      icon: <Grid className="h-3 w-3 md:h-4 md:w-4" />,
+      icon: <Grid className="h-2.5 w-2.5 md:h-4 md:w-4" />,
       count: counts.all,
     },
     {
       key: 'photography',
       label: 'Photography',
-      icon: <Camera className="h-3 w-3 md:h-4 md:w-4" />,
+      icon: <Camera className="h-2.5 w-2.5 md:h-4 md:w-4" />,
       count: counts.photography,
     },
     {
       key: 'video',
       label: 'Video',
-      icon: <Video className="h-3 w-3 md:h-4 md:w-4" />,
+      icon: <Video className="h-2.5 w-2.5 md:h-4 md:w-4" />,
       count: counts.video,
     },
   ];
@@ -118,7 +118,7 @@ export function PortfolioFilter({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
     >
-      <div className="flex flex-wrap justify-center gap-1.5 md:gap-2">
+      <div className="flex flex-wrap justify-center gap-1 md:gap-2">
         <AnimatePresence mode="wait">
           {filters.map((filter, index) => (
             <motion.div
