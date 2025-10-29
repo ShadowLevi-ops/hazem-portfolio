@@ -8,6 +8,7 @@ import 'yet-another-react-lightbox/styles.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AnimatedHero } from '@/components/animated-hero';
 import dynamic from 'next/dynamic';
+import { analytics } from '@/lib/analytics';
 
 // Optimized dynamic imports for faster initial load
 const PortfolioFilter = dynamic(
@@ -109,10 +110,19 @@ export default function Home() {
     [videoItems, photographyItems]
   );
 
+  const selectedTitle = useMemo(() => {
+    if (lightboxIndex < videoItems.length) {
+      return videoItems[lightboxIndex]?.title || 'Homepage';
+    }
+    const photoIndex = lightboxIndex - videoItems.length;
+    return photographyItems[photoIndex]?.title || 'Homepage';
+  }, [lightboxIndex, videoItems, photographyItems]);
+
   // Memoized lightbox function
   const openLightbox = useCallback((index: number) => {
     setLightboxIndex(index);
     setLightboxOpen(true);
+    analytics.track({ name: 'lightbox_open', properties: { index } });
   }, []);
 
   return (
@@ -139,7 +149,13 @@ export default function Home() {
 
           <PortfolioFilter
             activeFilter={activeFilter}
-            onFilterChange={setActiveFilter}
+            onFilterChange={filter => {
+              setActiveFilter(filter);
+              analytics.track({
+                name: 'filter_change',
+                properties: { filter },
+              });
+            }}
             counts={filterCounts}
           />
 
@@ -173,11 +189,29 @@ export default function Home() {
 
       <Lightbox
         open={lightboxOpen}
-        close={() => setLightboxOpen(false)}
+        close={() => {
+          setLightboxOpen(false);
+          analytics.track({ name: 'lightbox_close' });
+        }}
         index={lightboxIndex}
         slides={allSlides}
         plugins={[Video]}
+        on={{
+          view: ({ index }) =>
+            analytics.track({ name: 'lightbox_view', properties: { index } }),
+        }}
       />
+
+      {/* Floating booking button */}
+      <a
+        href={`${process.env.NEXT_PUBLIC_BOOKING_URL || 'https://cal.com/'}?context=${encodeURIComponent(selectedTitle)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-primary text-primary-foreground fixed right-4 bottom-4 z-40 rounded-full px-4 py-2 text-sm font-medium shadow-lg transition-transform hover:scale-105"
+        onClick={() => analytics.track({ name: 'cta_book_click' })}
+      >
+        Book a shoot
+      </a>
 
       <ScrollToTopButton />
     </>
