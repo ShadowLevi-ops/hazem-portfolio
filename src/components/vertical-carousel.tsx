@@ -49,12 +49,12 @@ export function VerticalCarousel({
                   className="group border-border/50 focus-visible:ring-primary relative aspect-[9/16] cursor-pointer overflow-hidden rounded-lg border shadow-lg will-change-transform outline-none hover:shadow-2xl focus-visible:ring-2 focus-visible:ring-offset-2 md:rounded-xl"
                   whileHover={
                     reduceMotion
-                      ? undefined
+                      ? {}
                       : { scale: 1.02, transition: { duration: 0.15 } }
                   }
                   whileTap={
                     reduceMotion
-                      ? undefined
+                      ? {}
                       : { scale: 0.98, transition: { duration: 0.1 } }
                   }
                   onClick={() => onItemClick(index)}
