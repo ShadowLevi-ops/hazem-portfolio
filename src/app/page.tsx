@@ -110,14 +110,6 @@ export default function Home() {
     [videoItems, photographyItems]
   );
 
-  const selectedTitle = useMemo(() => {
-    if (lightboxIndex < videoItems.length) {
-      return videoItems[lightboxIndex]?.title || 'Homepage';
-    }
-    const photoIndex = lightboxIndex - videoItems.length;
-    return photographyItems[photoIndex]?.title || 'Homepage';
-  }, [lightboxIndex, videoItems, photographyItems]);
-
   // Memoized lightbox function
   const openLightbox = useCallback((index: number) => {
     setLightboxIndex(index);
@@ -205,7 +197,7 @@ export default function Home() {
       {/* Floating WhatsApp button (top-right) */}
       <a
         href={`https://wa.me/60173767247?text=${encodeURIComponent(
-          `Hi Hazem, I'm interested in ${selectedTitle} — can we book?`
+          `Hi Hazem, Lets Collab!!`
         )}`}
         target="_blank"
         rel="noopener noreferrer"
