@@ -10,4 +10,6 @@ export interface PortfolioItem {
   client?: string; // Optional client name
   camera?: string; // Added camera details (optional)
   projectDetails?: string; // Added project details/category (optional)
-} 
+  dominantColor?: string; // Optional dominant color for placeholder
+  captionsUrl?: string; // Optional VTT captions for videos
+}

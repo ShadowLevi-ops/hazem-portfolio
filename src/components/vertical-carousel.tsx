@@ -1,9 +1,10 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import { Expand } from 'lucide-react';
 import type { PortfolioItem } from '@/types/portfolio';
+//
 
 interface VerticalCarouselProps {
   items: PortfolioItem[];
@@ -15,6 +16,7 @@ export function VerticalCarousel({
   onItemClick,
 }: VerticalCarouselProps) {
   const showLabels = process.env.NEXT_PUBLIC_SHOW_LABELS === 'true';
+  const reduceMotion = useReducedMotion();
   if (items.length === 0) {
     return (
       <div className="text-muted-foreground flex h-64 items-center justify-center md:h-96">
@@ -44,9 +46,17 @@ export function VerticalCarousel({
               return (
                 <motion.div
                   key={item.id}
-                  className="group border-border/50 relative aspect-[9/16] cursor-pointer overflow-hidden rounded-lg border shadow-lg will-change-transform hover:shadow-2xl md:rounded-xl"
-                  whileHover={{ scale: 1.02, transition: { duration: 0.15 } }}
-                  whileTap={{ scale: 0.98, transition: { duration: 0.1 } }}
+                  className="group border-border/50 focus-visible:ring-primary relative aspect-[9/16] cursor-pointer overflow-hidden rounded-lg border shadow-lg will-change-transform outline-none hover:shadow-2xl focus-visible:ring-2 focus-visible:ring-offset-2 md:rounded-xl"
+                  whileHover={
+                    reduceMotion
+                      ? undefined
+                      : { scale: 1.02, transition: { duration: 0.15 } }
+                  }
+                  whileTap={
+                    reduceMotion
+                      ? undefined
+                      : { scale: 0.98, transition: { duration: 0.1 } }
+                  }
                   onClick={() => onItemClick(index)}
                   initial={{ opacity: 0, transform: 'translate3d(0,0,0)' }}
                   animate={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
@@ -56,9 +66,19 @@ export function VerticalCarousel({
                     ease: 'easeOut',
                   }}
                   style={{ transform: 'translate3d(0,0,0)' }}
+                  tabIndex={0}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onItemClick(index);
+                    }
+                  }}
                 >
                   {/* Optimized image with optional video hover preview */}
-                  <div className="relative h-full w-full will-change-transform">
+                  <div
+                    className="relative h-full w-full will-change-transform"
+                    style={{ backgroundColor: item.dominantColor || '#0b0b0b' }}
+                  >
                     <Image
                       src={
                         isVideo
@@ -84,6 +104,7 @@ export function VerticalCarousel({
                         playsInline
                         preload="none"
                         poster={item.thumbnailUrl || '/images/p1.PNG'}
+                        crossOrigin="anonymous"
                         onMouseEnter={e => {
                           const v = e.currentTarget;
                           // Start playback on hover without blocking
@@ -96,6 +117,15 @@ export function VerticalCarousel({
                         }}
                       >
                         <source src={item.mediaUrl} type="video/mp4" />
+                        {item.captionsUrl && (
+                          <track
+                            kind="captions"
+                            srcLang="en"
+                            src={item.captionsUrl}
+                            label="English captions"
+                            default
+                          />
+                        )}
                       </video>
                     )}
                   </div>
