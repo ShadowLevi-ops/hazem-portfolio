@@ -151,6 +151,9 @@ export default function Home() {
             counts={filterCounts}
           />
 
+          {/* Spacer for fixed filter buttons */}
+          <div className="h-20 md:h-24" />
+
           <AnimatePresence mode="wait">
             <motion.div
               key={activeFilter}

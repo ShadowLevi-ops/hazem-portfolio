@@ -113,7 +113,7 @@ export function PortfolioFilter({
 
   return (
     <motion.div
-      className="sticky top-14 z-30 mb-4 flex flex-col gap-2 bg-transparent px-2 md:mb-6"
+      className="fixed top-14 right-0 left-0 z-30 flex flex-col items-center gap-2 bg-transparent px-2 py-2"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
