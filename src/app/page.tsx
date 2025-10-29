@@ -202,14 +202,14 @@ export default function Home() {
         }}
       />
 
-      {/* Floating booking button -> WhatsApp */}
+      {/* Floating WhatsApp button (top-right) */}
       <a
         href={`https://wa.me/60173767247?text=${encodeURIComponent(
           `Hi Hazem, I'm interested in ${selectedTitle} — can we book?`
         )}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-primary text-primary-foreground fixed right-4 bottom-4 z-40 rounded-full px-4 py-2 text-sm font-medium shadow-lg transition-transform hover:scale-105"
+        className="bg-primary text-primary-foreground fixed top-4 right-4 z-40 rounded-full px-4 py-2 text-sm font-medium shadow-lg transition-transform hover:scale-105"
         onClick={() =>
           analytics.track({
             name: 'cta_book_click',
@@ -217,7 +217,7 @@ export default function Home() {
           })
         }
       >
-        Book a shoot
+        WhatsApp
       </a>
 
       <ScrollToTopButton />
