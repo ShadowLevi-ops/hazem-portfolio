@@ -9,14 +9,22 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { AnimatedHero } from '@/components/animated-hero';
 import dynamic from 'next/dynamic';
 import { analytics } from '@/lib/analytics';
+import {
+  PortfolioFilterSkeleton,
+  VerticalCarouselSkeleton,
+  PortfolioSectionSkeleton,
+} from '@/components/loading-skeletons';
 
-// Optimized dynamic imports for faster initial load
+// Optimized dynamic imports for faster initial load with prefetching
 const PortfolioFilter = dynamic(
   () =>
     import('@/components/portfolio-filter').then(mod => ({
       default: mod.PortfolioFilter,
     })),
-  { loading: () => <div className="h-12 w-full bg-transparent" />, ssr: false }
+  {
+    loading: () => <PortfolioFilterSkeleton />,
+    ssr: false,
+  }
 );
 
 const VerticalCarousel = dynamic(
@@ -24,8 +32,19 @@ const VerticalCarousel = dynamic(
     import('@/components/vertical-carousel').then(mod => ({
       default: mod.VerticalCarousel,
     })),
-  { loading: () => <div className="h-64 w-full bg-transparent" />, ssr: false }
+  {
+    loading: () => <VerticalCarouselSkeleton />,
+    ssr: false,
+  }
 );
+
+// Preload components when idle for better perceived performance
+if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+  requestIdleCallback(() => {
+    import('@/components/portfolio-filter');
+    import('@/components/vertical-carousel');
+  });
+}
 
 const ScrollToTopButton = dynamic(
   () =>
@@ -122,7 +141,7 @@ export default function Home() {
       <AnimatedHero />
 
       {/* Portfolio Section */}
-      <Suspense fallback={<div className="h-96 w-full bg-transparent" />}>
+      <Suspense fallback={<PortfolioSectionSkeleton />}>
         <section
           id="portfolio"
           className="relative z-10 container mx-auto px-4 pt-8 pb-8 md:px-6 md:pt-12 md:pb-12 lg:px-8"
