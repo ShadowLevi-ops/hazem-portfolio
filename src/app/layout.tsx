@@ -43,7 +43,9 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://your-domain.com'), // Replace with your actual domain
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://hazem-designs.vercel.app'
+  ),
   alternates: {
     canonical: '/',
   },
@@ -109,7 +111,7 @@ const structuredData = {
   '@type': 'Person',
   name: 'Hazem',
   jobTitle: 'Photographer & Videographer',
-  url: 'https://your-domain.com', // Replace with your actual domain
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://hazem-designs.vercel.app',
   image: '/images/profile.jpg', // Add your profile image
   email: 'hazem@noveltyventures.uk',
   telephone: '+44 1737 67247',

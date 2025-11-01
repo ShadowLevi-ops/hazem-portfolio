@@ -18,9 +18,16 @@ function FilterButton({
   icon,
   count,
 }: FilterButtonProps) {
+  const buttonId = `filter-${label.toLowerCase().replace(/\s+/g, '-')}`;
+  const countId = `${buttonId}-count`;
+
   return (
     <motion.button
+      id={buttonId}
       onClick={onClick}
+      aria-label={`Filter portfolio by ${label}`}
+      aria-pressed={isActive}
+      aria-describedby={countId}
       className={`relative flex items-center gap-1 rounded-full border px-2 py-1 text-xs transition-all duration-300 md:gap-2 md:px-4 md:py-2 md:text-sm ${
         isActive
           ? 'bg-primary text-primary-foreground border-primary shadow-primary/25 shadow-lg'
@@ -32,11 +39,17 @@ function FilterButton({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <span className="flex items-center text-[10px] md:text-sm">{icon}</span>
+      <span
+        className="flex items-center text-[10px] md:text-sm"
+        aria-hidden="true"
+      >
+        {icon}
+      </span>
       <span className="text-[10px] font-medium whitespace-nowrap md:text-sm">
         {label}
       </span>
       <motion.span
+        id={countId}
         className={`rounded-full px-0.5 py-0.5 text-[10px] md:px-1.5 md:text-xs ${
           isActive
             ? 'bg-primary-foreground/20 text-primary-foreground'
@@ -46,6 +59,7 @@ function FilterButton({
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+        aria-label={`${count} items`}
       >
         {count}
       </motion.span>
@@ -117,8 +131,14 @@ export function PortfolioFilter({
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
+      role="region"
+      aria-label="Portfolio filters"
     >
-      <div className="flex flex-wrap justify-center gap-1 md:gap-2">
+      <div
+        className="flex flex-wrap justify-center gap-1 md:gap-2"
+        role="group"
+        aria-label="Filter options"
+      >
         <AnimatePresence mode="wait">
           {filters.map((filter, index) => (
             <motion.div
@@ -139,7 +159,14 @@ export function PortfolioFilter({
         </AnimatePresence>
       </div>
 
-      <div className="bg-muted mx-auto h-1 w-full max-w-3xl overflow-hidden rounded-full">
+      <div
+        className="bg-muted mx-auto h-1 w-full max-w-3xl overflow-hidden rounded-full"
+        role="progressbar"
+        aria-label="Filter progress"
+        aria-valuenow={Math.round(ratio * 100)}
+        aria-valuemin={0}
+        aria-valuemax={100}
+      >
         <motion.div
           className="bg-primary h-full"
           initial={{ width: 0 }}

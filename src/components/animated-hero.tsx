@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { Camera, Video, Award, MapPin, Mail } from 'lucide-react';
+import Image from 'next/image';
 
 export function AnimatedHero() {
   const ref = useRef(null);
@@ -57,7 +58,7 @@ export function AnimatedHero() {
   ];
 
   return (
-    <section
+    <header
       ref={ref}
       className="relative container mx-auto flex min-h-[60vh] flex-col items-center justify-center overflow-hidden px-4 pt-6 pb-8 text-center md:min-h-[70vh] md:px-8 md:pt-16 md:pb-12"
     >
@@ -104,12 +105,13 @@ export function AnimatedHero() {
             className="flex justify-center will-change-transform"
             variants={itemVariants}
           >
-            <img
+            <Image
               src="/giltmedia2.svg"
               alt="Gilt Media Logo"
+              width={300}
+              height={300}
               className="h-40 w-auto will-change-transform sm:h-48 md:h-56 lg:h-64 xl:h-72"
-              loading="eager"
-              decoding="async"
+              priority
               style={{ transform: 'translate3d(0,0,0)' }}
             />
           </motion.div>
@@ -203,6 +205,6 @@ export function AnimatedHero() {
           />
         </motion.div>
       </motion.div>
-    </section>
+    </header>
   );
 }

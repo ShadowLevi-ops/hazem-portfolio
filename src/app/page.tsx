@@ -14,6 +14,7 @@ import {
   VerticalCarouselSkeleton,
   PortfolioSectionSkeleton,
 } from '@/components/loading-skeletons';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 // Optimized dynamic imports for faster initial load with prefetching
 const PortfolioFilter = dynamic(
@@ -137,66 +138,76 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <ErrorBoundary>
+      {/* Skip to content link for accessibility */}
+      <a
+        href="#main-content"
+        className="focus:bg-primary focus:text-primary-foreground sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:px-4 focus:py-2 focus:shadow-lg"
+      >
+        Skip to main content
+      </a>
+
       <AnimatedHero />
 
       {/* Portfolio Section */}
-      <Suspense fallback={<PortfolioSectionSkeleton />}>
-        <section
-          id="portfolio"
-          className="relative z-10 container mx-auto px-4 pt-8 pb-8 md:px-6 md:pt-12 md:pb-12 lg:px-8"
-        >
-          <motion.h2
-            className="mb-6 text-center text-2xl font-bold md:mb-8 md:text-3xl lg:text-4xl"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.3 }}
+      <main id="main-content">
+        <Suspense fallback={<PortfolioSectionSkeleton />}>
+          <section
+            id="portfolio"
+            className="relative z-10 container mx-auto px-4 pt-8 pb-8 md:px-6 md:pt-12 md:pb-12 lg:px-8"
           >
-            <span className="from-primary bg-gradient-to-r to-purple-500 bg-clip-text text-transparent">
-              My Work
-            </span>
-          </motion.h2>
-
-          <PortfolioFilter
-            activeFilter={activeFilter}
-            onFilterChange={filter => {
-              setActiveFilter(filter);
-              analytics.track({
-                name: 'filter_change',
-                properties: { filter },
-              });
-            }}
-            counts={filterCounts}
-          />
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeFilter}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.2 }}
+            <motion.h2
+              className="mb-6 text-center text-2xl font-bold md:mb-8 md:text-3xl lg:text-4xl"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3 }}
             >
-              <VerticalCarousel
-                items={filteredItems}
-                onItemClick={index => {
-                  const item = filteredItems[index];
-                  if (!item) return;
+              <span className="from-primary bg-gradient-to-r to-purple-500 bg-clip-text text-transparent">
+                My Work
+              </span>
+            </motion.h2>
 
-                  const isVideo =
-                    item.type === 'videography' || item.type === 'film';
-                  const slideIndex = isVideo
-                    ? videoItems.findIndex(v => v.id === item.id)
-                    : videoItems.length +
-                      photographyItems.findIndex(p => p.id === item.id);
-                  openLightbox(slideIndex);
-                }}
-              />
-            </motion.div>
-          </AnimatePresence>
-        </section>
-      </Suspense>
+            <PortfolioFilter
+              activeFilter={activeFilter}
+              onFilterChange={filter => {
+                setActiveFilter(filter);
+                analytics.track({
+                  name: 'filter_change',
+                  properties: { filter },
+                });
+              }}
+              counts={filterCounts}
+            />
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeFilter}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.2 }}
+              >
+                <VerticalCarousel
+                  items={filteredItems}
+                  onItemClick={index => {
+                    const item = filteredItems[index];
+                    if (!item) return;
+
+                    const isVideo =
+                      item.type === 'videography' || item.type === 'film';
+                    const slideIndex = isVideo
+                      ? videoItems.findIndex(v => v.id === item.id)
+                      : videoItems.length +
+                        photographyItems.findIndex(p => p.id === item.id);
+                    openLightbox(slideIndex);
+                  }}
+                />
+              </motion.div>
+            </AnimatePresence>
+          </section>
+        </Suspense>
+      </main>
 
       <Lightbox
         open={lightboxOpen}
@@ -211,6 +222,7 @@ export default function Home() {
           view: ({ index }) =>
             analytics.track({ name: 'lightbox_view', properties: { index } }),
         }}
+        controller={{ closeOnBackdropClick: true, closeOnPullDown: true }}
       />
 
       {/* Floating WhatsApp button (top-right) */}
@@ -220,7 +232,8 @@ export default function Home() {
         )}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-primary text-primary-foreground fixed top-3 right-4 z-[60] rounded-full px-3 py-1.5 text-xs font-medium shadow-lg transition-transform hover:scale-105"
+        aria-label="Contact Hazem via WhatsApp to discuss collaboration opportunities"
+        className="bg-primary text-primary-foreground fixed top-3 right-4 z-[60] rounded-full px-3 py-1.5 text-xs font-medium shadow-lg transition-transform hover:scale-105 md:px-4 md:py-2 md:text-sm"
         onClick={() =>
           analytics.track({
             name: 'cta_book_click',
@@ -232,6 +245,6 @@ export default function Home() {
       </a>
 
       <ScrollToTopButton />
-    </>
+    </ErrorBoundary>
   );
 }

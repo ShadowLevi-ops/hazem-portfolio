@@ -44,9 +44,12 @@ export function VerticalCarousel({
                 item.projectDetails === 'ONGOING PROJECT';
 
               return (
-                <motion.div
+                <motion.article
                   key={item.id}
                   className="group border-border/50 focus-visible:ring-primary relative aspect-[9/16] cursor-pointer overflow-hidden rounded-lg border shadow-lg will-change-transform outline-none hover:shadow-2xl focus-visible:ring-2 focus-visible:ring-offset-2 md:rounded-xl"
+                  role="button"
+                  aria-label={`View ${item.title} - ${item.type}`}
+                  aria-describedby={`item-description-${item.id}`}
                   whileHover={
                     reduceMotion
                       ? {}
@@ -74,6 +77,10 @@ export function VerticalCarousel({
                     }
                   }}
                 >
+                  <span id={`item-description-${item.id}`} className="sr-only">
+                    {item.projectDetails || item.type}
+                    {item.camera && ` - Shot with ${item.camera}`}
+                  </span>
                   {/* Optimized image with optional video hover preview */}
                   <div
                     className="relative h-full w-full will-change-transform"
@@ -162,7 +169,7 @@ export function VerticalCarousel({
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </motion.article>
               );
             })}
           </div>
