@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from 'next';
-import { Cormorant_Garamond, Inter } from 'next/font/google';
+import { Montserrat, Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Layout } from '@/components/layout/Layout';
 import './globals.css';
 import { cn } from '@/lib/utils';
 
-const cormorantGaramond = Cormorant_Garamond({
+const montserrat = Montserrat({
   variable: '--font-serif',
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['400', '500', '600', '700', '800', '900'],
   display: 'swap',
 });
 
@@ -174,7 +174,7 @@ export default function RootLayout({
       <body
         className={cn(
           'bg-background dark min-h-screen font-sans antialiased',
-          cormorantGaramond.variable,
+          montserrat.variable,
           inter.variable
         )}
       >

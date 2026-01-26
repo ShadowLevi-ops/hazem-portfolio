@@ -1,10 +1,84 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Expand } from 'lucide-react';
 import type { PortfolioItem } from '@/types/portfolio';
-//
+
+// Auto-playing video component with Intersection Observer
+function VideoAutoPlay({
+  src,
+  poster,
+  captionsUrl,
+}: {
+  src: string;
+  poster?: string;
+  captionsUrl?: string;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const container = containerRef.current;
+    if (!video || !container) return;
+
+    // Intersection Observer for auto-play when in viewport
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Video is visible - play it
+            video.play().catch(() => {
+              // Silently handle autoplay restrictions
+            });
+          } else {
+            // Video is not visible - pause it
+            video.pause();
+          }
+        });
+      },
+      {
+        threshold: 0.5, // Play when 50% visible
+        rootMargin: '50px', // Start loading slightly before visible
+      }
+    );
+
+    observer.observe(container);
+
+    return () => {
+      observer.disconnect();
+      video.pause();
+    };
+  }, []);
+
+  return (
+    <div ref={containerRef} className="absolute inset-0">
+      <video
+        ref={videoRef}
+        className="absolute inset-0 h-full w-full object-cover object-center opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100"
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster={poster}
+        crossOrigin="anonymous"
+      >
+        <source src={src} type="video/mp4" />
+        {captionsUrl && (
+          <track
+            kind="captions"
+            srcLang="en"
+            src={captionsUrl}
+            label="English captions"
+            default
+          />
+        )}
+      </video>
+    </div>
+  );
+}
 
 interface VerticalCarouselProps {
   items: PortfolioItem[];
@@ -104,36 +178,11 @@ export function VerticalCarousel({
                     />
 
                     {isVideo && (
-                      <video
-                        className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100"
-                        muted
-                        loop
-                        playsInline
-                        preload="none"
+                      <VideoAutoPlay
+                        src={item.mediaUrl}
                         poster={item.thumbnailUrl || '/images/p1.PNG'}
-                        crossOrigin="anonymous"
-                        onMouseEnter={e => {
-                          const v = e.currentTarget;
-                          // Start playback on hover without blocking
-                          v.play().catch(() => {});
-                        }}
-                        onMouseLeave={e => {
-                          const v = e.currentTarget;
-                          v.pause();
-                          v.currentTime = 0;
-                        }}
-                      >
-                        <source src={item.mediaUrl} type="video/mp4" />
-                        {item.captionsUrl && (
-                          <track
-                            kind="captions"
-                            srcLang="en"
-                            src={item.captionsUrl}
-                            label="English captions"
-                            default
-                          />
-                        )}
-                      </video>
+                        captionsUrl={item.captionsUrl}
+                      />
                     )}
                   </div>
 

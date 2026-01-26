@@ -149,6 +149,50 @@ export default function Home() {
 
       <AnimatedHero />
 
+      {/* About Section */}
+      <section
+        id="about"
+        className="relative z-10 container mx-auto px-4 py-16 md:px-6 md:py-24 lg:px-8"
+      >
+        <motion.div
+          className="mx-auto max-w-3xl text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+        >
+          <motion.h2
+            className="mb-6 font-serif text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
+            <span className="from-foreground via-primary to-foreground bg-gradient-to-r bg-clip-text font-bold text-transparent">
+              About
+            </span>
+          </motion.h2>
+          <motion.div
+            className="bg-primary/30 mx-auto mb-8 h-px w-16 md:w-24"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          />
+          <motion.p
+            className="text-muted-foreground font-sans text-sm leading-relaxed font-light tracking-tight md:text-base"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+          >
+            Professional photographer and videographer specializing in visual
+            storytelling for brands and creatives. Based in Kuala Lumpur,
+            Malaysia.
+          </motion.p>
+        </motion.div>
+      </section>
+
       {/* Portfolio Section */}
       <main id="main-content">
         <Suspense fallback={<PortfolioSectionSkeleton />}>
@@ -170,7 +214,9 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0.1 }}
               >
-                <span className="text-foreground">Portfolio</span>
+                <span className="from-foreground via-primary to-foreground bg-gradient-to-r bg-clip-text font-bold text-transparent">
+                  Portfolio
+                </span>
               </motion.h2>
               <motion.div
                 className="bg-primary/30 mx-auto mt-4 h-px w-16 md:mt-6 md:w-24"
@@ -238,19 +284,78 @@ export default function Home() {
         controller={{ closeOnBackdropClick: true, closeOnPullDown: true }}
       />
 
-      {/* Elegant WhatsApp button */}
+      {/* Contact Section */}
+      <section
+        id="contact"
+        className="relative z-10 container mx-auto px-4 py-16 md:px-6 md:py-24 lg:px-8"
+      >
+        <motion.div
+          className="mx-auto max-w-2xl text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+        >
+          <motion.h2
+            className="mb-6 font-serif text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
+            <span className="from-foreground via-primary to-foreground bg-gradient-to-r bg-clip-text font-bold text-transparent">
+              Contact
+            </span>
+          </motion.h2>
+          <motion.div
+            className="bg-primary/30 mx-auto mb-8 h-px w-16 md:w-24"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          />
+          <motion.div
+            className="flex flex-col items-center gap-4 md:flex-row md:justify-center"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+          >
+            <a
+              href={`https://wa.me/60173767247?text=${encodeURIComponent(
+                `Hi Hazem, I'd like to discuss a collaboration opportunity.`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Contact Hazem via WhatsApp"
+              className="bg-primary/10 text-primary border-primary/30 hover:bg-primary/20 hover:border-primary/50 rounded-sm border px-6 py-2.5 text-xs font-light tracking-tight backdrop-blur-sm transition-all duration-300 md:text-sm"
+              onClick={() =>
+                analytics.track({
+                  name: 'cta_book_click',
+                  properties: { channel: 'whatsapp' },
+                })
+              }
+            >
+              WhatsApp
+            </a>
+            <a
+              href="mailto:hazem@noveltyventures.uk"
+              className="text-muted-foreground hover:text-primary text-xs font-light tracking-tight transition-colors duration-300 md:text-sm"
+            >
+              hazem@noveltyventures.uk
+            </a>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Floating Contact Button */}
       <a
-        href={`https://wa.me/60173767247?text=${encodeURIComponent(
-          `Hi Hazem, I'd like to discuss a collaboration opportunity.`
-        )}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Contact Hazem via WhatsApp to discuss collaboration opportunities"
+        href="#contact"
         className="bg-primary/10 text-primary border-primary/30 hover:bg-primary/20 hover:border-primary/50 fixed top-6 right-6 z-[60] rounded-sm border px-4 py-2 text-xs font-light tracking-tight backdrop-blur-sm transition-all duration-300 md:px-5 md:py-2.5 md:text-sm"
         onClick={() =>
           analytics.track({
-            name: 'cta_book_click',
-            properties: { channel: 'whatsapp' },
+            name: 'cta_contact_click',
+            properties: { source: 'floating_button' },
           })
         }
       >
