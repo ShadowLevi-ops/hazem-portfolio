@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Montserrat, Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Layout } from '@/components/layout/Layout';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import { cn } from '@/lib/utils';
 
@@ -188,6 +189,7 @@ export default function RootLayout({
             <Layout>{children}</Layout>
           </div>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

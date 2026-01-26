@@ -181,7 +181,7 @@ export function VerticalCarousel({
                       <VideoAutoPlay
                         src={item.mediaUrl}
                         poster={item.thumbnailUrl || '/images/p1.PNG'}
-                        captionsUrl={item.captionsUrl}
+                        {...(item.captionsUrl && { captionsUrl: item.captionsUrl })}
                       />
                     )}
                   </div>
