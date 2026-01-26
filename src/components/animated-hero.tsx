@@ -60,33 +60,33 @@ export function AnimatedHero() {
   return (
     <header
       ref={ref}
-      className="relative container mx-auto flex min-h-[60vh] flex-col items-center justify-center overflow-hidden px-4 pt-6 pb-8 text-center md:min-h-[70vh] md:px-8 md:pt-16 md:pb-12"
+      className="relative container mx-auto flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-4 pt-12 pb-16 text-center md:min-h-[80vh] md:px-8 md:pt-20 md:pb-24"
     >
-      {/* Optimized background elements */}
+      {/* Subtle background elements */}
       <div className="absolute inset-0 -z-10">
         <motion.div
-          className="absolute top-10 left-5 h-16 w-16 rounded-full bg-gradient-to-r from-purple-400/15 to-pink-400/15 blur-xl will-change-transform md:top-20 md:left-10 md:h-20 md:w-20"
+          className="bg-primary/5 absolute top-20 left-10 h-32 w-32 rounded-full blur-3xl will-change-transform md:top-32 md:left-20 md:h-48 md:w-48"
           animate={{
-            scale: [1, 1.1, 1],
-            rotate: [0, 180, 360],
+            scale: [1, 1.05, 1],
+            opacity: [0.3, 0.5, 0.3],
           }}
           transition={{
-            duration: 12,
+            duration: 8,
             repeat: Infinity,
-            ease: 'linear',
+            ease: 'easeInOut',
           }}
           style={{ transform: 'translate3d(0,0,0)' }}
         />
         <motion.div
-          className="absolute right-5 bottom-10 h-24 w-24 rounded-full bg-gradient-to-r from-blue-400/15 to-cyan-400/15 blur-xl will-change-transform md:right-10 md:bottom-20 md:h-32 md:w-32"
+          className="bg-primary/3 absolute right-10 bottom-20 h-40 w-40 rounded-full blur-3xl will-change-transform md:right-20 md:bottom-32 md:h-56 md:w-56"
           animate={{
-            scale: [1.1, 1, 1.1],
-            rotate: [360, 180, 0],
+            scale: [1.05, 1, 1.05],
+            opacity: [0.2, 0.4, 0.2],
           }}
           transition={{
-            duration: 15,
+            duration: 10,
             repeat: Infinity,
-            ease: 'linear',
+            ease: 'easeInOut',
           }}
           style={{ transform: 'translate3d(0,0,0)' }}
         />
@@ -99,7 +99,7 @@ export function AnimatedHero() {
         className="mx-auto w-full max-w-4xl space-y-4 will-change-transform md:space-y-6"
       >
         {/* Logo and Title */}
-        <motion.div variants={itemVariants} className="space-y-3 md:space-y-4">
+        <motion.div variants={itemVariants} className="space-y-6 md:space-y-8">
           {/* Logo */}
           <motion.div
             className="flex justify-center will-change-transform"
@@ -110,62 +110,69 @@ export function AnimatedHero() {
               alt="Gilt Media Logo"
               width={300}
               height={300}
-              className="h-40 w-auto will-change-transform sm:h-48 md:h-56 lg:h-64 xl:h-72"
+              className="h-32 w-auto will-change-transform sm:h-40 md:h-48 lg:h-56 xl:h-64"
               priority
               style={{ transform: 'translate3d(0,0,0)' }}
             />
           </motion.div>
 
           <motion.h1
-            className="text-center text-base font-bold sm:text-lg md:text-xl lg:text-2xl"
+            className="text-center font-serif text-xl leading-tight font-bold tracking-tight sm:text-2xl md:text-3xl lg:text-4xl"
             variants={itemVariants}
           >
-            <span className="from-primary bg-gradient-to-r via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              Commercial Grade Vertical Films That Just Works
+            <span className="from-foreground via-primary to-foreground bg-gradient-to-r bg-clip-text text-transparent">
+              Crafting Visual Narratives
+              <br />
+              Through Photography & Videography
             </span>
           </motion.h1>
 
           {/* Subtitle */}
           <motion.h2
-            className="text-muted-foreground text-center text-xs font-semibold sm:text-sm md:text-base lg:text-lg"
+            className="text-muted-foreground text-center font-sans text-xs font-light tracking-tight sm:text-sm md:text-base"
             variants={itemVariants}
           >
-            <span>I also made this website from scratch, so yeah.</span>
+            <span>
+              Professional visual storytelling for brands and creatives
+            </span>
           </motion.h2>
         </motion.div>
 
         {/* Contact info */}
         <motion.div
-          className="text-muted-foreground flex flex-col flex-wrap items-center justify-center gap-3 text-sm sm:flex-row md:gap-4 md:text-base"
+          className="text-muted-foreground flex flex-col flex-wrap items-center justify-center gap-4 text-xs sm:flex-row md:gap-6 md:text-sm"
           variants={itemVariants}
         >
-          <div className="hover:text-primary flex cursor-pointer items-center gap-2 transition-colors">
-            <MapPin className="h-4 w-4" />
-            <span>Kuala Lumpur, MY</span>
+          <div className="hover:text-primary flex cursor-pointer items-center gap-2.5 transition-colors duration-300">
+            <MapPin className="h-3.5 w-3.5" />
+            <span className="font-light tracking-tight">Kuala Lumpur, MY</span>
           </div>
+          <div className="bg-border h-4 w-px" />
           <a
             href="mailto:hazem@noveltyventures.uk"
-            className="hover:text-primary flex items-center gap-2 transition-colors"
+            className="hover:text-primary flex items-center gap-2.5 transition-colors duration-300"
           >
-            <Mail className="h-4 w-4" />
-            <span>hazem@noveltyventures.uk</span>
+            <Mail className="h-3.5 w-3.5" />
+            <span className="font-light tracking-tight">
+              hazem@noveltyventures.uk
+            </span>
           </a>
         </motion.div>
 
-        {/* Simplified stats */}
+        {/* Refined stats */}
         <motion.div
-          className="mx-auto grid max-w-sm grid-cols-3 gap-4 pt-2 md:max-w-md md:gap-6 md:pt-4"
+          className="mx-auto grid max-w-lg grid-cols-3 gap-8 pt-8 md:max-w-2xl md:gap-12 md:pt-12"
           variants={itemVariants}
         >
           {stats.map(stat => (
             <div key={stat.label} className="group text-center">
-              <div className="text-primary mb-2 flex justify-center transition-colors">
+              <div className="text-primary/60 group-hover:text-primary mb-3 flex justify-center transition-colors duration-300">
                 {stat.icon}
               </div>
-              <div className="text-foreground text-xl font-bold md:text-2xl">
+              <div className="text-foreground font-serif text-xl font-bold tracking-tight md:text-2xl lg:text-3xl">
                 {stat.value}
               </div>
-              <div className="text-muted-foreground mt-1 text-xs md:text-sm">
+              <div className="text-muted-foreground mt-2 text-[10px] font-light tracking-tight uppercase md:text-xs">
                 {stat.label}
               </div>
             </div>
@@ -173,32 +180,32 @@ export function AnimatedHero() {
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
+      {/* Elegant scroll indicator */}
       <motion.div
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 transform md:bottom-6"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 transform md:bottom-12"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 0.5 }}
+        transition={{ delay: 1.2, duration: 0.6 }}
       >
         <motion.div
-          className="border-muted-foreground/30 flex h-10 w-6 justify-center rounded-full border-2"
+          className="border-muted-foreground/20 flex h-12 w-6 justify-center rounded-full border"
           animate={{
-            scale: [1, 1.05, 1],
+            scale: [1, 1.02, 1],
           }}
           transition={{
-            duration: 2,
+            duration: 3,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
         >
           <motion.div
-            className="bg-muted-foreground/50 mt-2 h-3 w-1 rounded-full"
+            className="bg-primary/40 mt-2.5 h-2.5 w-0.5 rounded-full"
             animate={{
-              y: [0, 12, 0],
-              opacity: [1, 0.3, 1],
+              y: [0, 10, 0],
+              opacity: [0.6, 0.2, 0.6],
             }}
             transition={{
-              duration: 2,
+              duration: 2.5,
               repeat: Infinity,
               ease: 'easeInOut',
             }}

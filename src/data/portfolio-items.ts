@@ -5,7 +5,7 @@ export const portfolioItems: PortfolioItem[] = [
   // --- Photography Items ---
   {
     id: 'photo-1',
-    title: 'Urban Exploration',
+    title: 'Uluwatu Temple 1',
     type: 'photography',
     mediaUrl: '/images/p1.PNG',
     date: '2024-01-15',
@@ -14,7 +14,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'photo-2',
-    title: "Nature's Beauty",
+    title: 'Karangasem Dive Resort',
     type: 'photography',
     mediaUrl: '/images/p2.PNG',
     camera: 'Camera Used',
@@ -22,7 +22,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'photo-3',
-    title: 'Architectural Lines',
+    title: 'Uluwatu Temple 2',
     type: 'photography',
     mediaUrl: '/images/p3.PNG',
     camera: 'Camera Used',
@@ -30,7 +30,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'photo-4',
-    title: 'Coastal Views',
+    title: 'Karang Boma Cliff',
     type: 'photography',
     mediaUrl: '/images/p4.PNG',
     camera: 'Camera Used',
@@ -38,7 +38,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'photo-5',
-    title: 'New Photography',
+    title: 'Solaris Parq, Dutamas',
     type: 'photography',
     mediaUrl: '/images/p5.JPEG',
     camera: 'Camera Used',
@@ -46,7 +46,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'photo-6',
-    title: 'Creative Shot',
+    title: 'Masjid Wilayah Persekutuan, KL',
     type: 'photography',
     mediaUrl: '/images/p6.JPEG',
     camera: 'Camera Used',
@@ -54,7 +54,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'photo-7',
-    title: 'Latest Shot',
+    title: 'Mount Fuji',
     type: 'photography',
     mediaUrl: '/images/p7.jpg',
     camera: 'Camera Used',
@@ -62,7 +62,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'photo-8',
-    title: 'New Photography',
+    title: 'Canggu Beach Travel Shot',
     type: 'photography',
     mediaUrl: '/images/p8.JPEG',
     camera: 'Camera Used',
@@ -70,7 +70,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'photo-9',
-    title: 'Latest Photography',
+    title: 'Malaysia National Sports Day',
     type: 'photography',
     mediaUrl: '/images/p9.jpeg',
     camera: 'Camera Used',
@@ -78,7 +78,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'photo-10',
-    title: 'New Photography 10',
+    title: 'Hanuman, Uluwatu Kecak Dance',
     type: 'photography',
     mediaUrl: '/images/p10.png',
     camera: 'Camera Used',
@@ -86,7 +86,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'photo-11',
-    title: 'New Photography 11',
+    title: 'Hanuman, Uluwatu Kecak Dance 2',
     type: 'photography',
     mediaUrl: '/images/p11.png',
     camera: 'Camera Used',
@@ -94,7 +94,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'photo-12',
-    title: 'Ongoing Project 1',
+    title: 'New Stadium Shah Alam Promo 1',
     type: 'photography',
     mediaUrl: '/images/p12.jpg',
     camera: 'Camera Used',
@@ -102,7 +102,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'photo-13',
-    title: 'Ongoing Project 2',
+    title: 'New Stadium Shah Alam Promo 2',
     type: 'photography',
     mediaUrl: '/images/p13.jpg',
     camera: 'Camera Used',
@@ -110,7 +110,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'photo-14',
-    title: 'Ongoing Project 3',
+    title: 'New Stadium Shah Alam Promo 3',
     type: 'photography',
     mediaUrl: '/images/p14.jpg',
     camera: 'Camera Used',
@@ -119,7 +119,7 @@ export const portfolioItems: PortfolioItem[] = [
   // --- Video Items (Sorted video-1 to video-9) ---
   {
     id: 'video-1',
-    title: 'Short Film: The Wait',
+    title: 'Travel Shorts, Eiffel Tower & Brugge City Square',
     type: 'film',
     mediaUrl: '/videos/1.mp4',
     thumbnailUrl: '/videos/VT-1.png',
@@ -129,7 +129,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'video-2',
-    title: 'Client Project: Product Showcase',
+    title: 'The Met Corporate Towers, KL',
     type: 'videography',
     mediaUrl: '/videos/2.mp4',
     thumbnailUrl: '/videos/VT-2.png',
@@ -139,7 +139,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'video-3',
-    title: 'Music Video Concept',
+    title: 'JDTFC Game Short',
     type: 'videography',
     mediaUrl: '/videos/3.mp4',
     thumbnailUrl: '/videos/VT-3.png',
@@ -149,7 +149,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'video-4',
-    title: 'Documentary Short: The Maker',
+    title: 'Paris Product Shoot',
     type: 'film',
     mediaUrl: '/videos/4.mp4',
     thumbnailUrl: '/videos/VT-4.png',
@@ -158,7 +158,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'video-5',
-    title: 'Event Recap: Conference Highlights',
+    title: 'Nadin Amizah 2021 Concert Shoot',
     type: 'videography',
     mediaUrl: '/videos/5.mp4',
     thumbnailUrl: '/videos/VT-5.png',
@@ -168,7 +168,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'video-6',
-    title: 'Experimental Visuals',
+    title: 'Converse x Malaysian Indie Band Shoot',
     type: 'film',
     mediaUrl: '/videos/6.mp4',
     thumbnailUrl: '/videos/VT-6.png',
@@ -177,7 +177,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'video-7',
-    title: 'Video: Rahisa',
+    title: 'Underwater Shorts',
     type: 'videography',
     mediaUrl: '/videos/7.mp4',
     thumbnailUrl: '/videos/VT-7.png',
@@ -186,7 +186,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'video-8',
-    title: 'Video: Short Beach',
+    title: 'Travellogue Shorts',
     type: 'film',
     mediaUrl: '/videos/8.mp4',
     thumbnailUrl: '/videos/VT-8.png',
@@ -195,7 +195,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'video-9',
-    title: 'Video: Snip Midnight',
+    title: 'Midnight Fusic JB Shoot',
     type: 'videography',
     mediaUrl: '/videos/9.mp4',
     thumbnailUrl: '/videos/VT-9.png',
@@ -204,7 +204,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'video-10',
-    title: 'Video: New Project',
+    title: 'Scuba Diving Trip Recap',
     type: 'videography',
     mediaUrl: '/videos/10.mp4',
     thumbnailUrl: '/videos/VT-10.png',
@@ -213,7 +213,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'video-11',
-    title: 'Video: Latest Work',
+    title: 'Phuket Travellogue Shorts',
     type: 'videography',
     mediaUrl: '/videos/11.mp4',
     thumbnailUrl: '/videos/VT-11.png',
@@ -222,11 +222,20 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'video-12',
-    title: 'Video: New Project',
+    title: 'Japan Travellogue Shorts',
     type: 'videography',
     mediaUrl: '/videos/12.mp4',
     thumbnailUrl: '/videos/VT-12.jpg',
     camera: '35mm f1.8',
+    projectDetails: 'Creative Film',
+  },
+  {
+    id: 'video-13',
+    title: 'Tottenham Hotspur Reels Shoot',
+    type: 'videography',
+    mediaUrl: '/videos/13.mp4',
+    thumbnailUrl: '/videos/VT-13.jpg',
+    camera: 'Camera Used',
     projectDetails: 'Creative Film',
   },
 ];

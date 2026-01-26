@@ -154,19 +154,32 @@ export default function Home() {
         <Suspense fallback={<PortfolioSectionSkeleton />}>
           <section
             id="portfolio"
-            className="relative z-10 container mx-auto px-4 pt-8 pb-8 md:px-6 md:pt-12 md:pb-12 lg:px-8"
+            className="relative z-10 container mx-auto px-4 pt-16 pb-16 md:px-6 md:pt-24 md:pb-24 lg:px-8"
           >
-            <motion.h2
-              className="mb-6 text-center text-2xl font-bold md:mb-8 md:text-3xl lg:text-4xl"
+            <motion.div
+              className="mb-12 text-center md:mb-16"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.4 }}
             >
-              <span className="from-primary bg-gradient-to-r to-purple-500 bg-clip-text text-transparent">
-                My Work
-              </span>
-            </motion.h2>
+              <motion.h2
+                className="font-serif text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+              >
+                <span className="text-foreground">Portfolio</span>
+              </motion.h2>
+              <motion.div
+                className="bg-primary/30 mx-auto mt-4 h-px w-16 md:mt-6 md:w-24"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              />
+            </motion.div>
 
             <PortfolioFilter
               activeFilter={activeFilter}
@@ -225,15 +238,15 @@ export default function Home() {
         controller={{ closeOnBackdropClick: true, closeOnPullDown: true }}
       />
 
-      {/* Floating WhatsApp button (top-right) */}
+      {/* Elegant WhatsApp button */}
       <a
         href={`https://wa.me/60173767247?text=${encodeURIComponent(
-          `Hi Hazem, Lets Collab!!`
+          `Hi Hazem, I'd like to discuss a collaboration opportunity.`
         )}`}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Contact Hazem via WhatsApp to discuss collaboration opportunities"
-        className="bg-primary text-primary-foreground fixed top-3 right-4 z-[60] rounded-full px-3 py-1.5 text-xs font-medium shadow-lg transition-transform hover:scale-105 md:px-4 md:py-2 md:text-sm"
+        className="bg-primary/10 text-primary border-primary/30 hover:bg-primary/20 hover:border-primary/50 fixed top-6 right-6 z-[60] rounded-sm border px-4 py-2 text-xs font-light tracking-tight backdrop-blur-sm transition-all duration-300 md:px-5 md:py-2.5 md:text-sm"
         onClick={() =>
           analytics.track({
             name: 'cta_book_click',
@@ -241,7 +254,7 @@ export default function Home() {
           })
         }
       >
-        WhatsApp
+        Contact
       </a>
 
       <ScrollToTopButton />

@@ -28,10 +28,10 @@ function FilterButton({
       aria-label={`Filter portfolio by ${label}`}
       aria-pressed={isActive}
       aria-describedby={countId}
-      className={`relative flex items-center gap-1 rounded-full border px-2 py-1 text-xs transition-all duration-300 md:gap-2 md:px-4 md:py-2 md:text-sm ${
+      className={`relative flex items-center gap-1.5 rounded-sm border px-3 py-1.5 text-[10px] font-light tracking-tight transition-all duration-300 md:gap-2 md:px-4 md:py-1.5 md:text-xs ${
         isActive
-          ? 'bg-primary text-primary-foreground border-primary shadow-primary/25 shadow-lg'
-          : 'bg-background/80 border-border hover:border-primary/50 hover:bg-accent/50 backdrop-blur-sm'
+          ? 'bg-primary/10 text-primary border-primary/50 shadow-sm'
+          : 'bg-background/40 border-border/50 hover:border-primary/30 hover:bg-accent/20 text-muted-foreground hover:text-foreground backdrop-blur-sm'
       } `}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
@@ -45,15 +45,15 @@ function FilterButton({
       >
         {icon}
       </span>
-      <span className="text-[10px] font-medium whitespace-nowrap md:text-sm">
+      <span className="text-[10px] font-light tracking-tight whitespace-nowrap uppercase md:text-xs">
         {label}
       </span>
       <motion.span
         id={countId}
-        className={`rounded-full px-0.5 py-0.5 text-[10px] md:px-1.5 md:text-xs ${
+        className={`rounded-sm px-1.5 py-0.5 text-[10px] font-light md:px-2 md:text-xs ${
           isActive
-            ? 'bg-primary-foreground/20 text-primary-foreground'
-            : 'bg-muted text-muted-foreground'
+            ? 'bg-primary/20 text-primary'
+            : 'bg-muted/50 text-muted-foreground'
         } `}
         key={count}
         initial={{ scale: 0 }}
@@ -66,11 +66,11 @@ function FilterButton({
 
       {isActive && (
         <motion.div
-          className="border-primary/30 absolute inset-0 rounded-full border-2"
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1.05, opacity: 1 }}
-          exit={{ scale: 0.8, opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          className="border-primary/20 absolute inset-0 rounded-sm border"
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.95, opacity: 0 }}
+          transition={{ duration: 0.2 }}
         />
       )}
     </motion.button>
@@ -127,10 +127,10 @@ export function PortfolioFilter({
 
   return (
     <motion.div
-      className="sticky top-0 z-30 mb-4 flex flex-col items-center gap-2 bg-transparent px-2 md:mb-6"
-      initial={{ opacity: 0, y: 30 }}
+      className="sticky top-0 z-30 mb-8 flex flex-col items-center gap-4 bg-transparent px-2 md:mb-12"
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
+      transition={{ duration: 0.4, delay: 0.2 }}
       role="region"
       aria-label="Portfolio filters"
     >
@@ -160,7 +160,7 @@ export function PortfolioFilter({
       </div>
 
       <div
-        className="bg-muted mx-auto h-1 w-full max-w-3xl overflow-hidden rounded-full"
+        className="bg-muted/30 mx-auto h-px w-full max-w-2xl overflow-hidden"
         role="progressbar"
         aria-label="Filter progress"
         aria-valuenow={Math.round(ratio * 100)}
@@ -168,10 +168,10 @@ export function PortfolioFilter({
         aria-valuemax={100}
       >
         <motion.div
-          className="bg-primary h-full"
+          className="bg-primary/60 h-full"
           initial={{ width: 0 }}
           animate={{ width: `${Math.round(ratio * 100)}%` }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
         />
       </div>
     </motion.div>

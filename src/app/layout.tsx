@@ -1,19 +1,23 @@
 import type { Metadata, Viewport } from 'next';
-// import { Geist, Geist_Mono } from "next/font/google"; // Keep or remove based on preference/shadcn setup
-import { ThemeProvider } from '@/components/theme-provider'; // Restore ThemeProvider import
-import { Layout } from '@/components/layout/Layout'; // Import the Layout component
+import { Cormorant_Garamond, Inter } from 'next/font/google';
+import { ThemeProvider } from '@/components/theme-provider';
+import { Layout } from '@/components/layout/Layout';
 import './globals.css';
-import { cn } from '@/lib/utils'; // Import cn utility
+import { cn } from '@/lib/utils';
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-//
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+const cormorantGaramond = Cormorant_Garamond({
+  variable: '--font-serif',
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  display: 'swap',
+});
+
+const inter = Inter({
+  variable: '--font-sans',
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600'],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: {
@@ -167,16 +171,22 @@ export default function RootLayout({
         />
         <meta name="color-scheme" content="light dark" />
       </head>
-      <body className={cn('bg-background min-h-screen font-sans antialiased')}>
-        {' '}
-        {/* Added font-sans */}
-        <ThemeProvider // Restore ThemeProvider wrapper
+      <body
+        className={cn(
+          'bg-background dark min-h-screen font-sans antialiased',
+          cormorantGaramond.variable,
+          inter.variable
+        )}
+      >
+        <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="dark"
+          enableSystem={false}
           disableTransitionOnChange
         >
-          <Layout>{children}</Layout> {/* Wrap children with Layout */}
+          <div className="dark">
+            <Layout>{children}</Layout>
+          </div>
         </ThemeProvider>
       </body>
     </html>

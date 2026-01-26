@@ -27,16 +27,16 @@ export function VerticalCarousel({
 
   return (
     <div className="relative mx-auto w-full max-w-7xl">
-      {/* Optimized container */}
-      <div className="from-background/50 to-background/80 relative overflow-hidden rounded-xl border bg-gradient-to-b backdrop-blur-sm md:rounded-2xl">
+      {/* Refined container */}
+      <div className="border-border/50 bg-background/40 relative overflow-hidden rounded-lg border backdrop-blur-sm md:rounded-xl">
         <motion.div
           initial={{ opacity: 0, transform: 'translate3d(0,0,0)' }}
           animate={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
           transition={{ duration: 0.4, ease: 'easeOut' }}
-          className="p-3 will-change-transform md:p-6"
+          className="p-4 will-change-transform md:p-8"
         >
-          {/* Optimized grid layout */}
-          <div className="grid grid-cols-3 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-4 lg:gap-6">
+          {/* Refined grid layout */}
+          <div className="grid grid-cols-3 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8">
             {items.map((item, index) => {
               const isVideo =
                 item.type === 'videography' || item.type === 'film';
@@ -46,7 +46,7 @@ export function VerticalCarousel({
               return (
                 <motion.article
                   key={item.id}
-                  className="group border-border/50 focus-visible:ring-primary relative aspect-[9/16] cursor-pointer overflow-hidden rounded-lg border shadow-lg will-change-transform outline-none hover:shadow-2xl focus-visible:ring-2 focus-visible:ring-offset-2 md:rounded-xl"
+                  className="group border-border/30 focus-visible:ring-primary bg-card/20 hover:border-primary/30 hover:bg-card/30 relative aspect-[9/16] cursor-pointer overflow-hidden rounded-md border transition-all duration-300 will-change-transform outline-none focus-visible:ring-2 focus-visible:ring-offset-2 md:rounded-lg"
                   role="button"
                   aria-label={`View ${item.title} - ${item.type}`}
                   aria-describedby={`item-description-${item.id}`}
@@ -137,8 +137,8 @@ export function VerticalCarousel({
                     )}
                   </div>
 
-                  {/* Simplified overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  {/* Refined overlay - darker */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                   {/* Ongoing Project Overlay */}
                   {isOngoingProject && (
@@ -166,6 +166,20 @@ export function VerticalCarousel({
                     <div className="absolute top-1.5 right-1.5 md:top-2 md:right-2">
                       <div className="rounded-full bg-white/20 p-1 backdrop-blur-sm md:p-1.5">
                         <Expand className="h-2.5 w-2.5 text-white md:h-3 md:w-3" />
+                      </div>
+                    </div>
+
+                    {/* Title overlay - fades in on hover */}
+                    <div className="absolute right-3 bottom-3 left-3 md:right-4 md:bottom-4 md:left-4">
+                      <div className="font-sans text-[10px] leading-tight font-bold tracking-tight text-white md:text-xs">
+                        <div className="mb-1 line-clamp-2 break-words">
+                          {item.title}
+                        </div>
+                        <div className="text-[9px] font-bold tracking-tight text-white/80 uppercase md:text-[10px]">
+                          {item.type === 'videography' || item.type === 'film'
+                            ? 'Video'
+                            : 'Photography'}
+                        </div>
                       </div>
                     </div>
                   </div>
