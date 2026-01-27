@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import { Camera, Video, Award, MapPin, Mail } from 'lucide-react';
+import { MapPin, Mail } from 'lucide-react';
 import Image from 'next/image';
 
 export function AnimatedHero() {
@@ -38,24 +38,6 @@ export function AnimatedHero() {
       },
     },
   };
-
-  const stats = [
-    {
-      icon: <Camera className="h-4 w-4 md:h-5 md:w-5" />,
-      label: 'Photography',
-      value: '50+',
-    },
-    {
-      icon: <Video className="h-4 w-4 md:h-5 md:w-5" />,
-      label: 'Video Projects',
-      value: '30+',
-    },
-    {
-      icon: <Award className="h-4 w-4 md:h-5 md:w-5" />,
-      label: 'Happy Clients',
-      value: '100+',
-    },
-  ];
 
   return (
     <header
@@ -158,31 +140,11 @@ export function AnimatedHero() {
             </span>
           </a>
         </motion.div>
-
-        {/* Refined stats */}
-        <motion.div
-          className="mx-auto grid max-w-lg grid-cols-3 gap-8 pt-8 md:max-w-2xl md:gap-12 md:pt-12"
-          variants={itemVariants}
-        >
-          {stats.map(stat => (
-            <div key={stat.label} className="group text-center">
-              <div className="text-primary/60 group-hover:text-primary mb-3 flex justify-center transition-colors duration-300">
-                {stat.icon}
-              </div>
-              <div className="text-foreground font-serif text-xl font-bold tracking-tight md:text-2xl lg:text-3xl">
-                {stat.value}
-              </div>
-              <div className="text-muted-foreground mt-2 text-[10px] font-light tracking-tight uppercase md:text-xs">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </motion.div>
       </motion.div>
 
       {/* Elegant scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 transform md:bottom-12"
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 transform md:bottom-16"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.6 }}

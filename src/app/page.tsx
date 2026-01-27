@@ -6,6 +6,7 @@ import Video from 'yet-another-react-lightbox/plugins/video';
 import type { Slide } from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import { AnimatePresence, motion } from 'framer-motion';
+import { MapPin, Mail } from 'lucide-react';
 import { AnimatedHero } from '@/components/animated-hero';
 import dynamic from 'next/dynamic';
 import { analytics } from '@/lib/analytics';
@@ -155,14 +156,14 @@ export default function Home() {
         className="relative z-10 container mx-auto px-4 py-16 md:px-6 md:py-24 lg:px-8"
       >
         <motion.div
-          className="mx-auto max-w-3xl text-center"
+          className="mx-auto max-w-3xl"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
         >
           <motion.h2
-            className="mb-6 font-serif text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl"
+            className="mb-6 text-center font-serif text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -173,23 +174,44 @@ export default function Home() {
             </span>
           </motion.h2>
           <motion.div
-            className="bg-primary/30 mx-auto mb-8 h-px w-16 md:w-24"
+            className="bg-primary/30 mx-auto mb-12 h-px w-16 md:mb-16 md:w-24"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           />
-          <motion.p
-            className="text-muted-foreground font-sans text-sm leading-relaxed font-light tracking-tight md:text-base"
+
+          <motion.div
+            className="space-y-6 text-center md:space-y-8"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.3 }}
           >
-            Professional photographer and videographer specializing in visual
-            storytelling for brands and creatives. Based in Kuala Lumpur,
-            Malaysia.
-          </motion.p>
+            <p className="text-muted-foreground font-sans text-sm leading-relaxed font-light tracking-tight md:text-base">
+              Professional photographer and videographer specializing in visual
+              storytelling for brands and creatives.
+            </p>
+
+            <p className="text-muted-foreground font-sans text-sm leading-relaxed font-light tracking-tight md:text-base">
+              Based in Kuala Lumpur, Malaysia. Available for projects worldwide.
+            </p>
+
+            <div className="text-muted-foreground flex flex-col items-center gap-4 pt-4 text-xs font-light tracking-tight md:flex-row md:justify-center md:gap-6 md:text-sm">
+              <div className="flex items-center gap-2.5">
+                <MapPin className="h-3.5 w-3.5" />
+                <span>Kuala Lumpur, Malaysia</span>
+              </div>
+              <div className="bg-border h-4 w-px" />
+              <a
+                href="mailto:hazem@noveltyventures.uk"
+                className="hover:text-primary flex items-center gap-2.5 transition-colors duration-300"
+              >
+                <Mail className="h-3.5 w-3.5" />
+                <span>hazem@noveltyventures.uk</span>
+              </a>
+            </div>
+          </motion.div>
         </motion.div>
       </section>
 
