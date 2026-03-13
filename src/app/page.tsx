@@ -108,19 +108,19 @@ export default function Home() {
           {
             src: item.mediaUrl,
             type: 'video/mp4',
-            // Add color space attributes to prevent oversaturation
-            colorSpace: 'srgb',
-            colorGamut: 'srgb',
           },
         ],
         title: item.title,
         description: `${item.camera ? item.camera + ' | ' : ''}${item.projectDetails || ''}`,
         poster: item.thumbnailUrl || '/videos/VT-1.png',
-        // Add video attributes for proper color handling
-        attributes: {
-          style: 'color-scheme: light dark; color-interpolation-filters: sRGB;',
-          'data-color-space': 'srgb',
-        },
+        // Reasonable default aspect for vertical reels
+        width: 1080,
+        height: 1920,
+        controls: true,
+        autoPlay: true,
+        loop: true,
+        muted: true,
+        playsInline: true,
       })),
       ...photographyItems.map(item => ({
         src: item.mediaUrl,
@@ -350,7 +350,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Contact Hazem via WhatsApp"
-              className="bg-primary/10 text-primary border-primary/30 hover:bg-primary/20 hover:border-primary/50 rounded-sm border px-6 py-2.5 text-xs font-light tracking-tight backdrop-blur-sm transition-all duration-300 md:text-sm"
+              className="bg-primary/10 text-primary border-primary/30 hover:bg-primary/20 hover:border-primary/50 rounded-sm border px-6 py-2.5 text-xs font-light tracking-tight backdrop-blur-sm transition-all duration-300 md:px-8 md:py-3.5 md:text-base"
               onClick={() =>
                 analytics.track({
                   name: 'cta_book_click',
@@ -362,7 +362,7 @@ export default function Home() {
             </a>
             <a
               href="mailto:hazem@noveltyventures.uk"
-              className="text-muted-foreground hover:text-primary text-xs font-light tracking-tight transition-colors duration-300 md:text-sm"
+              className="text-muted-foreground hover:text-primary text-xs font-light tracking-tight transition-colors duration-300 md:text-base"
             >
               hazem@noveltyventures.uk
             </a>

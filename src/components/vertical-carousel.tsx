@@ -18,6 +18,7 @@ function VideoAutoPlay({
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const isInViewRef = useRef(false);
   const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
@@ -25,35 +26,45 @@ function VideoAutoPlay({
     const container = containerRef.current;
     if (!video || !container) return;
 
-    // Intersection Observer for auto-play when in viewport
+    const playWhenReady = () => {
+      if (isInViewRef.current && video.readyState >= 2) {
+        video.play().catch(() => {
+          // Silently handle autoplay restrictions (e.g. some mobile browsers)
+        });
+      }
+    };
+
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
+          isInViewRef.current = entry.isIntersecting;
           if (entry.isIntersecting) {
             setShouldLoad(true);
-            // Video is visible - play it
-            video.play().catch(() => {
-              // Silently handle autoplay restrictions
-            });
+            // Play once video has loaded (handled by canplay listener)
+            playWhenReady();
           } else {
-            // Video is not visible - pause it
             video.pause();
           }
         });
       },
       {
-        threshold: 0.5, // Play when 50% visible
-        rootMargin: '50px', // Start loading slightly before visible
+        threshold: 0.25,
+        rootMargin: '80px',
       }
     );
 
     observer.observe(container);
 
+    video.addEventListener('canplay', playWhenReady);
+    video.addEventListener('loadeddata', playWhenReady);
+
     return () => {
       observer.disconnect();
+      video.removeEventListener('canplay', playWhenReady);
+      video.removeEventListener('loadeddata', playWhenReady);
       video.pause();
     };
-  }, []);
+  }, [src]);
 
   return (
     <div ref={containerRef} className="absolute inset-0">
@@ -65,7 +76,6 @@ function VideoAutoPlay({
         playsInline
         preload={shouldLoad ? 'metadata' : 'none'}
         poster={poster}
-        crossOrigin="anonymous"
       >
         {shouldLoad && <source src={src} type="video/mp4" />}
         {captionsUrl && (
