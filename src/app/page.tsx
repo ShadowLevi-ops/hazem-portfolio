@@ -370,20 +370,6 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Floating Contact Button */}
-      <a
-        href="#contact"
-        className="bg-primary/10 text-primary border-primary/30 hover:bg-primary/20 hover:border-primary/50 fixed top-6 right-6 z-[60] rounded-sm border px-4 py-2 text-xs font-light tracking-tight backdrop-blur-sm transition-all duration-300 md:px-5 md:py-2.5 md:text-sm"
-        onClick={() =>
-          analytics.track({
-            name: 'cta_contact_click',
-            properties: { source: 'floating_button' },
-          })
-        }
-      >
-        Contact
-      </a>
-
       <ScrollToTopButton />
     </ErrorBoundary>
   );

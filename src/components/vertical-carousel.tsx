@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Expand } from 'lucide-react';
 import type { PortfolioItem } from '@/types/portfolio';
@@ -18,6 +18,7 @@ function VideoAutoPlay({
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -29,6 +30,7 @@ function VideoAutoPlay({
       entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
+            setShouldLoad(true);
             // Video is visible - play it
             video.play().catch(() => {
               // Silently handle autoplay restrictions
@@ -61,11 +63,11 @@ function VideoAutoPlay({
         muted
         loop
         playsInline
-        preload="metadata"
+        preload={shouldLoad ? 'metadata' : 'none'}
         poster={poster}
         crossOrigin="anonymous"
       >
-        <source src={src} type="video/mp4" />
+        {shouldLoad && <source src={src} type="video/mp4" />}
         {captionsUrl && (
           <track
             kind="captions"
