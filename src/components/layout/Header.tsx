@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 export const Header = () => {
   return (
-    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 border-border/50 sticky top-0 z-50 w-full overflow-hidden border-b backdrop-blur">
+    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 border-border/50 z-40 w-full overflow-hidden border-b backdrop-blur">
       <div className="container flex h-16 items-center justify-between px-6 md:h-20 md:px-10">
         {/* Logo */}
         <Link href="/" className="flex items-center">
