@@ -271,4 +271,13 @@ export const portfolioItems: PortfolioItem[] = [
     camera: 'Camera Used',
     projectDetails: 'Creative Film',
   },
+  {
+    id: 'video-15',
+    title: 'Spurs Malaysian x Singaporean Fanclub',
+    type: 'videography',
+    mediaUrl: '/videos/15.mp4',
+    thumbnailUrl: '/videos/VT-15.jpg',
+    camera: 'Camera Used',
+    projectDetails: 'Creative Film',
+  },
 ];
