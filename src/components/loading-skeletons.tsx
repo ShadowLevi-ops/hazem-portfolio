@@ -3,7 +3,7 @@
 // Optimized lightweight skeleton for PortfolioFilter
 export function PortfolioFilterSkeleton() {
   return (
-    <div className="md:bg-background/90 z-20 mb-4 flex flex-col items-center gap-2 bg-transparent px-2 md:sticky md:top-20 md:z-30 md:mb-6 md:backdrop-blur-md">
+    <div className="z-20 mb-4 flex flex-col items-center gap-2 bg-transparent px-2 md:mb-6">
       <div className="flex flex-wrap justify-center gap-1 md:gap-2">
         {[0, 1, 2].map(index => (
           <div

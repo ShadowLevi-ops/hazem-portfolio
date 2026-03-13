@@ -127,7 +127,7 @@ export function PortfolioFilter({
 
   return (
     <motion.div
-      className="md:bg-background/90 z-20 mb-8 flex flex-col items-center gap-4 bg-transparent px-2 md:sticky md:top-20 md:z-30 md:mb-12 md:backdrop-blur-md"
+      className="z-20 mb-8 flex flex-col items-center gap-4 bg-transparent px-2 md:mb-12"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.2 }}
