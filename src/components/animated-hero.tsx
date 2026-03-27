@@ -114,9 +114,7 @@ export function AnimatedHero() {
             className="text-muted-foreground text-center font-sans text-xs font-light tracking-tight sm:text-sm md:text-base"
             variants={itemVariants}
           >
-            <span>
-              Professional visual storytelling for brands and creatives
-            </span>
+            <span>At the intersection of culture and creativity</span>
           </motion.h2>
         </motion.div>
 

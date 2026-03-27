@@ -65,6 +65,24 @@ export default function Home() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [activeFilter, setActiveFilter] = useState('all');
+  const services = [
+    'Videography',
+    'Photography',
+    'Social Media',
+    'Branding',
+    'Websites',
+    'Creative Strategy',
+  ];
+  const industries = [
+    'Fashion',
+    'Sports',
+    'Hospitality',
+    'Health & Beauty',
+    'Automotive',
+    'Tourism',
+    'Real Estate',
+    'Lifestyle',
+  ];
 
   // Memoized filtered items for better performance
   const filteredItems = useMemo(() => {
@@ -189,12 +207,14 @@ export default function Home() {
             transition={{ duration: 0.4, delay: 0.3 }}
           >
             <p className="text-muted-foreground font-sans text-sm leading-relaxed font-light tracking-tight md:text-base">
-              Professional photographer and videographer specializing in visual
-              storytelling for brands and creatives.
+              GiltMedia is a Kuala Lumpur-based creative studio for brands,
+              agencies, and visionaries who want culturally relevant visual
+              storytelling.
             </p>
 
             <p className="text-muted-foreground font-sans text-sm leading-relaxed font-light tracking-tight md:text-base">
-              Based in Kuala Lumpur, Malaysia. Available for projects worldwide.
+              From short-form films to campaign photography, we build work that
+              feels premium, modern, and built for impact.
             </p>
 
             <div className="text-muted-foreground flex flex-col items-center gap-4 pt-4 text-xs font-light tracking-tight md:flex-row md:justify-center md:gap-6 md:text-sm">
@@ -212,6 +232,73 @@ export default function Home() {
               </a>
             </div>
           </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Services Section */}
+      <section
+        id="services"
+        className="relative z-10 container mx-auto px-4 pb-16 md:px-6 md:pb-24 lg:px-8"
+      >
+        <motion.div
+          className="mx-auto max-w-5xl"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+        >
+          <div className="mb-8 text-center md:mb-12">
+            <h2 className="font-serif text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl">
+              <span className="from-foreground via-primary to-foreground bg-gradient-to-r bg-clip-text text-transparent">
+                Services
+              </span>
+            </h2>
+            <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-sm font-light tracking-tight md:text-base">
+              Strategy-led creative production built for social-first brands and
+              campaigns.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
+            {services.map(service => (
+              <motion.div
+                key={service}
+                className="border-border/50 bg-card/20 hover:border-primary/40 rounded-sm border px-3 py-3 text-center text-xs font-light tracking-tight transition-all duration-300 md:px-4 md:py-4 md:text-sm"
+                whileHover={{ y: -2, scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+              >
+                {service}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Industries Section */}
+      <section className="relative z-10 container mx-auto px-4 pb-16 md:px-6 md:pb-24 lg:px-8">
+        <motion.div
+          className="mx-auto max-w-5xl"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+        >
+          <div className="mb-6 text-center md:mb-8">
+            <h3 className="text-foreground text-lg font-bold tracking-tight md:text-xl">
+              Industries We Work With
+            </h3>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3">
+            {industries.map(industry => (
+              <motion.span
+                key={industry}
+                className="border-border/50 bg-background/40 rounded-sm border px-3 py-1.5 text-[10px] font-light tracking-tight md:px-4 md:py-2 md:text-xs"
+                whileHover={{ y: -1 }}
+              >
+                {industry}
+              </motion.span>
+            ))}
+          </div>
         </motion.div>
       </section>
 
@@ -326,7 +413,7 @@ export default function Home() {
             transition={{ duration: 0.4, delay: 0.1 }}
           >
             <span className="from-foreground via-primary to-foreground bg-gradient-to-r bg-clip-text font-bold text-transparent">
-              Contact
+              Let&apos;s Talk
             </span>
           </motion.h2>
           <motion.div
@@ -350,7 +437,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Contact Hazem via WhatsApp"
-              className="bg-primary/10 text-primary border-primary/30 hover:bg-primary/20 hover:border-primary/50 rounded-sm border px-6 py-2.5 text-xs font-light tracking-tight backdrop-blur-sm transition-all duration-300 md:px-8 md:py-3.5 md:text-base"
+              className="bg-primary/10 text-primary border-primary/30 hover:bg-primary/20 hover:border-primary/50 rounded-sm border px-6 py-2.5 text-xs font-light tracking-tight backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 md:px-8 md:py-3.5 md:text-base"
               onClick={() =>
                 analytics.track({
                   name: 'cta_book_click',
