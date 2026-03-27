@@ -15,6 +15,7 @@ export const Header = () => {
 
       for (let i = sectionIds.length - 1; i >= 0; i -= 1) {
         const id = sectionIds[i];
+        if (!id) continue;
         const section = document.getElementById(id);
         if (!section) continue;
         if (scrollPosition >= section.offsetTop) {
