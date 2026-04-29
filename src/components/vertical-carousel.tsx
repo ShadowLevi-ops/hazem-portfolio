@@ -145,9 +145,15 @@ export function VerticalCarousel({
       const effectiveType = connection?.effectiveType || '';
       const isSlowConnection =
         effectiveType.includes('2g') || effectiveType === '3g';
+      const prefersReducedMotion = Boolean(reduceMotion);
 
       // Mobile/coarse pointers and reduced-motion devices get poster-first cards.
-      return saveData || isSlowConnection || mediaQuery.matches || reduceMotion;
+      return (
+        saveData ||
+        isSlowConnection ||
+        mediaQuery.matches ||
+        prefersReducedMotion
+      );
     };
 
     const updateMode = () => setLowDataMode(shouldUseLowDataMode());
