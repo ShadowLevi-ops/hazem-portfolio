@@ -139,6 +139,8 @@ export default function Home() {
         loop: true,
         muted: true,
         playsInline: true,
+        preload: 'metadata' as const,
+        controlsList: 'nodownload noplaybackrate' as const,
       })),
       ...photographyItems.map(item => ({
         src: item.mediaUrl,

@@ -20,6 +20,7 @@ function VideoAutoPlay({
   const containerRef = useRef<HTMLDivElement>(null);
   const isInViewRef = useRef(false);
   const [shouldLoad, setShouldLoad] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -49,7 +50,7 @@ function VideoAutoPlay({
       },
       {
         threshold: 0.25,
-        rootMargin: '80px',
+        rootMargin: '240px',
       }
     );
 
@@ -58,13 +59,23 @@ function VideoAutoPlay({
     video.addEventListener('canplay', playWhenReady);
     video.addEventListener('loadeddata', playWhenReady);
 
+    const eagerLoadOnHover = () => setShouldLoad(true);
+    container.addEventListener('mouseenter', eagerLoadOnHover);
+    container.addEventListener('touchstart', eagerLoadOnHover, {
+      passive: true,
+    });
+
     return () => {
       observer.disconnect();
       video.removeEventListener('canplay', playWhenReady);
       video.removeEventListener('loadeddata', playWhenReady);
+      container.removeEventListener('mouseenter', eagerLoadOnHover);
+      container.removeEventListener('touchstart', eagerLoadOnHover);
       video.pause();
     };
   }, [src]);
+
+  if (hasError) return null;
 
   return (
     <div ref={containerRef} className="absolute inset-0">
@@ -74,8 +85,12 @@ function VideoAutoPlay({
         muted
         loop
         playsInline
+        controls={false}
         preload={shouldLoad ? 'metadata' : 'none'}
         poster={poster}
+        onError={() => {
+          setHasError(true);
+        }}
       >
         {shouldLoad && <source src={src} type="video/mp4" />}
         {captionsUrl && (
