@@ -280,4 +280,13 @@ export const portfolioItems: PortfolioItem[] = [
     camera: 'Camera Used',
     projectDetails: 'Creative Film',
   },
+  {
+    id: 'video-16',
+    title: 'PUMA x SOLEWHAT (H Street Line Launch)',
+    type: 'videography',
+    mediaUrl: '/videos/16.mp4',
+    thumbnailUrl: '/videos/VT-16.jpg',
+    camera: 'Camera Used',
+    projectDetails: 'Creative Film',
+  },
 ];
