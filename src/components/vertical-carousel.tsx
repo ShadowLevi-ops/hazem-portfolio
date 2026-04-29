@@ -114,7 +114,7 @@ export function VerticalCarousel({
   return (
     <div className="relative mx-auto w-full max-w-7xl">
       {/* Refined container */}
-      <div className="border-border/50 bg-background/40 relative overflow-hidden rounded-lg border backdrop-blur-sm md:rounded-xl">
+      <div className="surface-card relative overflow-hidden rounded-lg backdrop-blur-sm md:rounded-xl">
         <motion.div
           initial={{ opacity: 0, transform: 'translate3d(0,0,0)' }}
           animate={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
@@ -132,7 +132,7 @@ export function VerticalCarousel({
               return (
                 <motion.article
                   key={item.id}
-                  className="group border-border/30 focus-visible:ring-primary bg-card/20 hover:border-primary/30 hover:bg-card/30 relative aspect-[9/16] cursor-pointer overflow-hidden rounded-md border transition-all duration-300 will-change-transform outline-none focus-visible:ring-2 focus-visible:ring-offset-2 md:rounded-lg"
+                  className="group border-border/30 focus-visible:ring-primary bg-card/25 hover:border-primary/30 hover:bg-card/35 relative aspect-[9/16] cursor-pointer overflow-hidden rounded-md border transition-all duration-300 will-change-transform outline-none focus-visible:ring-2 focus-visible:ring-offset-2 md:rounded-lg"
                   role="button"
                   aria-label={`View ${item.title} - ${item.type}`}
                   aria-describedby={`item-description-${item.id}`}

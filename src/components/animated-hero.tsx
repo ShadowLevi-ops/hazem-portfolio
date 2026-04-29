@@ -4,8 +4,16 @@ import { useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { MapPin, Mail } from 'lucide-react';
 import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
 export function AnimatedHero() {
+  const scrollToSection = (sectionId: string) => {
+    document.getElementById(sectionId)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  };
+
   const ref = useRef(null);
   const controls = useAnimation();
 
@@ -137,6 +145,27 @@ export function AnimatedHero() {
               hazem@noveltyventures.uk
             </span>
           </a>
+        </motion.div>
+
+        <motion.div
+          className="flex flex-wrap items-center justify-center gap-3 pt-2 md:gap-4"
+          variants={itemVariants}
+        >
+          <Button
+            size="lg"
+            className="from-primary to-primary/80 hover:to-primary rounded-full bg-gradient-to-r px-6 shadow-md shadow-black/10 hover:-translate-y-0.5"
+            onClick={() => scrollToSection('portfolio')}
+          >
+            View Portfolio
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            className="bg-background/50 hover:bg-background/70 rounded-full border-white/20 px-6 backdrop-blur-sm"
+            onClick={() => scrollToSection('contact')}
+          >
+            Start a Project
+          </Button>
         </motion.div>
       </motion.div>
 

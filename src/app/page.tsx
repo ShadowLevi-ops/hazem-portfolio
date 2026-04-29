@@ -263,7 +263,7 @@ export default function Home() {
             {services.map(service => (
               <motion.div
                 key={service}
-                className="border-border/50 bg-card/20 hover:border-primary/40 rounded-sm border px-3 py-3 text-center text-xs font-light tracking-tight transition-all duration-300 md:px-4 md:py-4 md:text-sm"
+                className="surface-card hover:border-primary/40 rounded-md px-3 py-3 text-center text-xs font-light tracking-tight transition-all duration-300 hover:-translate-y-0.5 md:px-4 md:py-4 md:text-sm"
                 whileHover={{ y: -2, scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
               >
@@ -292,7 +292,7 @@ export default function Home() {
             {industries.map(industry => (
               <motion.span
                 key={industry}
-                className="border-border/50 bg-background/40 rounded-sm border px-3 py-1.5 text-[10px] font-light tracking-tight md:px-4 md:py-2 md:text-xs"
+                className="glass rounded-md px-3 py-1.5 text-[10px] font-light tracking-tight md:px-4 md:py-2 md:text-xs"
                 whileHover={{ y: -1 }}
               >
                 {industry}
@@ -437,7 +437,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Contact Hazem via WhatsApp"
-              className="bg-primary/10 text-primary border-primary/30 hover:bg-primary/20 hover:border-primary/50 rounded-sm border px-6 py-2.5 text-xs font-light tracking-tight backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 md:px-8 md:py-3.5 md:text-base"
+              className="from-primary to-primary/80 text-primary-foreground hover:to-primary rounded-full border border-transparent bg-gradient-to-r px-6 py-2.5 text-xs font-medium tracking-tight shadow-md shadow-black/15 transition-all duration-300 hover:-translate-y-0.5 md:px-8 md:py-3.5 md:text-base"
               onClick={() =>
                 analytics.track({
                   name: 'cta_book_click',
@@ -449,7 +449,7 @@ export default function Home() {
             </a>
             <a
               href="mailto:hazem@noveltyventures.uk"
-              className="text-muted-foreground hover:text-primary text-xs font-light tracking-tight transition-colors duration-300 md:text-base"
+              className="text-muted-foreground hover:text-primary rounded-full border border-white/20 px-4 py-2 text-xs font-light tracking-tight backdrop-blur-sm transition-colors duration-300 md:text-base"
             >
               hazem@noveltyventures.uk
             </a>

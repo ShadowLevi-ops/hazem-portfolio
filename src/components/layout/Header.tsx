@@ -6,12 +6,21 @@ import Image from 'next/image';
 
 export const Header = () => {
   const [activeSection, setActiveSection] = useState('portfolio');
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const sectionIds = ['portfolio', 'about', 'services', 'contact'];
 
     const updateActiveSection = () => {
       const scrollPosition = window.scrollY + 140;
+      const maxScroll =
+        document.documentElement.scrollHeight - window.innerHeight;
+
+      setIsScrolled(window.scrollY > 16);
+      setScrollProgress(
+        maxScroll > 0 ? Math.min(100, (window.scrollY / maxScroll) * 100) : 0
+      );
 
       for (let i = sectionIds.length - 1; i >= 0; i -= 1) {
         const id = sectionIds[i];
@@ -47,7 +56,13 @@ export const Header = () => {
     }`;
 
   return (
-    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 border-border/50 z-40 w-full overflow-hidden border-b backdrop-blur">
+    <header
+      className={`border-border/50 supports-[backdrop-filter]:bg-background/55 sticky top-0 z-40 w-full overflow-hidden border-b backdrop-blur-xl transition-all duration-300 ${
+        isScrolled
+          ? 'bg-background/85 shadow-[0_8px_30px_rgba(0,0,0,0.12)]'
+          : 'bg-background/65'
+      }`}
+    >
       <div className="container flex h-16 items-center justify-between px-6 md:h-20 md:px-10">
         {/* Logo */}
         <Link href="/" className="flex items-center">
@@ -91,6 +106,13 @@ export const Header = () => {
             Contact
           </a>
         </nav>
+      </div>
+      <div className="bg-primary/15 h-0.5 w-full">
+        <div
+          className="from-primary via-primary/80 to-primary/60 h-full bg-gradient-to-r transition-[width] duration-150 ease-out"
+          style={{ width: `${scrollProgress}%` }}
+          aria-hidden="true"
+        />
       </div>
     </header>
   );

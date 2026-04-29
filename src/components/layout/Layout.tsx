@@ -23,9 +23,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       >
         {children}
       </motion.main>
-      <footer className="bg-background text-muted-foreground border-border/50 border-t py-8 text-center md:py-12">
+      <footer className="bg-background/80 text-muted-foreground border-border/50 border-t py-10 text-center backdrop-blur-sm md:py-14">
         <div className="container mx-auto px-4 md:px-6">
-          <p className="text-[10px] font-light tracking-tight md:text-xs">
+          <p className="text-[11px] font-light tracking-tight md:text-xs">
             © {new Date().getFullYear()} GiltMedia Studios. All rights
             reserved.
           </p>

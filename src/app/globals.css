@@ -76,6 +76,8 @@
   --sidebar-accent-foreground: oklch(0.25 0.02 30);
   --sidebar-border: oklch(0.9 0.003 30);
   --sidebar-ring: oklch(0.65 0.08 75);
+  --surface-soft: color-mix(in oklch, var(--card) 84%, transparent);
+  --surface-glass: color-mix(in oklch, var(--background) 78%, transparent);
 }
 
 .dark {
@@ -110,6 +112,8 @@
   --sidebar-accent-foreground: oklch(0.95 0.002 106.424);
   --sidebar-border: oklch(0.25 0.01 30);
   --sidebar-ring: oklch(0.65 0.08 75);
+  --surface-soft: color-mix(in oklch, var(--card) 76%, transparent);
+  --surface-glass: color-mix(in oklch, var(--background) 62%, transparent);
 }
 
 @layer base {
@@ -118,9 +122,18 @@
   }
   body {
     @apply bg-background text-foreground;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
   }
   html {
     scroll-behavior: smooth;
+  }
+  a,
+  button {
+    @apply transition-all duration-200;
+  }
+  :focus-visible {
+    @apply ring-primary/55 ring-offset-background ring-2 ring-offset-2 outline-none;
   }
 }
 
@@ -249,14 +262,19 @@
 
 /* Glassmorphism effect */
 .glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--surface-glass);
+  backdrop-filter: blur(14px);
+  border: 1px solid color-mix(in oklch, var(--border) 85%, white 15%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 16px 36px rgba(0, 0, 0, 0.1);
 }
 
 .dark .glass {
-  background: rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid color-mix(in oklch, var(--border) 92%, white 8%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.12) inset,
+    0 18px 42px rgba(0, 0, 0, 0.32);
 }
 
 /* Text gradient utilities */
@@ -281,6 +299,15 @@
 /* Enhanced focus states */
 .focus-ring {
   @apply focus:ring-primary/50 focus:ring-offset-background focus:ring-2 focus:ring-offset-2 focus:outline-none;
+}
+
+/* Reusable modern card surface */
+.surface-card {
+  background: var(--surface-soft);
+  border: 1px solid color-mix(in oklch, var(--border) 88%, white 12%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.3) inset,
+    0 10px 28px rgba(0, 0, 0, 0.09);
 }
 
 /* Video color space and quality preservation */

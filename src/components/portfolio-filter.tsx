@@ -28,10 +28,10 @@ function FilterButton({
       aria-label={`Filter portfolio by ${label}`}
       aria-pressed={isActive}
       aria-describedby={countId}
-      className={`relative flex items-center gap-1.5 rounded-sm border px-3 py-1.5 text-[10px] font-light tracking-tight transition-all duration-300 md:gap-2.5 md:px-5 md:py-2.5 md:text-sm ${
+      className={`relative flex items-center gap-1.5 rounded-md border px-3 py-1.5 text-[10px] font-light tracking-tight transition-all duration-300 md:gap-2.5 md:px-5 md:py-2.5 md:text-sm ${
         isActive
-          ? 'bg-primary/10 text-primary border-primary/50 shadow-sm'
-          : 'bg-background/40 border-border/50 hover:border-primary/30 hover:bg-accent/20 text-muted-foreground hover:text-foreground backdrop-blur-sm'
+          ? 'bg-primary/15 text-primary border-primary/45 shadow-sm'
+          : 'bg-background/45 border-border/50 hover:border-primary/30 hover:bg-accent/30 text-muted-foreground hover:text-foreground backdrop-blur-md'
       } `}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
@@ -50,7 +50,7 @@ function FilterButton({
       </span>
       <motion.span
         id={countId}
-        className={`rounded-sm px-1.5 py-0.5 text-[10px] font-light md:px-2 md:text-xs ${
+        className={`rounded-full px-1.5 py-0.5 text-[10px] font-light md:px-2 md:text-xs ${
           isActive
             ? 'bg-primary/20 text-primary'
             : 'bg-muted/50 text-muted-foreground'
@@ -66,7 +66,7 @@ function FilterButton({
 
       {isActive && (
         <motion.div
-          className="border-primary/20 absolute inset-0 rounded-sm border"
+          className="border-primary/20 absolute inset-0 rounded-md border"
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.95, opacity: 0 }}

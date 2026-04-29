@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { ChevronUp } from 'lucide-react';
@@ -38,12 +38,12 @@ export const ScrollToTopButton = () => {
       size="icon"
       onClick={scrollToTop}
       className={cn(
-        'fixed bottom-4 right-4 z-50 transition-opacity duration-300',
-        isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        'bg-background/70 hover:bg-background/85 fixed right-5 bottom-5 z-50 border-white/20 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 md:right-8 md:bottom-8',
+        isVisible ? 'opacity-100' : 'pointer-events-none opacity-0'
       )}
       aria-label="Scroll to top"
     >
       <ChevronUp className="h-5 w-5" />
     </Button>
   );
-}; 
+};
