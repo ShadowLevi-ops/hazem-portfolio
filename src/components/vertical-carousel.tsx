@@ -11,10 +11,12 @@ function VideoAutoPlay({
   src,
   poster,
   captionsUrl,
+  lowDataMode,
 }: {
   src: string;
   poster?: string;
   captionsUrl?: string;
+  lowDataMode: boolean;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -23,6 +25,8 @@ function VideoAutoPlay({
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
+    if (lowDataMode) return;
+
     const video = videoRef.current;
     const container = containerRef.current;
     if (!video || !container) return;
@@ -73,9 +77,9 @@ function VideoAutoPlay({
       container.removeEventListener('touchstart', eagerLoadOnHover);
       video.pause();
     };
-  }, [src]);
+  }, [src, lowDataMode]);
 
-  if (hasError) return null;
+  if (hasError || lowDataMode) return null;
 
   return (
     <div ref={containerRef} className="absolute inset-0">
@@ -118,6 +122,47 @@ export function VerticalCarousel({
 }: VerticalCarouselProps) {
   const showLabels = process.env.NEXT_PUBLIC_SHOW_LABELS === 'true';
   const reduceMotion = useReducedMotion();
+  const [lowDataMode, setLowDataMode] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(pointer: coarse)');
+
+    const getConnection = () =>
+      (
+        navigator as Navigator & {
+          connection?: {
+            saveData?: boolean;
+            effectiveType?: string;
+            addEventListener?: (type: string, listener: () => void) => void;
+            removeEventListener?: (type: string, listener: () => void) => void;
+          };
+        }
+      ).connection;
+
+    const shouldUseLowDataMode = () => {
+      const connection = getConnection();
+      const saveData = Boolean(connection?.saveData);
+      const effectiveType = connection?.effectiveType || '';
+      const isSlowConnection =
+        effectiveType.includes('2g') || effectiveType === '3g';
+
+      // Mobile/coarse pointers and reduced-motion devices get poster-first cards.
+      return saveData || isSlowConnection || mediaQuery.matches || reduceMotion;
+    };
+
+    const updateMode = () => setLowDataMode(shouldUseLowDataMode());
+    updateMode();
+
+    const connection = getConnection();
+    mediaQuery.addEventListener('change', updateMode);
+    connection?.addEventListener?.('change', updateMode);
+
+    return () => {
+      mediaQuery.removeEventListener('change', updateMode);
+      connection?.removeEventListener?.('change', updateMode);
+    };
+  }, [reduceMotion]);
+
   if (items.length === 0) {
     return (
       <div className="text-muted-foreground flex h-64 items-center justify-center md:h-96">
@@ -208,6 +253,7 @@ export function VerticalCarousel({
                       <VideoAutoPlay
                         src={item.mediaUrl}
                         poster={item.thumbnailUrl || '/images/p1.PNG'}
+                        lowDataMode={lowDataMode}
                         {...(item.captionsUrl && {
                           captionsUrl: item.captionsUrl,
                         })}
