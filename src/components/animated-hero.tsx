@@ -50,7 +50,7 @@ export function AnimatedHero() {
   return (
     <header
       ref={ref}
-      className="section-shell relative flex min-h-[66vh] flex-col items-center justify-center overflow-hidden pt-12 pb-20 text-center md:min-h-[76vh] md:pt-16 md:pb-24"
+      className="relative flex min-h-[74vh] w-full flex-col items-center justify-center overflow-hidden pt-0 pb-20 text-center md:min-h-[88vh] md:pt-0 md:pb-24"
     >
       {/* Hero background video (Asset 11 style treatment) */}
       <div className="absolute inset-0 -z-20">
@@ -82,81 +82,88 @@ export function AnimatedHero() {
         />
       </div>
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate={controls}
-        className="mx-auto w-full max-w-5xl space-y-4 will-change-transform md:space-y-6"
-      >
-        {/* Logo and Title */}
-        <motion.div variants={itemVariants} className="space-y-4 md:space-y-6">
-          {/* Logo */}
+      <div className="section-shell">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={controls}
+          className="mx-auto w-full max-w-5xl space-y-4 will-change-transform md:space-y-6"
+        >
+          {/* Logo and Title */}
           <motion.div
-            className="flex justify-center will-change-transform"
             variants={itemVariants}
+            className="space-y-4 md:space-y-6"
           >
-            <Image
-              src="/giltmedia2.svg"
-              alt="Gilt Media Logo"
-              width={300}
-              height={300}
-              className="h-32 w-auto will-change-transform sm:h-40 md:h-48 lg:h-56 xl:h-64"
-              priority
-              style={{ transform: 'translate3d(0,0,0)' }}
-            />
+            {/* Logo */}
+            <motion.div
+              className="flex justify-center will-change-transform"
+              variants={itemVariants}
+            >
+              <Image
+                src="/giltmedia2.svg"
+                alt="Gilt Media Logo"
+                width={300}
+                height={300}
+                className="h-32 w-auto will-change-transform sm:h-40 md:h-48 lg:h-56 xl:h-64"
+                priority
+                style={{ transform: 'translate3d(0,0,0)' }}
+              />
+            </motion.div>
+
+            {/* Subtitle */}
+            <motion.h2
+              className="text-muted-foreground text-center font-sans text-xs tracking-[0.2em] uppercase sm:text-sm md:text-base"
+              variants={itemVariants}
+            >
+              <span>At the intersection of culture and creativity</span>
+            </motion.h2>
           </motion.div>
 
-          {/* Subtitle */}
-          <motion.h2
-            className="text-muted-foreground text-center font-sans text-xs tracking-[0.2em] uppercase sm:text-sm md:text-base"
+          {/* Contact info */}
+          <motion.div
+            className="text-muted-foreground flex flex-col flex-wrap items-center justify-center gap-4 text-xs sm:flex-row md:gap-6 md:text-sm"
             variants={itemVariants}
           >
-            <span>At the intersection of culture and creativity</span>
-          </motion.h2>
-        </motion.div>
+            <div className="hover:text-primary flex cursor-pointer items-center gap-2.5 transition-colors duration-300">
+              <MapPin className="h-3.5 w-3.5" />
+              <span className="font-light tracking-tight">
+                Kuala Lumpur, MY
+              </span>
+            </div>
+            <div className="bg-border h-4 w-px" />
+            <a
+              href="mailto:hazem@noveltyventures.uk"
+              className="hover:text-primary flex items-center gap-2.5 transition-colors duration-300"
+            >
+              <Mail className="h-3.5 w-3.5" />
+              <span className="font-light tracking-tight">
+                hazem@noveltyventures.uk
+              </span>
+            </a>
+          </motion.div>
 
-        {/* Contact info */}
-        <motion.div
-          className="text-muted-foreground flex flex-col flex-wrap items-center justify-center gap-4 text-xs sm:flex-row md:gap-6 md:text-sm"
-          variants={itemVariants}
-        >
-          <div className="hover:text-primary flex cursor-pointer items-center gap-2.5 transition-colors duration-300">
-            <MapPin className="h-3.5 w-3.5" />
-            <span className="font-light tracking-tight">Kuala Lumpur, MY</span>
-          </div>
-          <div className="bg-border h-4 w-px" />
-          <a
-            href="mailto:hazem@noveltyventures.uk"
-            className="hover:text-primary flex items-center gap-2.5 transition-colors duration-300"
+          <motion.div
+            className="flex flex-wrap items-center justify-center gap-3 pt-2 md:gap-4"
+            variants={itemVariants}
           >
-            <Mail className="h-3.5 w-3.5" />
-            <span className="font-light tracking-tight">
-              hazem@noveltyventures.uk
-            </span>
-          </a>
+            <Button
+              size="lg"
+              className="from-primary to-primary/80 hover:to-primary rounded-full border border-transparent bg-gradient-to-r px-7 tracking-[0.12em] uppercase shadow-md shadow-black/10 hover:-translate-y-0.5"
+              onClick={() => scrollToSection('portfolio')}
+            >
+              View Portfolio
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-background/50 hover:bg-background/70 rounded-full border-white/20 px-7 tracking-[0.12em] uppercase backdrop-blur-sm"
+              onClick={() => scrollToSection('contact')}
+            >
+              Start a Project
+            </Button>
+          </motion.div>
         </motion.div>
-
-        <motion.div
-          className="flex flex-wrap items-center justify-center gap-3 pt-2 md:gap-4"
-          variants={itemVariants}
-        >
-          <Button
-            size="lg"
-            className="from-primary to-primary/80 hover:to-primary rounded-full border border-transparent bg-gradient-to-r px-7 tracking-[0.12em] uppercase shadow-md shadow-black/10 hover:-translate-y-0.5"
-            onClick={() => scrollToSection('portfolio')}
-          >
-            View Portfolio
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="bg-background/50 hover:bg-background/70 rounded-full border-white/20 px-7 tracking-[0.12em] uppercase backdrop-blur-sm"
-            onClick={() => scrollToSection('contact')}
-          >
-            Start a Project
-          </Button>
-        </motion.div>
-      </motion.div>
+      </div>
 
       {/* Elegant scroll indicator */}
       <motion.div
