@@ -50,7 +50,7 @@ export function AnimatedHero() {
   return (
     <header
       ref={ref}
-      className="section-shell relative flex min-h-[72vh] flex-col items-center justify-center overflow-hidden pt-16 pb-24 text-center md:min-h-[86vh] md:pt-24 md:pb-28"
+      className="section-shell relative flex min-h-[66vh] flex-col items-center justify-center overflow-hidden pt-12 pb-20 text-center md:min-h-[76vh] md:pt-16 md:pb-24"
     >
       {/* Subtle background elements */}
       <div className="absolute inset-0 -z-10">
@@ -86,10 +86,10 @@ export function AnimatedHero() {
         variants={containerVariants}
         initial="hidden"
         animate={controls}
-        className="mx-auto w-full max-w-5xl space-y-5 will-change-transform md:space-y-8"
+        className="mx-auto w-full max-w-5xl space-y-4 will-change-transform md:space-y-6"
       >
         {/* Logo and Title */}
-        <motion.div variants={itemVariants} className="space-y-6 md:space-y-8">
+        <motion.div variants={itemVariants} className="space-y-4 md:space-y-6">
           {/* Logo */}
           <motion.div
             className="flex justify-center will-change-transform"
@@ -105,17 +105,6 @@ export function AnimatedHero() {
               style={{ transform: 'translate3d(0,0,0)' }}
             />
           </motion.div>
-
-          <motion.h1
-            className="text-center font-serif text-3xl leading-[1.06] font-semibold tracking-[-0.02em] sm:text-4xl md:text-5xl lg:text-6xl"
-            variants={itemVariants}
-          >
-            <span className="text-foreground bg-clip-text">
-              Crafting Visual Narratives
-              <br />
-              Through Photography & Videography
-            </span>
-          </motion.h1>
 
           {/* Subtitle */}
           <motion.h2
