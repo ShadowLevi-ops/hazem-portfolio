@@ -28,9 +28,9 @@ function FilterButton({
       aria-label={`Filter portfolio by ${label}`}
       aria-pressed={isActive}
       aria-describedby={countId}
-      className={`relative flex items-center gap-1.5 rounded-md border px-3 py-1.5 text-[10px] font-light tracking-tight transition-all duration-300 md:gap-2.5 md:px-5 md:py-2.5 md:text-sm ${
+      className={`relative flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[10px] tracking-[0.12em] uppercase transition-all duration-300 md:gap-2.5 md:px-5 md:py-2.5 md:text-sm ${
         isActive
-          ? 'bg-primary/15 text-primary border-primary/45 shadow-sm'
+          ? 'bg-primary/16 text-primary border-primary/55 shadow-sm'
           : 'bg-background/45 border-border/50 hover:border-primary/30 hover:bg-accent/30 text-muted-foreground hover:text-foreground backdrop-blur-md'
       } `}
       whileHover={{ scale: 1.02 }}
@@ -45,9 +45,7 @@ function FilterButton({
       >
         {icon}
       </span>
-      <span className="text-[10px] font-light tracking-tight whitespace-nowrap uppercase md:text-sm">
-        {label}
-      </span>
+      <span className="text-[10px] whitespace-nowrap md:text-sm">{label}</span>
       <motion.span
         id={countId}
         className={`rounded-full px-1.5 py-0.5 text-[10px] font-light md:px-2 md:text-xs ${
@@ -127,7 +125,7 @@ export function PortfolioFilter({
 
   return (
     <motion.div
-      className="z-20 mb-8 flex flex-col items-center gap-4 bg-transparent px-2 md:mb-12"
+      className="z-20 mb-10 flex flex-col items-center gap-5 bg-transparent px-2 md:mb-14"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.2 }}

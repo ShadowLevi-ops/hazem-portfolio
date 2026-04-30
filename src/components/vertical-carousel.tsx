@@ -206,7 +206,7 @@ export function VerticalCarousel({
               return (
                 <motion.article
                   key={item.id}
-                  className="group border-border/30 focus-visible:ring-primary bg-card/25 hover:border-primary/30 hover:bg-card/35 relative aspect-[9/16] cursor-pointer overflow-hidden rounded-md border transition-all duration-300 will-change-transform outline-none focus-visible:ring-2 focus-visible:ring-offset-2 md:rounded-lg"
+                  className="group border-border/30 focus-visible:ring-primary bg-card/25 hover:border-primary/35 hover:bg-card/40 relative aspect-[9/16] cursor-pointer overflow-hidden rounded-md border transition-all duration-300 will-change-transform outline-none focus-visible:ring-2 focus-visible:ring-offset-2 md:rounded-lg"
                   role="button"
                   aria-label={`View ${item.title} - ${item.type}`}
                   aria-describedby={`item-description-${item.id}`}
@@ -293,7 +293,7 @@ export function VerticalCarousel({
 
                   {showLabels && !isOngoingProject && (
                     <div className="absolute top-1.5 left-1.5 md:top-2 md:left-2">
-                      <div className="rounded-md bg-black/60 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm md:px-2.5 md:py-1.5 md:text-xs">
+                      <div className="rounded-md bg-black/60 px-2 py-1 text-xs font-medium tracking-[0.12em] text-white uppercase backdrop-blur-sm md:px-2.5 md:py-1.5 md:text-xs">
                         {item.projectDetails || item.type}
                       </div>
                     </div>
@@ -309,7 +309,7 @@ export function VerticalCarousel({
 
                     {/* Title overlay - fades in on hover */}
                     <div className="absolute right-3 bottom-3 left-3 md:right-4 md:bottom-4 md:left-4">
-                      <div className="font-sans text-[10px] leading-tight font-bold tracking-tight text-white md:text-xs">
+                      <div className="font-sans text-[10px] leading-tight font-semibold tracking-[0.08em] text-white md:text-xs">
                         <div className="mb-1 line-clamp-2 break-words">
                           {item.title}
                         </div>

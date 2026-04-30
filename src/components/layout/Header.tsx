@@ -57,10 +57,10 @@ export const Header = () => {
 
   return (
     <header
-      className={`border-border/50 supports-[backdrop-filter]:bg-background/55 sticky top-0 z-40 w-full overflow-hidden border-b backdrop-blur-xl transition-all duration-300 ${
+      className={`border-border/60 supports-[backdrop-filter]:bg-background/55 sticky top-0 z-40 w-full overflow-hidden border-b backdrop-blur-2xl transition-all duration-300 ${
         isScrolled
-          ? 'bg-background/85 shadow-[0_8px_30px_rgba(0,0,0,0.12)]'
-          : 'bg-background/65'
+          ? 'bg-background/90 shadow-[0_16px_42px_rgba(0,0,0,0.22)]'
+          : 'bg-background/72'
       }`}
     >
       <div className="container flex h-16 items-center justify-between px-6 md:h-20 md:px-10">
@@ -71,12 +71,12 @@ export const Header = () => {
             alt="Hazem Logo"
             width={64}
             height={16}
-            className="h-6 w-auto"
+            className="h-6 w-auto opacity-90"
           />
         </Link>
 
         {/* Simple Navigation */}
-        <nav className="hidden h-full items-center gap-6 md:flex">
+        <nav className="hidden h-full items-center gap-7 md:flex">
           <a
             href="#portfolio"
             className={navItemClass('portfolio')}
@@ -107,7 +107,7 @@ export const Header = () => {
           </a>
         </nav>
       </div>
-      <div className="bg-primary/15 h-0.5 w-full">
+      <div className="bg-primary/15 h-[3px] w-full">
         <div
           className="from-primary via-primary/80 to-primary/60 h-full bg-gradient-to-r transition-[width] duration-150 ease-out"
           style={{ width: `${scrollProgress}%` }}

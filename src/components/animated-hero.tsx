@@ -50,7 +50,7 @@ export function AnimatedHero() {
   return (
     <header
       ref={ref}
-      className="relative container mx-auto flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-4 pt-12 pb-16 text-center md:min-h-[80vh] md:px-8 md:pt-20 md:pb-24"
+      className="section-shell relative flex min-h-[72vh] flex-col items-center justify-center overflow-hidden pt-16 pb-24 text-center md:min-h-[86vh] md:pt-24 md:pb-28"
     >
       {/* Subtle background elements */}
       <div className="absolute inset-0 -z-10">
@@ -86,7 +86,7 @@ export function AnimatedHero() {
         variants={containerVariants}
         initial="hidden"
         animate={controls}
-        className="mx-auto w-full max-w-4xl space-y-4 will-change-transform md:space-y-6"
+        className="mx-auto w-full max-w-5xl space-y-5 will-change-transform md:space-y-8"
       >
         {/* Logo and Title */}
         <motion.div variants={itemVariants} className="space-y-6 md:space-y-8">
@@ -107,10 +107,10 @@ export function AnimatedHero() {
           </motion.div>
 
           <motion.h1
-            className="text-center font-serif text-xl leading-tight font-bold tracking-tight sm:text-2xl md:text-3xl lg:text-4xl"
+            className="text-center font-serif text-3xl leading-[1.06] font-semibold tracking-[-0.02em] sm:text-4xl md:text-5xl lg:text-6xl"
             variants={itemVariants}
           >
-            <span className="from-foreground via-primary to-foreground bg-gradient-to-r bg-clip-text text-transparent">
+            <span className="text-foreground bg-clip-text">
               Crafting Visual Narratives
               <br />
               Through Photography & Videography
@@ -119,7 +119,7 @@ export function AnimatedHero() {
 
           {/* Subtitle */}
           <motion.h2
-            className="text-muted-foreground text-center font-sans text-xs font-light tracking-tight sm:text-sm md:text-base"
+            className="text-muted-foreground text-center font-sans text-xs tracking-[0.2em] uppercase sm:text-sm md:text-base"
             variants={itemVariants}
           >
             <span>At the intersection of culture and creativity</span>
@@ -153,7 +153,7 @@ export function AnimatedHero() {
         >
           <Button
             size="lg"
-            className="from-primary to-primary/80 hover:to-primary rounded-full bg-gradient-to-r px-6 shadow-md shadow-black/10 hover:-translate-y-0.5"
+            className="from-primary to-primary/80 hover:to-primary rounded-full border border-transparent bg-gradient-to-r px-7 tracking-[0.12em] uppercase shadow-md shadow-black/10 hover:-translate-y-0.5"
             onClick={() => scrollToSection('portfolio')}
           >
             View Portfolio
@@ -161,7 +161,7 @@ export function AnimatedHero() {
           <Button
             size="lg"
             variant="outline"
-            className="bg-background/50 hover:bg-background/70 rounded-full border-white/20 px-6 backdrop-blur-sm"
+            className="bg-background/50 hover:bg-background/70 rounded-full border-white/20 px-7 tracking-[0.12em] uppercase backdrop-blur-sm"
             onClick={() => scrollToSection('contact')}
           >
             Start a Project

@@ -171,27 +171,22 @@ export default function Home() {
       <AnimatedHero />
 
       {/* About Section */}
-      <section
-        id="about"
-        className="relative z-10 container mx-auto px-4 py-16 md:px-6 md:py-24 lg:px-8"
-      >
+      <section id="about" className="section-shell section-block">
         <motion.div
-          className="mx-auto max-w-3xl"
+          className="mx-auto max-w-4xl"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
         >
           <motion.h2
-            className="mb-6 text-center font-serif text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl"
+            className="section-title mb-6 text-center"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
-            <span className="from-foreground via-primary to-foreground bg-gradient-to-r bg-clip-text font-bold text-transparent">
-              About
-            </span>
+            About
           </motion.h2>
           <motion.div
             className="bg-primary/30 mx-auto mb-12 h-px w-16 md:mb-16 md:w-24"
@@ -208,18 +203,18 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.3 }}
           >
-            <p className="text-muted-foreground font-sans text-sm leading-relaxed font-light tracking-tight md:text-base">
+            <p className="text-muted-foreground font-sans text-sm leading-relaxed md:text-base">
               GiltMedia is a Kuala Lumpur-based creative studio for brands,
               agencies, and visionaries who want culturally relevant visual
               storytelling.
             </p>
 
-            <p className="text-muted-foreground font-sans text-sm leading-relaxed font-light tracking-tight md:text-base">
+            <p className="text-muted-foreground font-sans text-sm leading-relaxed md:text-base">
               From short-form films to campaign photography, we build work that
               feels premium, modern, and built for impact.
             </p>
 
-            <div className="text-muted-foreground flex flex-col items-center gap-4 pt-4 text-xs font-light tracking-tight md:flex-row md:justify-center md:gap-6 md:text-sm">
+            <div className="text-muted-foreground flex flex-col items-center gap-4 pt-4 text-xs tracking-[0.14em] uppercase md:flex-row md:justify-center md:gap-6 md:text-sm">
               <div className="flex items-center gap-2.5">
                 <MapPin className="h-3.5 w-3.5" />
                 <span>Kuala Lumpur, Malaysia</span>
@@ -238,10 +233,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section
-        id="services"
-        className="relative z-10 container mx-auto px-4 pb-16 md:px-6 md:pb-24 lg:px-8"
-      >
+      <section id="services" className="section-shell pb-16 md:pb-24">
         <motion.div
           className="mx-auto max-w-5xl"
           initial={{ opacity: 0, y: 20 }}
@@ -249,13 +241,10 @@ export default function Home() {
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
         >
-          <div className="mb-8 text-center md:mb-12">
-            <h2 className="font-serif text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl">
-              <span className="from-foreground via-primary to-foreground bg-gradient-to-r bg-clip-text text-transparent">
-                Services
-              </span>
-            </h2>
-            <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-sm font-light tracking-tight md:text-base">
+          <div className="section-header">
+            <p className="section-kicker">Capabilities</p>
+            <h2 className="section-title">Services</h2>
+            <p className="section-copy">
               Strategy-led creative production built for social-first brands and
               campaigns.
             </p>
@@ -265,7 +254,7 @@ export default function Home() {
             {services.map(service => (
               <motion.div
                 key={service}
-                className="surface-card hover:border-primary/40 rounded-md px-3 py-3 text-center text-xs font-light tracking-tight transition-all duration-300 hover:-translate-y-0.5 md:px-4 md:py-4 md:text-sm"
+                className="surface-card hover:border-primary/40 rounded-md px-3 py-3 text-center text-xs tracking-[0.14em] uppercase transition-all duration-300 hover:-translate-y-0.5 md:px-4 md:py-4 md:text-sm"
                 whileHover={{ y: -2, scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
               >
@@ -277,7 +266,7 @@ export default function Home() {
       </section>
 
       {/* Industries Section */}
-      <section className="relative z-10 container mx-auto px-4 pb-16 md:px-6 md:pb-24 lg:px-8">
+      <section className="section-shell pb-16 md:pb-24">
         <motion.div
           className="mx-auto max-w-5xl"
           initial={{ opacity: 0, y: 20 }}
@@ -286,7 +275,7 @@ export default function Home() {
           transition={{ duration: 0.4 }}
         >
           <div className="mb-6 text-center md:mb-8">
-            <h3 className="text-foreground text-lg font-bold tracking-tight md:text-xl">
+            <h3 className="text-foreground text-lg font-semibold tracking-[0.12em] uppercase md:text-xl">
               Industries We Work With
             </h3>
           </div>
@@ -294,7 +283,7 @@ export default function Home() {
             {industries.map(industry => (
               <motion.span
                 key={industry}
-                className="glass rounded-md px-3 py-1.5 text-[10px] font-light tracking-tight md:px-4 md:py-2 md:text-xs"
+                className="glass rounded-full px-3 py-1.5 text-[10px] tracking-[0.12em] uppercase md:px-4 md:py-2 md:text-xs"
                 whileHover={{ y: -1 }}
               >
                 {industry}
@@ -309,25 +298,23 @@ export default function Home() {
         <Suspense fallback={<PortfolioSectionSkeleton />}>
           <section
             id="portfolio"
-            className="relative z-10 container mx-auto px-4 pt-16 pb-16 md:px-6 md:pt-24 md:pb-24 lg:px-8"
+            className="section-shell pt-16 pb-16 md:pt-24 md:pb-24"
           >
             <motion.div
-              className="mb-12 text-center md:mb-16"
+              className="section-header"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4 }}
             >
               <motion.h2
-                className="font-serif text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl"
+                className="section-title"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0.1 }}
               >
-                <span className="from-foreground via-primary to-foreground bg-gradient-to-r bg-clip-text font-bold text-transparent">
-                  Portfolio
-                </span>
+                Portfolio
               </motion.h2>
               <motion.div
                 className="bg-primary/30 mx-auto mt-4 h-px w-16 md:mt-6 md:w-24"
@@ -396,10 +383,7 @@ export default function Home() {
       />
 
       {/* Contact Section */}
-      <section
-        id="contact"
-        className="relative z-10 container mx-auto px-4 py-16 md:px-6 md:py-24 lg:px-8"
-      >
+      <section id="contact" className="section-shell section-block">
         <motion.div
           className="mx-auto max-w-2xl text-center"
           initial={{ opacity: 0, y: 20 }}
@@ -408,15 +392,13 @@ export default function Home() {
           transition={{ duration: 0.4 }}
         >
           <motion.h2
-            className="mb-6 font-serif text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl"
+            className="section-title mb-6"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
-            <span className="from-foreground via-primary to-foreground bg-gradient-to-r bg-clip-text font-bold text-transparent">
-              Let&apos;s Talk
-            </span>
+            Let&apos;s Talk
           </motion.h2>
           <motion.div
             className="bg-primary/30 mx-auto mb-8 h-px w-16 md:w-24"
@@ -439,7 +421,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Contact Hazem via WhatsApp"
-              className="from-primary to-primary/80 text-primary-foreground hover:to-primary rounded-full border border-transparent bg-gradient-to-r px-6 py-2.5 text-xs font-medium tracking-tight shadow-md shadow-black/15 transition-all duration-300 hover:-translate-y-0.5 md:px-8 md:py-3.5 md:text-base"
+              className="from-primary to-primary/80 text-primary-foreground hover:to-primary rounded-full border border-transparent bg-gradient-to-r px-6 py-2.5 text-xs font-semibold tracking-[0.14em] uppercase shadow-md shadow-black/15 transition-all duration-300 hover:-translate-y-0.5 md:px-8 md:py-3.5 md:text-base"
               onClick={() =>
                 analytics.track({
                   name: 'cta_book_click',
@@ -451,7 +433,7 @@ export default function Home() {
             </a>
             <a
               href="mailto:hazem@noveltyventures.uk"
-              className="text-muted-foreground hover:text-primary rounded-full border border-white/20 px-4 py-2 text-xs font-light tracking-tight backdrop-blur-sm transition-colors duration-300 md:text-base"
+              className="text-muted-foreground hover:text-primary rounded-full border border-white/20 px-4 py-2 text-xs tracking-[0.12em] uppercase backdrop-blur-sm transition-colors duration-300 md:text-base"
             >
               hazem@noveltyventures.uk
             </a>
