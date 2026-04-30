@@ -19,7 +19,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
-        className="flex-1 pt-12 md:pt-16"
+        className="flex-1"
       >
         {children}
       </motion.main>
