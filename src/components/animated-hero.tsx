@@ -52,32 +52,32 @@ export function AnimatedHero() {
       ref={ref}
       className="section-shell relative flex min-h-[66vh] flex-col items-center justify-center overflow-hidden pt-12 pb-20 text-center md:min-h-[76vh] md:pt-16 md:pb-24"
     >
-      {/* Subtle background elements */}
+      {/* Hero background video (Asset 11 style treatment) */}
+      <div className="absolute inset-0 -z-20">
+        <video
+          className="h-full w-full object-cover object-center"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/videos/VT-11.png"
+          aria-hidden="true"
+        >
+          <source src="/videos/11.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      {/* Contrast overlays for text legibility */}
+      <div className="absolute inset-0 -z-10 bg-black/52" />
+      <div className="from-background/70 via-background/45 to-background/75 absolute inset-0 -z-10 bg-gradient-to-b" />
+
+      {/* Subtle accent glow on top of video */}
       <div className="absolute inset-0 -z-10">
         <motion.div
-          className="bg-primary/5 absolute top-20 left-10 h-32 w-32 rounded-full blur-3xl will-change-transform md:top-32 md:left-20 md:h-48 md:w-48"
-          animate={{
-            scale: [1, 1.05, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          style={{ transform: 'translate3d(0,0,0)' }}
-        />
-        <motion.div
-          className="bg-primary/3 absolute right-10 bottom-20 h-40 w-40 rounded-full blur-3xl will-change-transform md:right-20 md:bottom-32 md:h-56 md:w-56"
-          animate={{
-            scale: [1.05, 1, 1.05],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
+          className="bg-primary/10 absolute top-24 left-12 h-36 w-36 rounded-full blur-3xl will-change-transform md:top-36 md:left-24 md:h-56 md:w-56"
+          animate={{ scale: [1, 1.05, 1], opacity: [0.35, 0.5, 0.35] }}
+          transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
           style={{ transform: 'translate3d(0,0,0)' }}
         />
       </div>

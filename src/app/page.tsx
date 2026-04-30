@@ -65,6 +65,10 @@ export default function Home() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [activeFilter, setActiveFilter] = useState('all');
+  const portfolioItemsVisible = useMemo(
+    () => portfolioItems.filter(item => item.id !== 'video-11'),
+    []
+  );
   const services = [
     'Videography',
     'Photography',
@@ -86,26 +90,26 @@ export default function Home() {
 
   // Memoized filtered items for better performance
   const filteredItems = useMemo(() => {
-    if (activeFilter === 'all') return portfolioItems;
+    if (activeFilter === 'all') return portfolioItemsVisible;
     if (activeFilter === 'video') {
-      return portfolioItems.filter(
+      return portfolioItemsVisible.filter(
         item => item.type === 'videography' || item.type === 'film'
       );
     }
-    return portfolioItems.filter(item => item.type === activeFilter);
-  }, [activeFilter]);
+    return portfolioItemsVisible.filter(item => item.type === activeFilter);
+  }, [activeFilter, portfolioItemsVisible]);
 
   // Memoized categorized items
   const { photographyItems, videoItems, filterCounts } = useMemo(() => {
-    const photography = portfolioItems.filter(
+    const photography = portfolioItemsVisible.filter(
       item => item.type === 'photography'
     );
-    const video = portfolioItems.filter(
+    const video = portfolioItemsVisible.filter(
       item => item.type === 'videography' || item.type === 'film'
     );
 
     const counts = {
-      all: portfolioItems.length,
+      all: portfolioItemsVisible.length,
       photography: photography.length,
       video: video.length,
     };
@@ -115,7 +119,7 @@ export default function Home() {
       videoItems: video,
       filterCounts: counts,
     };
-  }, []);
+  }, [portfolioItemsVisible]);
 
   // Memoized slides array
   const allSlides: Slide[] = useMemo(
