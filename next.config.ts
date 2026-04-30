@@ -1,5 +1,7 @@
 import type { NextConfig } from 'next';
 
+const isStaticExport = true;
+
 const nextConfig: NextConfig = {
   output: 'export',
   images: {
@@ -23,46 +25,50 @@ const nextConfig: NextConfig = {
     // optimizeCss: true, // Disabled to avoid critters dependency issues
     webpackBuildWorker: true,
   },
-  // Security headers
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY',
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin',
-          },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=()',
-          },
-        ],
-      },
-      // Preserve video quality - prevent compression for video files
-      {
-        source: '/videos/(.*)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-          {
-            key: 'Content-Encoding',
-            value: 'identity',
-          },
-        ],
-      },
-    ];
-  },
+  // Security/cache headers (only supported in non-export deployments)
+  ...(isStaticExport
+    ? {}
+    : {
+        async headers() {
+          return [
+            {
+              source: '/(.*)',
+              headers: [
+                {
+                  key: 'X-Frame-Options',
+                  value: 'DENY',
+                },
+                {
+                  key: 'X-Content-Type-Options',
+                  value: 'nosniff',
+                },
+                {
+                  key: 'Referrer-Policy',
+                  value: 'strict-origin-when-cross-origin',
+                },
+                {
+                  key: 'Permissions-Policy',
+                  value: 'camera=(), microphone=(), geolocation=()',
+                },
+              ],
+            },
+            // Preserve video quality - prevent compression for video files
+            {
+              source: '/videos/(.*)',
+              headers: [
+                {
+                  key: 'Cache-Control',
+                  value: 'public, max-age=31536000, immutable',
+                },
+                {
+                  key: 'Content-Encoding',
+                  value: 'identity',
+                },
+              ],
+            },
+          ];
+        },
+      }),
   // Webpack configuration for better performance
   webpack: (config, { isServer }) => {
     if (!isServer) {
