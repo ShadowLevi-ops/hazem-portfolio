@@ -22,6 +22,7 @@ function VideoAutoPlay({
   const containerRef = useRef<HTMLDivElement>(null);
   const isInViewRef = useRef(false);
   const [shouldLoad, setShouldLoad] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
@@ -33,6 +34,7 @@ function VideoAutoPlay({
 
     const playWhenReady = () => {
       if (isInViewRef.current && video.readyState >= 2) {
+        setIsVideoReady(true);
         video.play().catch(() => {
           // Silently handle autoplay restrictions (e.g. some mobile browsers)
         });
@@ -85,7 +87,9 @@ function VideoAutoPlay({
     <div ref={containerRef} className="absolute inset-0">
       <video
         ref={videoRef}
-        className="absolute inset-0 h-full w-full object-cover object-center opacity-100 transition-opacity duration-300 ease-out"
+        className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-300 ease-out ${
+          isVideoReady ? 'opacity-100' : 'opacity-0'
+        }`}
         autoPlay
         muted
         loop
@@ -95,6 +99,9 @@ function VideoAutoPlay({
         poster={poster}
         onError={() => {
           setHasError(true);
+        }}
+        onLoadedData={() => {
+          setIsVideoReady(true);
         }}
       >
         {shouldLoad && <source src={src} type="video/mp4" />}
