@@ -85,7 +85,8 @@ function VideoAutoPlay({
     <div ref={containerRef} className="absolute inset-0">
       <video
         ref={videoRef}
-        className="absolute inset-0 h-full w-full object-cover object-center opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100"
+        className="absolute inset-0 h-full w-full object-cover object-center opacity-100 transition-opacity duration-300 ease-out"
+        autoPlay
         muted
         loop
         playsInline
