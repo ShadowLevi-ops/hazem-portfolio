@@ -325,6 +325,15 @@ export default function Home() {
               >
                 Portfolio
               </motion.h2>
+              <motion.p
+                className="section-copy mt-3 md:mt-4"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.15 }}
+              >
+                Explore selected work and tap any card to view full details.
+              </motion.p>
               <motion.div
                 className="bg-primary/30 mx-auto mt-4 h-px w-16 md:mt-6 md:w-24"
                 initial={{ scaleX: 0 }}

@@ -310,7 +310,7 @@ export function VerticalCarousel({
                   )}
 
                   {!isOngoingProject && (
-                    <div className="absolute right-2 bottom-2 left-2 md:right-3 md:bottom-3 md:left-3">
+                    <div className="absolute right-1.5 bottom-1.5 left-1.5 min-[380px]:right-2 min-[380px]:bottom-2 min-[380px]:left-2 md:right-3 md:bottom-3 md:left-3">
                       <motion.div
                         initial={{ opacity: 0, y: 8 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -319,12 +319,12 @@ export function VerticalCarousel({
                           duration: 0.28,
                           delay: Math.min(index * 0.02, 0.16),
                         }}
-                        className="translate-y-1 rounded-md bg-black/72 px-2 py-1.5 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+                        className="translate-y-0 rounded-md bg-black/72 px-1.5 py-1 opacity-100 backdrop-blur-sm transition-all duration-300 min-[380px]:px-2 min-[380px]:py-1.5 md:translate-y-1 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100"
                       >
-                        <p className="line-clamp-2 font-serif text-xs leading-snug font-semibold tracking-tight text-white md:text-sm">
+                        <p className="line-clamp-2 font-serif text-[10px] leading-snug font-semibold tracking-tight text-white min-[380px]:text-[11px] md:text-sm">
                           {item.title}
                         </p>
-                        <p className="mt-0.5 line-clamp-2 text-[10px] leading-relaxed text-white/90 md:text-xs">
+                        <p className="mt-0.5 line-clamp-2 text-[9px] leading-relaxed text-white/90 min-[380px]:line-clamp-3 min-[380px]:text-[10px] md:line-clamp-2 md:text-xs">
                           {brief}
                         </p>
                       </motion.div>
