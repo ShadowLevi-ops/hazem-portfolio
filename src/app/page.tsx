@@ -24,6 +24,21 @@ const FEATURED_PROJECT_IDS: readonly string[] = [
   'video-10',
 ];
 
+const getItemSortTimestamp = (item: PortfolioItem): number => {
+  if (item.date) {
+    const parsed = Date.parse(item.date);
+    if (!Number.isNaN(parsed)) return parsed;
+  }
+
+  const idMatch = item.id.match(/-(\d+)$/);
+  if (idMatch?.[1]) return Number.parseInt(idMatch[1], 10);
+
+  return 0;
+};
+
+const sortNewestFirst = (items: PortfolioItem[]): PortfolioItem[] =>
+  [...items].sort((a, b) => getItemSortTimestamp(b) - getItemSortTimestamp(a));
+
 // Optimized dynamic imports for faster initial load with prefetching
 const PortfolioFilter = dynamic(
   () =>
@@ -105,22 +120,39 @@ export default function Home() {
 
   // Memoized filtered items for better performance
   const filteredItems = useMemo(() => {
-    if (activeFilter === 'all') return portfolioItemsVisible;
+    if (activeFilter === 'all') {
+      const videos = sortNewestFirst(
+        portfolioItemsVisible.filter(
+          item => item.type === 'videography' || item.type === 'film'
+        )
+      );
+      const photography = sortNewestFirst(
+        portfolioItemsVisible.filter(item => item.type === 'photography')
+      );
+      return [...videos, ...photography];
+    }
+
     if (activeFilter === 'video') {
-      return portfolioItemsVisible.filter(
-        item => item.type === 'videography' || item.type === 'film'
+      return sortNewestFirst(
+        portfolioItemsVisible.filter(
+          item => item.type === 'videography' || item.type === 'film'
+        )
       );
     }
-    return portfolioItemsVisible.filter(item => item.type === activeFilter);
+    return sortNewestFirst(
+      portfolioItemsVisible.filter(item => item.type === activeFilter)
+    );
   }, [activeFilter, portfolioItemsVisible]);
 
   // Memoized categorized items
   const { photographyItems, videoItems, filterCounts } = useMemo(() => {
-    const photography = portfolioItemsVisible.filter(
-      item => item.type === 'photography'
+    const photography = sortNewestFirst(
+      portfolioItemsVisible.filter(item => item.type === 'photography')
     );
-    const video = portfolioItemsVisible.filter(
-      item => item.type === 'videography' || item.type === 'film'
+    const video = sortNewestFirst(
+      portfolioItemsVisible.filter(
+        item => item.type === 'videography' || item.type === 'film'
+      )
     );
 
     const counts = {
@@ -362,14 +394,14 @@ export default function Home() {
       {/* Contact Section */}
       <section id="contact" className="section-shell section-block">
         <motion.div
-          className="mx-auto max-w-2xl text-center"
+          className="mx-auto max-w-xl text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
         >
           <motion.h2
-            className="section-title mb-6"
+            className="mb-4 font-serif text-2xl leading-tight font-semibold tracking-[-0.02em] md:text-3xl"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -378,14 +410,14 @@ export default function Home() {
             Let&apos;s Talk
           </motion.h2>
           <motion.div
-            className="bg-primary/30 mx-auto mb-8 h-px w-16 md:w-24"
+            className="bg-primary/30 mx-auto mb-6 h-px w-12 md:w-16"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           />
           <motion.div
-            className="flex flex-col items-center gap-4 md:flex-row md:justify-center"
+            className="flex flex-col items-center gap-3 md:flex-row md:justify-center"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -398,7 +430,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Contact Hazem via WhatsApp"
-              className="from-primary to-primary/80 text-primary-foreground hover:to-primary rounded-full border border-transparent bg-gradient-to-r px-6 py-2.5 text-xs font-semibold tracking-[0.14em] uppercase shadow-md shadow-black/15 transition-all duration-300 hover:-translate-y-0.5 md:px-8 md:py-3.5 md:text-base"
+              className="from-primary to-primary/80 text-primary-foreground hover:to-primary rounded-full border border-transparent bg-gradient-to-r px-5 py-2 text-[11px] font-semibold tracking-[0.14em] uppercase shadow-md shadow-black/15 transition-all duration-300 hover:-translate-y-0.5 md:px-6 md:py-2.5 md:text-sm"
               onClick={() =>
                 analytics.track({
                   name: 'cta_book_click',
@@ -410,7 +442,7 @@ export default function Home() {
             </a>
             <a
               href="mailto:hazem@noveltyventures.uk"
-              className="text-muted-foreground hover:text-primary rounded-full border border-white/20 px-4 py-2 text-xs tracking-[0.12em] uppercase backdrop-blur-sm transition-colors duration-300 md:text-base"
+              className="text-muted-foreground hover:text-primary rounded-full border border-white/20 px-3.5 py-1.5 text-[11px] tracking-[0.12em] uppercase backdrop-blur-sm transition-colors duration-300 md:px-4 md:py-2 md:text-sm"
             >
               hazem@noveltyventures.uk
             </a>

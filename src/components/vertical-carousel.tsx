@@ -6,6 +6,12 @@ import Image from 'next/image';
 import { Expand } from 'lucide-react';
 import type { PortfolioItem } from '@/types/portfolio';
 
+const BRIEF_BY_ID: Record<string, string> = {
+  'video-16': 'Retail launch film for the H Street line drop.',
+  'video-14': 'Festive football storytelling for Lunar New Year.',
+  'video-10': 'Immersive scuba recap cut for social-first storytelling.',
+};
+
 // Auto-playing video component with Intersection Observer
 function VideoAutoPlay({
   src,
@@ -202,6 +208,10 @@ export function VerticalCarousel({
                 item.type === 'videography' || item.type === 'film';
               const isOngoingProject =
                 item.projectDetails === 'ONGOING PROJECT';
+              const brief =
+                BRIEF_BY_ID[item.id] ||
+                item.projectDetails ||
+                'Campaign-focused visual storytelling piece.';
 
               return (
                 <motion.article
@@ -275,8 +285,8 @@ export function VerticalCarousel({
                     )}
                   </div>
 
-                  {/* Refined overlay - darker */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  {/* Always-on bottom gradient for legibility */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/45 to-transparent" />
 
                   {/* Ongoing Project Overlay */}
                   {isOngoingProject && (
@@ -299,25 +309,33 @@ export function VerticalCarousel({
                     </div>
                   )}
 
+                  {!isOngoingProject && (
+                    <div className="absolute right-2 bottom-2 left-2 md:right-3 md:bottom-3 md:left-3">
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.5 }}
+                        transition={{
+                          duration: 0.28,
+                          delay: Math.min(index * 0.02, 0.16),
+                        }}
+                        className="translate-y-1 rounded-md bg-black/72 px-2 py-1.5 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+                      >
+                        <p className="line-clamp-2 font-serif text-xs leading-snug font-semibold tracking-tight text-white md:text-sm">
+                          {item.title}
+                        </p>
+                        <p className="mt-0.5 line-clamp-2 text-[10px] leading-relaxed text-white/90 md:text-xs">
+                          {brief}
+                        </p>
+                      </motion.div>
+                    </div>
+                  )}
+
                   <div className="absolute inset-0 flex flex-col justify-between p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:p-4 lg:p-5">
                     {/* Expand indicator - optimized for mobile */}
                     <div className="absolute top-1.5 right-1.5 md:top-2 md:right-2">
                       <div className="rounded-full bg-white/20 p-1 backdrop-blur-sm md:p-1.5">
                         <Expand className="h-2.5 w-2.5 text-white md:h-3 md:w-3" />
-                      </div>
-                    </div>
-
-                    {/* Title overlay - fades in on hover */}
-                    <div className="absolute right-3 bottom-3 left-3 md:right-4 md:bottom-4 md:left-4">
-                      <div className="font-sans text-[10px] leading-tight font-semibold tracking-[0.08em] text-white md:text-xs">
-                        <div className="mb-1 line-clamp-2 break-words">
-                          {item.title}
-                        </div>
-                        <div className="text-[9px] font-bold tracking-tight text-white/80 uppercase md:text-[10px]">
-                          {item.type === 'videography' || item.type === 'film'
-                            ? 'Video'
-                            : 'Photography'}
-                        </div>
                       </div>
                     </div>
                   </div>

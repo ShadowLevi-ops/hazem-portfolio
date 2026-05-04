@@ -10,6 +10,17 @@ const TEASERS: Record<string, string> = {
   'video-10': 'Immersive scuba recap cut for social-first storytelling.',
 };
 
+const INDUSTRIES: Record<string, string> = {
+  'video-16': 'Fashion / Retail',
+  'video-14': 'Sports / Entertainment',
+  'video-10': 'Travel / Lifestyle',
+};
+
+const CLIENTS: Record<string, string> = {
+  'video-16': 'PUMA x Solewhat',
+  'video-14': 'Tottenham Hotspurs',
+};
+
 type FeaturedWorkProps = {
   items: PortfolioItem[];
   onSelect: (item: PortfolioItem) => void;
@@ -49,6 +60,9 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
             const tag =
               item.projectDetails || (isVideo ? 'Video' : 'Photography');
             const teaser = TEASERS[item.id] ?? '';
+            const client =
+              CLIENTS[item.id] || item.client || 'Independent project';
+            const industry = INDUSTRIES[item.id] || 'Creative';
 
             return (
               <motion.button
@@ -86,18 +100,57 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
-                  <span className="text-primary-foreground/90 absolute top-3 left-3 rounded bg-black/45 px-2 py-1 text-[10px] tracking-[0.14em] uppercase backdrop-blur-sm md:text-xs">
-                    {tag}
-                  </span>
-                  <div className="absolute right-0 bottom-0 left-0 p-4 md:p-5">
-                    <h3 className="text-foreground font-serif text-base leading-snug font-semibold tracking-tight md:text-lg">
+                  <div className="absolute top-3 right-3 left-3 flex items-start justify-between gap-2 md:top-4 md:right-4 md:left-4">
+                    <motion.h3
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: 0.05 }}
+                      className="font-serif text-sm leading-snug font-semibold tracking-tight text-white transition-transform duration-300 group-hover:-translate-y-1 md:text-base"
+                    >
                       {item.title}
-                    </h3>
-                    {teaser ? (
-                      <p className="text-muted-foreground mt-2 line-clamp-2 text-xs leading-relaxed md:text-sm">
-                        {teaser}
+                    </motion.h3>
+                    <span className="rounded bg-black/45 px-2 py-1 text-[10px] tracking-[0.14em] text-white/90 uppercase backdrop-blur-sm md:text-xs">
+                      {tag}
+                    </span>
+                  </div>
+                  <div className="absolute right-0 bottom-0 left-0 p-4 md:p-5">
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{
+                        duration: 0.28,
+                        delay: Math.min(idx * 0.02, 0.16),
+                      }}
+                      className="mt-3 translate-y-1 rounded-md border border-white/20 bg-black/55 p-3 text-left opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+                    >
+                      <p className="text-[10px] tracking-[0.14em] text-white/70 uppercase">
+                        Project Brief
                       </p>
-                    ) : null}
+                      <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-white md:text-sm">
+                        {teaser ||
+                          'Campaign-focused visual storytelling piece.'}
+                      </p>
+                      <div className="mt-2 grid grid-cols-2 gap-2 text-[10px] md:text-xs">
+                        <div>
+                          <p className="tracking-[0.12em] text-white/70 uppercase">
+                            Client
+                          </p>
+                          <p className="mt-0.5 line-clamp-1 text-white">
+                            {client}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="tracking-[0.12em] text-white/70 uppercase">
+                            Industry
+                          </p>
+                          <p className="mt-0.5 line-clamp-1 text-white">
+                            {industry}
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
                   </div>
                 </div>
               </motion.button>
