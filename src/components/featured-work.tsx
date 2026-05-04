@@ -64,13 +64,27 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                 className="surface-card group hover:border-primary/45 relative flex w-full flex-col overflow-hidden rounded-md border border-transparent text-left transition-colors duration-300"
               >
                 <div className="bg-muted relative aspect-[4/5] w-full overflow-hidden md:aspect-[3/4]">
-                  <Image
-                    src={src}
-                    alt={item.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
+                  {isVideo ? (
+                    <video
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      src={item.mediaUrl}
+                      poster={item.thumbnailUrl}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      aria-label={item.title}
+                    />
+                  ) : (
+                    <Image
+                      src={src}
+                      alt={item.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                   <span className="text-primary-foreground/90 absolute top-3 left-3 rounded bg-black/45 px-2 py-1 text-[10px] tracking-[0.14em] uppercase backdrop-blur-sm md:text-xs">
                     {tag}
