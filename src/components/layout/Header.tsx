@@ -123,7 +123,7 @@ export const Header = () => {
             : 'bg-background/72'
         }`}
       >
-        <div className="container flex h-16 items-center justify-between px-6 md:h-20 md:px-10">
+        <div className="flex h-16 w-full items-center justify-between px-6 md:h-20 md:px-10">
           <Link href="/" className="flex shrink-0 items-center">
             <Image
               src="/favicon.png"
