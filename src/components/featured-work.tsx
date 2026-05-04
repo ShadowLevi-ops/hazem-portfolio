@@ -7,7 +7,7 @@ import type { PortfolioItem } from '@/types/portfolio';
 const TEASERS: Record<string, string> = {
   'video-16': 'Retail launch film for the H Street line drop.',
   'video-14': 'Festive football storytelling for Lunar New Year.',
-  'photo-9': 'National campaign coverage across sports and community.',
+  'video-10': 'Immersive scuba recap cut for social-first storytelling.',
 };
 
 type FeaturedWorkProps = {
@@ -76,7 +76,7 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                     {tag}
                   </span>
                   <div className="absolute right-0 bottom-0 left-0 p-4 md:p-5">
-                    <h3 className="text-foreground font-serif text-lg leading-snug font-semibold tracking-tight md:text-xl">
+                    <h3 className="text-foreground font-serif text-base leading-snug font-semibold tracking-tight md:text-lg">
                       {item.title}
                     </h3>
                     {teaser ? (

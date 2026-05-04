@@ -21,7 +21,7 @@ import type { PortfolioItem } from '@/types/portfolio';
 const FEATURED_PROJECT_IDS: readonly string[] = [
   'video-16',
   'video-14',
-  'photo-9',
+  'video-10',
 ];
 
 // Optimized dynamic imports for faster initial load with prefetching
