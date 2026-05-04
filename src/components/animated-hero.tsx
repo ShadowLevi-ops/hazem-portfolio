@@ -117,6 +117,16 @@ export function AnimatedHero() {
             >
               <span>At the intersection of culture and creativity</span>
             </motion.h2>
+
+            <motion.p
+              className="text-muted-foreground mx-auto max-w-2xl px-2 text-center font-sans text-sm leading-relaxed md:text-base"
+              variants={itemVariants}
+            >
+              GiltMedia is a Kuala Lumpur studio for brands, agencies, and
+              visionaries who want culturally tuned visual work—from campaign
+              films and social-first edits to photography that feels premium and
+              built to perform.
+            </motion.p>
           </motion.div>
 
           {/* Contact info */}

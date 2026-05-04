@@ -6,8 +6,8 @@ import Video from 'yet-another-react-lightbox/plugins/video';
 import type { Slide } from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import { AnimatePresence, motion } from 'framer-motion';
-import { MapPin, Mail } from 'lucide-react';
 import { AnimatedHero } from '@/components/animated-hero';
+import { FeaturedWork } from '@/components/featured-work';
 import dynamic from 'next/dynamic';
 import { analytics } from '@/lib/analytics';
 import {
@@ -16,6 +16,13 @@ import {
   PortfolioSectionSkeleton,
 } from '@/components/loading-skeletons';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import type { PortfolioItem } from '@/types/portfolio';
+
+const FEATURED_PROJECT_IDS: readonly string[] = [
+  'video-16',
+  'video-14',
+  'photo-9',
+];
 
 // Optimized dynamic imports for faster initial load with prefetching
 const PortfolioFilter = dynamic(
@@ -67,6 +74,14 @@ export default function Home() {
   const [activeFilter, setActiveFilter] = useState('all');
   const portfolioItemsVisible = useMemo(
     () => portfolioItems.filter(item => item.id !== 'video-11'),
+    []
+  );
+
+  const featuredItems = useMemo(
+    () =>
+      FEATURED_PROJECT_IDS.map(id =>
+        portfolioItems.find(item => item.id === id)
+      ).filter((item): item is PortfolioItem => Boolean(item)),
     []
   );
   const services = [
@@ -162,6 +177,22 @@ export default function Home() {
     analytics.track({ name: 'lightbox_open', properties: { index } });
   }, []);
 
+  const openPortfolioItem = useCallback(
+    (item: PortfolioItem) => {
+      const isVideo = item.type === 'videography' || item.type === 'film';
+      const slideIndex = isVideo
+        ? videoItems.findIndex(v => v.id === item.id)
+        : videoItems.length + photographyItems.findIndex(p => p.id === item.id);
+      if (slideIndex < 0) return;
+      openLightbox(slideIndex);
+      analytics.track({
+        name: 'featured_work_click',
+        properties: { id: item.id },
+      });
+    },
+    [videoItems, photographyItems, openLightbox]
+  );
+
   return (
     <ErrorBoundary>
       {/* Skip to content link for accessibility */}
@@ -174,67 +205,9 @@ export default function Home() {
 
       <AnimatedHero />
 
-      {/* About Section */}
-      <section id="about" className="section-shell section-block">
-        <motion.div
-          className="mx-auto max-w-4xl"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-        >
-          <motion.h2
-            className="section-title mb-6 text-center"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-          >
-            About
-          </motion.h2>
-          <motion.div
-            className="bg-primary/30 mx-auto mb-12 h-px w-16 md:mb-16 md:w-24"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          />
-
-          <motion.div
-            className="space-y-6 text-center md:space-y-8"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.3 }}
-          >
-            <p className="text-muted-foreground font-sans text-sm leading-relaxed md:text-base">
-              GiltMedia is a Kuala Lumpur-based creative studio for brands,
-              agencies, and visionaries who want culturally relevant visual
-              storytelling.
-            </p>
-
-            <p className="text-muted-foreground font-sans text-sm leading-relaxed md:text-base">
-              From short-form films to campaign photography, we build work that
-              feels premium, modern, and built for impact.
-            </p>
-
-            <div className="text-muted-foreground flex flex-col items-center gap-4 pt-4 text-xs tracking-[0.14em] uppercase md:flex-row md:justify-center md:gap-6 md:text-sm">
-              <div className="flex items-center gap-2.5">
-                <MapPin className="h-3.5 w-3.5" />
-                <span>Kuala Lumpur, Malaysia</span>
-              </div>
-              <div className="bg-border h-4 w-px" />
-              <a
-                href="mailto:hazem@noveltyventures.uk"
-                className="hover:text-primary flex items-center gap-2.5 transition-colors duration-300"
-              >
-                <Mail className="h-3.5 w-3.5" />
-                <span>hazem@noveltyventures.uk</span>
-              </a>
-            </div>
-          </motion.div>
-        </motion.div>
-      </section>
+      {featuredItems.length > 0 ? (
+        <FeaturedWork items={featuredItems} onSelect={openPortfolioItem} />
+      ) : null}
 
       {/* Services Section */}
       <section id="services" className="section-shell pb-16 md:pb-24">
@@ -270,7 +243,7 @@ export default function Home() {
       </section>
 
       {/* Industries Section */}
-      <section className="section-shell pb-16 md:pb-24">
+      <section id="industries" className="section-shell pb-16 md:pb-24">
         <motion.div
           className="mx-auto max-w-5xl"
           initial={{ opacity: 0, y: 20 }}

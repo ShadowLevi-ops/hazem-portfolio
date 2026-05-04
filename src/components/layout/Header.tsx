@@ -1,17 +1,84 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Menu, X, ChevronDown } from 'lucide-react';
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
+
+const SECTION_IDS = [
+  'featured',
+  'portfolio',
+  'services',
+  'industries',
+  'contact',
+] as const;
+
+const NAV_GROUPS: {
+  label: string;
+  items: { id: (typeof SECTION_IDS)[number]; label: string }[];
+}[] = [
+  {
+    label: 'Work',
+    items: [
+      { id: 'featured', label: 'Featured' },
+      { id: 'portfolio', label: 'Portfolio' },
+    ],
+  },
+  {
+    label: 'Studio',
+    items: [
+      { id: 'services', label: 'Services' },
+      { id: 'industries', label: 'Industries' },
+    ],
+  },
+];
 
 export const Header = () => {
-  const [activeSection, setActiveSection] = useState('portfolio');
+  const [activeSection, setActiveSection] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+  const [desktopMenuOpen, setDesktopMenuOpen] = useState(false);
+
+  const navigateToSection = useCallback((sectionId: string) => {
+    setIsMenuOpen(false);
+    setDesktopMenuOpen(false);
+    document.getElementById(sectionId)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }, []);
 
   useEffect(() => {
-    const sectionIds = ['portfolio', 'about', 'services', 'contact'];
+    if (!isMenuOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [isMenuOpen]);
 
+  useEffect(() => {
+    if (!isMenuOpen) setMobileExpanded(null);
+  }, [isMenuOpen]);
+
+  useEffect(() => {
     const updateActiveSection = () => {
       const scrollPosition = window.scrollY + 140;
       const maxScroll =
@@ -22,16 +89,18 @@ export const Header = () => {
         maxScroll > 0 ? Math.min(100, (window.scrollY / maxScroll) * 100) : 0
       );
 
-      for (let i = sectionIds.length - 1; i >= 0; i -= 1) {
-        const id = sectionIds[i];
+      let next: string | null = null;
+      for (let i = SECTION_IDS.length - 1; i >= 0; i -= 1) {
+        const id = SECTION_IDS[i];
         if (!id) continue;
         const section = document.getElementById(id);
         if (!section) continue;
         if (scrollPosition >= section.offsetTop) {
-          setActiveSection(id);
-          return;
+          next = id;
+          break;
         }
       }
+      setActiveSection(next);
     };
 
     updateActiveSection();
@@ -42,78 +111,157 @@ export const Header = () => {
   const scrollToSection =
     (sectionId: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
-      document.getElementById(sectionId)?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
+      navigateToSection(sectionId);
     };
 
-  const navItemClass = (sectionId: string) =>
-    `flex h-full items-center border-b text-xs tracking-tight transition-all duration-300 ${
-      activeSection === sectionId
-        ? 'text-foreground border-primary/70 font-medium'
-        : 'text-muted-foreground hover:text-foreground border-transparent font-light hover:border-primary/40'
-    }`;
-
   return (
-    <header
-      className={`border-border/60 supports-[backdrop-filter]:bg-background/55 sticky top-0 z-40 w-full overflow-hidden border-b backdrop-blur-2xl transition-all duration-300 ${
-        isScrolled
-          ? 'bg-background/90 shadow-[0_16px_42px_rgba(0,0,0,0.22)]'
-          : 'bg-background/72'
-      }`}
-    >
-      <div className="container flex h-16 items-center justify-between px-6 md:h-20 md:px-10">
-        {/* Logo */}
-        <Link href="/" className="flex items-center">
-          <Image
-            src="/favicon.png"
-            alt="Hazem Logo"
-            width={64}
-            height={16}
-            className="h-6 w-auto opacity-90"
-          />
-        </Link>
+    <>
+      <header
+        className={`border-border/60 supports-[backdrop-filter]:bg-background/55 sticky top-0 z-50 w-full border-b backdrop-blur-2xl transition-all duration-300 ${
+          isScrolled
+            ? 'bg-background/90 shadow-[0_16px_42px_rgba(0,0,0,0.22)]'
+            : 'bg-background/72'
+        }`}
+      >
+        <div className="container flex h-16 items-center justify-between px-6 md:h-20 md:px-10">
+          <Link href="/" className="flex shrink-0 items-center">
+            <Image
+              src="/favicon.png"
+              alt="Hazem Logo"
+              width={64}
+              height={16}
+              className="h-6 w-auto opacity-90"
+            />
+          </Link>
 
-        {/* Simple Navigation */}
-        <nav className="hidden h-full items-center gap-7 md:flex">
-          <a
-            href="#portfolio"
-            className={navItemClass('portfolio')}
-            onClick={scrollToSection('portfolio')}
+          <DropdownMenu
+            open={desktopMenuOpen}
+            onOpenChange={setDesktopMenuOpen}
           >
-            Portfolio
-          </a>
-          <a
-            href="#about"
-            className={navItemClass('about')}
-            onClick={scrollToSection('about')}
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className="text-foreground hover:text-primary border-border/60 hover:border-primary/30 hidden size-10 items-center justify-center rounded-md border border-transparent transition-colors md:inline-flex"
+                aria-label="Open sections menu"
+                aria-expanded={desktopMenuOpen}
+              >
+                <Menu className="h-6 w-6" strokeWidth={1.5} />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56" sideOffset={8}>
+              {NAV_GROUPS.map((group, gi) => (
+                <React.Fragment key={group.label}>
+                  {gi > 0 ? <DropdownMenuSeparator /> : null}
+                  <DropdownMenuLabel className="text-muted-foreground text-[10px] tracking-[0.2em] uppercase">
+                    {group.label}
+                  </DropdownMenuLabel>
+                  {group.items.map(item => (
+                    <DropdownMenuItem
+                      key={item.id}
+                      className={cn(
+                        'cursor-pointer text-xs tracking-[0.12em] uppercase',
+                        activeSection === item.id && 'bg-accent/60'
+                      )}
+                      onSelect={() => navigateToSection(item.id)}
+                    >
+                      {item.label}
+                    </DropdownMenuItem>
+                  ))}
+                </React.Fragment>
+              ))}
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className={cn(
+                  'cursor-pointer text-xs tracking-[0.12em] uppercase',
+                  activeSection === 'contact' && 'bg-accent/60'
+                )}
+                onSelect={() => navigateToSection('contact')}
+              >
+                Contact
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <button
+            type="button"
+            className="text-foreground hover:text-primary inline-flex size-10 items-center justify-center rounded-md transition-colors md:hidden"
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-nav-panel"
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setIsMenuOpen(open => !open)}
           >
-            About
-          </a>
-          <a
-            href="#services"
-            className={navItemClass('services')}
-            onClick={scrollToSection('services')}
-          >
-            Services
-          </a>
+            {isMenuOpen ? (
+              <X className="h-6 w-6" strokeWidth={1.5} />
+            ) : (
+              <Menu className="h-6 w-6" strokeWidth={1.5} />
+            )}
+          </button>
+        </div>
+        <div className="bg-primary/15 h-[3px] w-full">
+          <div
+            className="from-primary via-primary/80 to-primary/60 h-full bg-gradient-to-r transition-[width] duration-150 ease-out"
+            style={{ width: `${scrollProgress}%` }}
+            aria-hidden="true"
+          />
+        </div>
+      </header>
+
+      {isMenuOpen ? (
+        <div
+          id="mobile-nav-panel"
+          className="bg-background/96 fixed inset-0 z-40 flex flex-col items-center gap-2 overflow-y-auto pt-24 pb-12 backdrop-blur-xl md:hidden"
+          role="dialog"
+          aria-modal="true"
+        >
+          {NAV_GROUPS.map(group => {
+            const open = mobileExpanded === group.label;
+            return (
+              <div key={group.label} className="w-full max-w-xs px-8">
+                <button
+                  type="button"
+                  className="text-foreground hover:text-primary flex w-full items-center justify-between border-b border-white/10 py-3 text-left text-sm tracking-[0.18em] uppercase transition-colors"
+                  aria-expanded={open}
+                  onClick={() =>
+                    setMobileExpanded(v =>
+                      v === group.label ? null : group.label
+                    )
+                  }
+                >
+                  {group.label}
+                  <ChevronDown
+                    className={cn(
+                      'h-4 w-4 shrink-0 transition-transform duration-200',
+                      open && 'rotate-180'
+                    )}
+                    aria-hidden="true"
+                  />
+                </button>
+                {open ? (
+                  <div className="border-border/40 border-l-primary/35 flex flex-col gap-1 border-l-2 py-3 pl-4">
+                    {group.items.map(item => (
+                      <a
+                        key={item.id}
+                        href={`#${item.id}`}
+                        className="text-muted-foreground hover:text-primary text-xs tracking-[0.14em] uppercase transition-colors"
+                        onClick={scrollToSection(item.id)}
+                      >
+                        {item.label}
+                      </a>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
           <a
             href="#contact"
-            className={navItemClass('contact')}
+            className="text-foreground hover:text-primary mt-2 text-sm tracking-[0.18em] uppercase transition-colors"
             onClick={scrollToSection('contact')}
           >
             Contact
           </a>
-        </nav>
-      </div>
-      <div className="bg-primary/15 h-[3px] w-full">
-        <div
-          className="from-primary via-primary/80 to-primary/60 h-full bg-gradient-to-r transition-[width] duration-150 ease-out"
-          style={{ width: `${scrollProgress}%` }}
-          aria-hidden="true"
-        />
-      </div>
-    </header>
+        </div>
+      ) : null}
+    </>
   );
 };
