@@ -123,36 +123,36 @@ function PortfolioLightboxSlideFooter({ slide }: { slide: Slide }) {
   });
 
   return (
-    <div className="pointer-events-none mx-auto w-full max-w-5xl px-3 pb-5 sm:px-4 md:px-6 md:pb-7">
+    <div className="pointer-events-none mx-auto w-full max-w-4xl px-3 pb-3 sm:px-4 md:px-6 md:pb-4">
       <div
-        className="rounded-md border border-white/15 bg-black/78 px-3 py-2 text-left text-white shadow-sm backdrop-blur-sm md:px-4 md:py-3"
+        className="rounded-md border border-white/15 bg-black/78 px-2.5 py-1.5 text-left text-white shadow-sm backdrop-blur-sm md:px-3 md:py-2"
         data-lightbox-caption=""
       >
         {hasTitle ? (
-          <p className="text-[11px] leading-snug font-semibold tracking-[-0.01em] sm:text-[13px] md:text-[15px]">
+          <p className="text-[10px] leading-snug font-semibold tracking-[-0.01em] sm:text-[12px] md:text-[13px]">
             {title}
           </p>
         ) : null}
         {typeLine ? (
-          <p className="mt-0.5 text-[9px] font-medium tracking-[0.08em] text-white/85 uppercase sm:text-[10px]">
+          <p className="mt-0.5 text-[8px] font-medium tracking-[0.08em] text-white/85 uppercase sm:text-[9px]">
             {typeLine}
           </p>
         ) : null}
         {infoRows.length > 0 ? (
-          <div className="mt-2 grid gap-2 sm:grid-cols-2 md:grid-cols-3">
+          <div className="mt-1.5 grid gap-1.5 sm:grid-cols-2 md:grid-cols-3">
             {infoRows.map(row => (
               <div
                 key={row.id}
-                className={`rounded border border-white/10 bg-black/35 px-2 py-1.5 md:px-2.5 md:py-2 ${
+                className={`rounded border border-white/10 bg-black/35 px-2 py-1 md:px-2 md:py-1.5 ${
                   row.label.toLowerCase() === 'project brief'
                     ? 'sm:col-span-2 md:col-span-3'
                     : ''
                 }`}
               >
-                <p className="text-[8px] tracking-[0.08em] text-white/65 uppercase sm:text-[9px]">
+                <p className="text-[7px] tracking-[0.08em] text-white/65 uppercase sm:text-[8px]">
                   {row.label}
                 </p>
-                <p className="mt-0.5 text-[9px] leading-relaxed break-words text-white sm:text-[10px] md:text-[11px]">
+                <p className="mt-0.5 text-[8px] leading-relaxed break-words text-white sm:text-[9px] md:text-[10px]">
                   {row.value}
                 </p>
               </div>
@@ -476,8 +476,15 @@ export default function Home() {
         slides={allSlides}
         plugins={[Video]}
         render={{
-          slideFooter: ({ slide }) => (
-            <PortfolioLightboxSlideFooter slide={slide} />
+          slideContainer: ({ slide, children }) => (
+            <div className="mx-auto flex h-full w-full max-w-[1400px] flex-col">
+              <div className="flex min-h-0 flex-1 items-center justify-center overflow-hidden">
+                {children}
+              </div>
+              <div className="w-full shrink-0 pb-2 sm:pb-3">
+                <PortfolioLightboxSlideFooter slide={slide} />
+              </div>
+            </div>
           ),
         }}
         on={{
