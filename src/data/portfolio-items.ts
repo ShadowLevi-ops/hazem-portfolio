@@ -247,6 +247,7 @@ export const portfolioItems: PortfolioItem[] = [
     thumbnailUrl: '/videos/VT-14.jpg',
     client: 'Tottenham Hotspurs',
     projectDetails: 'Sports/Lifestyle',
+    mediaOrientation: 'horizontal',
   },
   {
     id: 'video-15',

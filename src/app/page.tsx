@@ -106,6 +106,7 @@ function PortfolioLightboxSlideContainer({
     top: number;
     left: number;
     maxWidth: number;
+    mediaWidth: number;
   } | null>(null);
 
   const { title, description: desc } = slide as Slide & {
@@ -145,13 +146,15 @@ function PortfolioLightboxSlideContainer({
       top: mr.top - rr.top,
       left: mr.left - rr.left,
       maxWidth: Math.max(120, Math.min(mr.width - 8, 352)),
+      mediaWidth: mr.width,
     };
     setAnchor(prev => {
       if (
         prev &&
         prev.top === next.top &&
         prev.left === next.left &&
-        prev.maxWidth === next.maxWidth
+        prev.maxWidth === next.maxWidth &&
+        prev.mediaWidth === next.mediaWidth
       ) {
         return prev;
       }
@@ -194,15 +197,18 @@ function PortfolioLightboxSlideContainer({
         <div
           className={`pointer-events-none absolute z-[2] rounded-br-md border border-white/15 bg-black/78 text-left text-white shadow-sm backdrop-blur-sm ${
             isHorizontalSlide
-              ? 'px-0.5 py-0.5 sm:px-1 sm:py-0.5'
-              : 'px-0.5 py-0.5 sm:px-1.5 sm:py-1'
+              ? 'w-[120px] px-1 py-0.5 sm:w-[240px] sm:px-2.5 sm:py-2 md:w-[360px] md:px-5 md:py-3 lg:w-[460px] lg:px-6 lg:py-4'
+              : 'px-1.5 py-1 sm:px-3 sm:py-2.5 md:px-3.5 md:py-3'
           }`}
           style={{
-            top: anchor.top + (isHorizontalSlide ? 14 : 10),
-            left: anchor.left + (isHorizontalSlide ? 14 : 10),
+            top: anchor.top + (isHorizontalSlide ? 14 : 6),
+            left: anchor.left + (isHorizontalSlide ? 14 : 6),
+            width: isHorizontalSlide
+              ? Math.max(140, Math.min(anchor.mediaWidth * 0.42, 520))
+              : undefined,
             maxWidth: isHorizontalSlide
-              ? Math.max(72, Math.min(anchor.maxWidth - 32, 120))
-              : Math.max(88, Math.min(anchor.maxWidth - 20, 180)),
+              ? Math.max(140, anchor.maxWidth - 20)
+              : Math.max(120, Math.min(anchor.maxWidth - 12, 250)),
           }}
           data-lightbox-caption=""
         >
@@ -210,8 +216,8 @@ function PortfolioLightboxSlideContainer({
             <p
               className={`leading-snug font-semibold tracking-[-0.01em] ${
                 isHorizontalSlide
-                  ? 'text-[6px] sm:text-[8px]'
-                  : 'text-[8px] sm:text-[10px]'
+                  ? 'text-[7px] sm:text-[9px] md:text-[10px] lg:text-[11px]'
+                  : 'text-[8px] sm:text-[9px] md:text-[11px] lg:text-[12px]'
               }`}
             >
               {title}
@@ -219,10 +225,10 @@ function PortfolioLightboxSlideContainer({
           ) : null}
           {hasDesc ? (
             <p
-              className={`mt-0.5 leading-relaxed whitespace-pre-line text-white/92 ${
+              className={`mt-0.5 leading-relaxed break-words whitespace-pre-line text-white ${
                 isHorizontalSlide
-                  ? 'text-[4px] sm:text-[6px]'
-                  : 'text-[6px] sm:text-[8px]'
+                  ? 'text-[5px] sm:text-[7px] md:text-[8px] lg:text-[9px]'
+                  : 'text-[6px] sm:text-[7px] md:text-[9px] lg:text-[10px]'
               }`}
             >
               {desc}

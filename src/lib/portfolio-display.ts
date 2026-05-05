@@ -67,12 +67,39 @@ export function portfolioGridBlurb(item: PortfolioItem): string {
   return `${TYPE_LABEL[item.type]} — tap for full screen.`;
 }
 
+function lightboxProjectBrief(item: PortfolioItem): string {
+  const curated = CARD_TEASERS[item.id]?.trim();
+  if (curated) {
+    // Card teasers may be intentionally shortened; avoid trailing ellipses in fullscreen.
+    return curated.replace(/\.\.\.+$/, '').trim();
+  }
+
+  if (item.projectDetails === 'ONGOING PROJECT') {
+    return 'In production — more soon.';
+  }
+
+  const pd = item.projectDetails?.trim();
+  if (pd && !isPlaceholderProjectDetails(pd)) {
+    return pd;
+  }
+
+  const client = item.client?.trim();
+  if (client) {
+    return `${TYPE_LABEL[item.type]} · ${client}`;
+  }
+
+  return `${TYPE_LABEL[item.type]} project.`;
+}
+
 /**
  * Multi-line meta under the title in the fullscreen lightbox (portfolio + highlights).
  */
 export function lightboxCaptionDescription(item: PortfolioItem): string {
   const kind = TYPE_LABEL[item.type];
   const lines: string[] = [];
+  const brief = lightboxProjectBrief(item);
+
+  lines.push(`Project Brief · ${brief}`);
 
   if (item.projectDetails === 'ONGOING PROJECT') {
     lines.push('In production');
