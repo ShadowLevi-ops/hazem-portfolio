@@ -98,6 +98,21 @@ function lightboxProjectBrief(item: PortfolioItem): string {
   return `${TYPE_LABEL[item.type]} project.`;
 }
 
+function lightboxExtendedBrief(item: PortfolioItem, brief: string): string {
+  const client = item.client?.trim();
+  const clientLine =
+    client && client.toLowerCase() !== 'independent project'
+      ? `for ${client}`
+      : 'for independent creative distribution';
+
+  const isVideo = item.type === 'videography' || item.type === 'film';
+  if (isVideo) {
+    return `${brief} Cut in a director's-pass style ${clientLine}, shaping rhythm, transitions, and emotional beats so the final piece lands with cinematic energy across screens.`;
+  }
+
+  return `${brief} Framed in a director-led visual language ${clientLine}, balancing mood, composition, and tonal control to deliver a still that feels cinematic and intentional.`;
+}
+
 /**
  * Multi-line meta under the title in the fullscreen lightbox (portfolio + highlights).
  */
@@ -105,8 +120,10 @@ export function lightboxCaptionDescription(item: PortfolioItem): string {
   const kind = TYPE_LABEL[item.type];
   const lines: string[] = [];
   const brief = lightboxProjectBrief(item);
+  const extendedBrief = lightboxExtendedBrief(item, brief);
 
   lines.push(`Project Brief · ${brief}`);
+  lines.push(`Extended Brief · ${extendedBrief}`);
 
   if (item.client?.trim()) {
     lines.push(`Client · ${item.client.trim()}`);
