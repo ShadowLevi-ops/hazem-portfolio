@@ -6,10 +6,10 @@ export interface PortfolioItem {
   type: PortfolioItemType;
   mediaUrl: string; // URL to the image or video file
   thumbnailUrl?: string; // Optional thumbnail for videos or galleries
-  date?: string; // Optional date of creation/publication
   client?: string; // Optional client name
-  camera?: string; // Added camera details (optional)
   projectDetails?: string; // Added project details/category (optional)
   dominantColor?: string; // Optional dominant color for placeholder
   captionsUrl?: string; // Optional VTT captions for videos
+  /** Landscape 16:9 vs portrait 9:16 — affects fullscreen lightbox sizing (grid stays portrait). Default portrait. */
+  mediaOrientation?: 'horizontal' | 'vertical';
 }

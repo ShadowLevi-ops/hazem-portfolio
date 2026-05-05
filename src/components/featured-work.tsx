@@ -3,23 +3,13 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import type { PortfolioItem } from '@/types/portfolio';
-
-const TEASERS: Record<string, string> = {
-  'video-16': 'Retail launch film for the H Street line drop.',
-  'video-14': 'Festive football storytelling for Lunar New Year.',
-  'video-10': 'Immersive scuba recap cut for social-first storytelling.',
-};
-
-const INDUSTRIES: Record<string, string> = {
-  'video-16': 'Fashion / Retail',
-  'video-14': 'Sports / Entertainment',
-  'video-10': 'Travel / Lifestyle',
-};
-
-const CLIENTS: Record<string, string> = {
-  'video-16': 'PUMA x Solewhat',
-  'video-14': 'Tottenham Hotspurs',
-};
+import { portfolioDisplayTitle } from '@/lib/portfolio-display';
+import {
+  projectCardTag,
+  projectCardTeaser,
+  projectCardClient,
+  projectCardIndustry,
+} from '@/lib/project-card-labels';
 
 type FeaturedWorkProps = {
   items: PortfolioItem[];
@@ -57,12 +47,11 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
             const src = isVideo
               ? item.thumbnailUrl || item.mediaUrl
               : item.mediaUrl;
-            const tag =
-              item.projectDetails || (isVideo ? 'Video' : 'Photography');
-            const teaser = TEASERS[item.id] ?? '';
-            const client =
-              CLIENTS[item.id] || item.client || 'Independent project';
-            const industry = INDUSTRIES[item.id] || 'Creative';
+            const tag = projectCardTag(item);
+            const teaser = projectCardTeaser(item);
+            const client = projectCardClient(item);
+            const industry = projectCardIndustry(item);
+            const displayTitle = portfolioDisplayTitle(item);
 
             return (
               <motion.button
@@ -88,12 +77,12 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                       loop
                       playsInline
                       preload="metadata"
-                      aria-label={item.title}
+                      aria-label={displayTitle}
                     />
                   ) : (
                     <Image
                       src={src}
-                      alt={item.title}
+                      alt={displayTitle}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                       sizes="(max-width: 768px) 100vw, 33vw"
@@ -108,7 +97,7 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                       transition={{ duration: 0.3, delay: 0.05 }}
                       className="line-clamp-2 max-w-[64%] font-serif text-[10px] leading-tight font-semibold tracking-tight text-white transition-transform duration-300 group-hover:-translate-y-1 min-[380px]:max-w-[66%] min-[380px]:text-[13px] min-[380px]:leading-snug md:max-w-none md:text-base"
                     >
-                      {item.title}
+                      {displayTitle}
                     </motion.h3>
                     <span className="max-w-[36%] truncate rounded bg-black/45 px-1 py-0.5 text-[8px] tracking-[0.08em] text-white/90 uppercase backdrop-blur-sm min-[380px]:max-w-[34%] min-[380px]:px-1.5 min-[380px]:py-0.5 min-[380px]:text-[9px] min-[380px]:tracking-[0.1em] min-[420px]:px-2 min-[420px]:py-1 min-[420px]:text-[10px] md:max-w-none md:text-xs">
                       {tag}

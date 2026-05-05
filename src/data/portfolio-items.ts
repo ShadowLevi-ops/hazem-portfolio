@@ -8,8 +8,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'Uluwatu Temple 1',
     type: 'photography',
     mediaUrl: '/images/p1.PNG',
-    date: '2024-01-15',
-    camera: 'Camera Used',
     projectDetails: 'Project Category',
   },
   {
@@ -17,7 +15,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'Karangasem Dive Resort',
     type: 'photography',
     mediaUrl: '/images/p2.PNG',
-    camera: 'Camera Used',
     projectDetails: 'Landscape',
   },
   {
@@ -25,7 +22,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'Uluwatu Temple 2',
     type: 'photography',
     mediaUrl: '/images/p3.PNG',
-    camera: 'Camera Used',
     projectDetails: 'Architecture',
   },
   {
@@ -33,7 +29,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'Karang Boma Cliff',
     type: 'photography',
     mediaUrl: '/images/p4.PNG',
-    camera: 'Camera Used',
     projectDetails: 'Seascape',
   },
   {
@@ -41,7 +36,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'Solaris Parq, Dutamas',
     type: 'photography',
     mediaUrl: '/images/p5.JPEG',
-    camera: 'Camera Used',
     projectDetails: 'Portrait',
   },
   {
@@ -49,7 +43,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'Masjid Wilayah Persekutuan, KL',
     type: 'photography',
     mediaUrl: '/images/p6.JPEG',
-    camera: 'Camera Used',
     projectDetails: 'Creative',
   },
   {
@@ -57,7 +50,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'Mount Fuji',
     type: 'photography',
     mediaUrl: '/images/p7.jpg',
-    camera: 'Camera Used',
     projectDetails: 'Photography',
   },
   {
@@ -65,7 +57,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'Canggu Beach Travel Shot',
     type: 'photography',
     mediaUrl: '/images/p8.JPEG',
-    camera: 'Camera Used',
     projectDetails: 'Creative Photography',
   },
   {
@@ -73,7 +64,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'Malaysia National Sports Day',
     type: 'photography',
     mediaUrl: '/images/p9.jpeg',
-    camera: 'Camera Used',
     projectDetails: 'Portrait Photography',
   },
   {
@@ -81,7 +71,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'Hanuman, Uluwatu Kecak Dance',
     type: 'photography',
     mediaUrl: '/images/p10.png',
-    camera: 'Camera Used',
     projectDetails: 'Photography',
   },
   {
@@ -89,7 +78,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'Hanuman, Uluwatu Kecak Dance 2',
     type: 'photography',
     mediaUrl: '/images/p11.png',
-    camera: 'Camera Used',
     projectDetails: 'Photography',
   },
   {
@@ -97,7 +85,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'New Stadium Shah Alam Promo 1',
     type: 'photography',
     mediaUrl: '/images/p12.jpg',
-    camera: 'Camera Used',
     projectDetails: 'ONGOING PROJECT',
   },
   {
@@ -105,7 +92,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'New Stadium Shah Alam Promo 2',
     type: 'photography',
     mediaUrl: '/images/p13.jpg',
-    camera: 'Camera Used',
     projectDetails: 'ONGOING PROJECT',
   },
   {
@@ -113,7 +99,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'New Stadium Shah Alam Promo 3',
     type: 'photography',
     mediaUrl: '/images/p14.jpg',
-    camera: 'Camera Used',
     projectDetails: 'ONGOING PROJECT',
   },
   {
@@ -121,7 +106,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'Product Shoot Japan',
     type: 'photography',
     mediaUrl: '/images/p15.jpg',
-    camera: 'Camera Used',
     projectDetails: 'Photography',
   },
   {
@@ -129,7 +113,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'Product Shoot Japan',
     type: 'photography',
     mediaUrl: '/images/p16.jpg',
-    camera: 'Camera Used',
     projectDetails: 'Photography',
   },
   {
@@ -137,7 +120,6 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'Product Shoot Japan',
     type: 'photography',
     mediaUrl: '/images/p17.jpg',
-    camera: 'Camera Used',
     projectDetails: 'Photography',
   },
   // --- Video Items (Sorted video-1 to video-9) ---
@@ -147,9 +129,8 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'film',
     mediaUrl: '/videos/1.mp4',
     thumbnailUrl: '/videos/VT-1.png',
-    date: '2023-11-20',
-    camera: '20mm f1.8',
-    projectDetails: 'Short Film',
+    client: 'Independent Project',
+    projectDetails: 'Travel',
   },
   {
     id: 'video-2',
@@ -157,8 +138,7 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'videography',
     mediaUrl: '/videos/2.mp4',
     thumbnailUrl: '/videos/VT-2.png',
-    client: 'Local Brand Co.',
-    camera: '70mm f5.6',
+    client: 'Triterra Metropolis',
     projectDetails: 'Commercial',
   },
   {
@@ -167,9 +147,8 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'videography',
     mediaUrl: '/videos/3.mp4',
     thumbnailUrl: '/videos/VT-3.png',
-    client: 'Local Artist',
-    camera: '24mm f2.8',
-    projectDetails: 'Music Video',
+    client: 'Independent Project',
+    projectDetails: 'Sports',
   },
   {
     id: 'video-4',
@@ -177,8 +156,8 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'film',
     mediaUrl: '/videos/4.mp4',
     thumbnailUrl: '/videos/VT-4.png',
-    camera: '20mm f1.8',
-    projectDetails: 'Documentary',
+    client: 'French Agency',
+    projectDetails: 'Travel',
   },
   {
     id: 'video-5',
@@ -186,9 +165,8 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'videography',
     mediaUrl: '/videos/5.mp4',
     thumbnailUrl: '/videos/VT-5.png',
-    client: 'Tech Corp',
-    camera: '70mm f5.6',
-    projectDetails: 'Event Coverage',
+    client: 'Zepp KL',
+    projectDetails: 'Music/Commercial',
   },
   {
     id: 'video-6',
@@ -196,8 +174,8 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'film',
     mediaUrl: '/videos/6.mp4',
     thumbnailUrl: '/videos/VT-6.png',
-    camera: '24mm f2.8',
-    projectDetails: 'Experimental Film',
+    client: 'Malaysian Indie Band',
+    projectDetails: 'Music/Commercial',
   },
   {
     id: 'video-7',
@@ -205,8 +183,8 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'videography',
     mediaUrl: '/videos/7.mp4',
     thumbnailUrl: '/videos/VT-7.png',
-    camera: '20mm f1.8',
-    projectDetails: 'Portrait Video',
+    client: 'Independent Project',
+    projectDetails: 'Travel',
   },
   {
     id: 'video-8',
@@ -214,8 +192,8 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'film',
     mediaUrl: '/videos/8.mp4',
     thumbnailUrl: '/videos/VT-8.png',
-    camera: '70mm f5.6',
-    projectDetails: 'Travel Film',
+    client: 'Independent Project',
+    projectDetails: 'Travel',
   },
   {
     id: 'video-9',
@@ -223,8 +201,8 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'videography',
     mediaUrl: '/videos/9.mp4',
     thumbnailUrl: '/videos/VT-9.png',
-    camera: '24mm f2.8',
-    projectDetails: 'Cinematic Snippet',
+    client: 'Midnight Fusic',
+    projectDetails: 'Music/Commercial',
   },
   {
     id: 'video-10',
@@ -232,8 +210,8 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'videography',
     mediaUrl: '/videos/10.mp4',
     thumbnailUrl: '/videos/VT-10.png',
-    camera: '35mm f1.8',
-    projectDetails: 'Creative Film',
+    client: 'Redang Island Dive Centre',
+    projectDetails: 'Travel',
   },
   {
     id: 'video-11',
@@ -241,7 +219,6 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'videography',
     mediaUrl: '/videos/11.mp4',
     thumbnailUrl: '/videos/VT-11.png',
-    camera: '50mm f1.4',
     projectDetails: 'Creative Video',
   },
   {
@@ -250,8 +227,8 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'videography',
     mediaUrl: '/videos/12.mp4',
     thumbnailUrl: '/videos/VT-12.jpg',
-    camera: '35mm f1.8',
-    projectDetails: 'Creative Film',
+    client: 'Independent Project',
+    projectDetails: 'Travel',
   },
   {
     id: 'video-13',
@@ -259,8 +236,8 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'videography',
     mediaUrl: '/videos/13.mp4',
     thumbnailUrl: '/videos/VT-13.jpg',
-    camera: 'Camera Used',
-    projectDetails: 'Creative Film',
+    client: 'Tottenham Hotspurs',
+    projectDetails: 'Sports/Lifestyle',
   },
   {
     id: 'video-14',
@@ -268,8 +245,8 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'videography',
     mediaUrl: '/videos/14.mp4',
     thumbnailUrl: '/videos/VT-14.jpg',
-    camera: 'Camera Used',
-    projectDetails: 'Creative Film',
+    client: 'Tottenham Hotspurs',
+    projectDetails: 'Sports/Lifestyle',
   },
   {
     id: 'video-15',
@@ -277,8 +254,8 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'videography',
     mediaUrl: '/videos/15.mp4',
     thumbnailUrl: '/videos/VT-15.jpg',
-    camera: 'Camera Used',
-    projectDetails: 'Creative Film',
+    client: 'Tottenham Hotspurs',
+    projectDetails: 'Sports/Lifestyle',
   },
   {
     id: 'video-16',
@@ -286,7 +263,36 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'videography',
     mediaUrl: '/videos/16.mp4',
     thumbnailUrl: '/videos/VT-16.jpg',
-    camera: 'Camera Used',
-    projectDetails: 'Creative Film',
+    projectDetails: 'Sports/Lifestyle',
+  },
+  {
+    id: 'video-17',
+    title: 'Giancarlo Gallifuoco Interview',
+    type: 'videography',
+    mediaUrl: '/videos/17.mp4',
+    thumbnailUrl: '/videos/VT-17.jpg',
+    client: 'Tottenham Hotspurs',
+    projectDetails: 'Sports/Lifestyle',
+    mediaOrientation: 'horizontal',
+  },
+  {
+    id: 'video-18',
+    title: 'Giancarlo Gallifuoco Interview 2',
+    type: 'videography',
+    mediaUrl: '/videos/18.mp4',
+    thumbnailUrl: '/videos/VT-18.jpg',
+    client: 'Tottenham Hotspurs',
+    projectDetails: 'Sports',
+    mediaOrientation: 'horizontal',
+  },
+  {
+    id: 'video-19',
+    title: 'SPURS Academy Graduate',
+    type: 'videography',
+    mediaUrl: '/videos/19.mp4',
+    thumbnailUrl: '/videos/VT-19.jpg',
+    client: 'Tottenham Hotspurs',
+    projectDetails: 'Sports',
+    mediaOrientation: 'horizontal',
   },
 ];

@@ -1,6 +1,13 @@
 'use client';
 
-import React, { useState, useMemo, useCallback, Suspense } from 'react';
+import React, {
+  useState,
+  useMemo,
+  useCallback,
+  Suspense,
+  useRef,
+  useLayoutEffect,
+} from 'react';
 import { portfolioItems } from '@/data/portfolio-items';
 import Video from 'yet-another-react-lightbox/plugins/video';
 import type { Slide } from 'yet-another-react-lightbox';
@@ -17,6 +24,11 @@ import {
 } from '@/components/loading-skeletons';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import type { PortfolioItem } from '@/types/portfolio';
+import {
+  isHorizontalVideoItem,
+  lightboxCaptionDescription,
+  portfolioDisplayTitle,
+} from '@/lib/portfolio-display';
 
 const FEATURED_PROJECT_IDS: readonly string[] = [
   'video-16',
@@ -25,14 +37,8 @@ const FEATURED_PROJECT_IDS: readonly string[] = [
 ];
 
 const getItemSortTimestamp = (item: PortfolioItem): number => {
-  if (item.date) {
-    const parsed = Date.parse(item.date);
-    if (!Number.isNaN(parsed)) return parsed;
-  }
-
   const idMatch = item.id.match(/-(\d+)$/);
   if (idMatch?.[1]) return Number.parseInt(idMatch[1], 10);
-
   return 0;
 };
 
@@ -82,6 +88,128 @@ const Lightbox = dynamic(() => import('yet-another-react-lightbox'), {
   ssr: false,
   loading: () => null,
 });
+
+/**
+ * Wraps slide media and pins the caption to the real video/img box. Video slides use a
+ * full-size wrapper div (100%×100%), so absolute top/left on the outer box lands in the
+ * letterboxing — we measure `video` / `img.yarl__slide_image` instead.
+ */
+function PortfolioLightboxSlideContainer({
+  slide,
+  children,
+}: {
+  slide: Slide;
+  children: React.ReactNode;
+}) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [anchor, setAnchor] = useState<{
+    top: number;
+    left: number;
+    maxWidth: number;
+  } | null>(null);
+
+  const { title, description: desc } = slide as Slide & {
+    title?: React.ReactNode;
+    description?: React.ReactNode;
+  };
+  const hasTitle =
+    title != null && (typeof title !== 'string' || title.trim().length > 0);
+  const hasDesc =
+    desc != null && (typeof desc !== 'string' || desc.trim().length > 0);
+
+  const measure = useCallback(() => {
+    const root = wrapRef.current;
+    if (!root) return;
+
+    const media = root.querySelector<HTMLElement>(
+      'video, img.yarl__slide_image'
+    );
+    if (!media) {
+      setAnchor(prev => (prev === null ? prev : null));
+      return;
+    }
+
+    const rr = root.getBoundingClientRect();
+    const mr = media.getBoundingClientRect();
+    if (mr.width < 2 || mr.height < 2) {
+      setAnchor(prev => (prev === null ? prev : null));
+      return;
+    }
+
+    const next = {
+      top: mr.top - rr.top,
+      left: mr.left - rr.left,
+      maxWidth: Math.max(120, Math.min(mr.width - 8, 352)),
+    };
+    setAnchor(prev => {
+      if (
+        prev &&
+        prev.top === next.top &&
+        prev.left === next.left &&
+        prev.maxWidth === next.maxWidth
+      ) {
+        return prev;
+      }
+      return next;
+    });
+  }, []);
+
+  useLayoutEffect(() => {
+    measure();
+    const raf = requestAnimationFrame(() => measure());
+
+    const root = wrapRef.current;
+    if (!root) {
+      return () => cancelAnimationFrame(raf);
+    }
+
+    const media = root.querySelector<HTMLElement>(
+      'video, img.yarl__slide_image'
+    );
+    const ro = new ResizeObserver(() => measure());
+    ro.observe(root);
+    if (media) ro.observe(media);
+
+    window.addEventListener('resize', measure);
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [measure, slide, children]);
+
+  if (!hasTitle && !hasDesc) {
+    return <>{children}</>;
+  }
+
+  return (
+    <div ref={wrapRef} className="relative h-full min-h-0 w-full min-w-0">
+      {children}
+      {anchor ? (
+        <div
+          className="pointer-events-none absolute z-[2] rounded-br-md border border-white/10 bg-black/60 px-2.5 py-2 text-left text-white shadow-sm backdrop-blur-sm sm:px-3 sm:py-2.5"
+          style={{
+            top: anchor.top,
+            left: anchor.left,
+            maxWidth: anchor.maxWidth,
+          }}
+          data-lightbox-caption=""
+        >
+          {hasTitle ? (
+            <p className="text-[12px] leading-snug font-semibold tracking-[-0.01em] sm:text-[13px]">
+              {title}
+            </p>
+          ) : null}
+          {hasDesc ? (
+            <p className="mt-0.5 text-[10px] leading-relaxed whitespace-pre-line text-white/90 sm:text-[11px]">
+              {desc}
+            </p>
+          ) : null}
+        </div>
+      ) : null}
+    </div>
+  );
+}
 
 export default function Home() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -179,12 +307,13 @@ export default function Home() {
             type: 'video/mp4',
           },
         ],
-        title: item.title,
-        description: `${item.camera ? item.camera + ' | ' : ''}${item.projectDetails || ''}`,
+        title: portfolioDisplayTitle(item),
+        description: lightboxCaptionDescription(item),
         poster: item.thumbnailUrl || '/videos/VT-1.png',
-        // Reasonable default aspect for vertical reels
-        width: 1080,
-        height: 1920,
+        // Horizontal 16:9 fills wide lightbox; vertical reels stay 9:16
+        ...(isHorizontalVideoItem(item)
+          ? { width: 1920, height: 1080 }
+          : { width: 1080, height: 1920 }),
         controls: true,
         autoPlay: true,
         loop: true,
@@ -195,8 +324,8 @@ export default function Home() {
       })),
       ...photographyItems.map(item => ({
         src: item.mediaUrl,
-        title: item.title,
-        description: `${item.camera ? item.camera + ' | ' : ''}${item.projectDetails || ''}`,
+        title: portfolioDisplayTitle(item),
+        description: lightboxCaptionDescription(item),
       })),
     ],
     [videoItems, photographyItems]
@@ -393,6 +522,13 @@ export default function Home() {
         index={lightboxIndex}
         slides={allSlides}
         plugins={[Video]}
+        render={{
+          slideContainer: ({ slide, children }) => (
+            <PortfolioLightboxSlideContainer slide={slide}>
+              {children}
+            </PortfolioLightboxSlideContainer>
+          ),
+        }}
         on={{
           view: ({ index }) =>
             analytics.track({ name: 'lightbox_view', properties: { index } }),

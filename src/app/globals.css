@@ -371,3 +371,5 @@ video::-webkit-media-controls {
   filter: none;
   -webkit-filter: none;
 }
+
+/* Lightbox caption overlay is rendered via render.slideContainer in page.tsx (on media, not letterboxing). */
