@@ -30,7 +30,7 @@ export function VerticalCarouselSkeleton() {
     <div className="relative mx-auto w-full max-w-7xl">
       <div className="from-background/50 to-background/80 relative overflow-hidden rounded-xl border bg-gradient-to-b backdrop-blur-sm md:rounded-2xl">
         <div className="p-5 md:p-10">
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 md:gap-7 lg:grid-cols-3 lg:gap-8">
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-7 lg:grid-cols-3 lg:gap-8">
             {skeletonItems.map((item, index) => (
               <div
                 key={item}

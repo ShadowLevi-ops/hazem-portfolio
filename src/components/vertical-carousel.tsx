@@ -203,7 +203,7 @@ export function VerticalCarousel({
           className="p-5 will-change-transform md:p-10"
         >
           {/* Fewer columns = larger cards; info uses compact type */}
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 md:gap-7 lg:grid-cols-3 lg:gap-8">
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-7 lg:grid-cols-3 lg:gap-8">
             {items.map((item, index) => {
               const isVideo =
                 item.type === 'videography' || item.type === 'film';
@@ -266,7 +266,7 @@ export function VerticalCarousel({
                       alt={displayTitle}
                       fill
                       className="object-cover transition-transform duration-200 ease-out will-change-transform group-hover:scale-105"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 34vw"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 34vw"
                       loading={index < 6 ? 'eager' : 'lazy'}
                       quality={index < 4 ? 85 : 70}
                       priority={index < 4}
@@ -340,11 +340,11 @@ export function VerticalCarousel({
                           <p className="text-[7px] tracking-[0.06em] text-white/65 uppercase min-[380px]:text-[8px]">
                             Project Brief
                           </p>
-                          <p className="mt-0.5 line-clamp-3 text-[9px] leading-snug text-white/95 min-[380px]:text-[10px] min-[380px]:leading-relaxed md:line-clamp-2 md:text-[11px]">
+                          <p className="mt-0.5 line-clamp-2 text-[9px] leading-snug text-white/95 min-[380px]:text-[10px] min-[380px]:leading-relaxed md:line-clamp-2 md:text-[11px]">
                             {teaser ||
                               'Campaign-focused visual storytelling piece.'}
                           </p>
-                          <div className="mt-1 grid grid-cols-2 gap-x-2 gap-y-0.5 text-[7px] min-[380px]:mt-1.5 min-[380px]:gap-x-2.5 min-[380px]:text-[8px] md:text-[9px]">
+                          <div className="mt-1 hidden grid-cols-2 gap-x-2 gap-y-0.5 text-[7px] min-[380px]:mt-1.5 min-[380px]:gap-x-2.5 min-[380px]:text-[8px] md:grid md:text-[9px]">
                             <div>
                               <p className="tracking-[0.06em] text-white/60 uppercase">
                                 Client
