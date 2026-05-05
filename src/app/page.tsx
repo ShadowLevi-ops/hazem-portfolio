@@ -112,6 +112,11 @@ function PortfolioLightboxSlideContainer({
     title?: React.ReactNode;
     description?: React.ReactNode;
   };
+  const slideSize = slide as Slide & { width?: number; height?: number };
+  const isHorizontalSlide =
+    typeof slideSize.width === 'number' &&
+    typeof slideSize.height === 'number' &&
+    slideSize.width > slideSize.height;
   const hasTitle =
     title != null && (typeof title !== 'string' || title.trim().length > 0);
   const hasDesc =
@@ -187,21 +192,39 @@ function PortfolioLightboxSlideContainer({
       {children}
       {anchor ? (
         <div
-          className="pointer-events-none absolute z-[2] rounded-br-md border border-white/10 bg-black/60 px-2.5 py-2 text-left text-white shadow-sm backdrop-blur-sm sm:px-3 sm:py-2.5"
+          className={`pointer-events-none absolute z-[2] rounded-br-md border border-white/15 bg-black/78 text-left text-white shadow-sm backdrop-blur-sm ${
+            isHorizontalSlide
+              ? 'px-0.5 py-0.5 sm:px-1 sm:py-0.5'
+              : 'px-0.5 py-0.5 sm:px-1.5 sm:py-1'
+          }`}
           style={{
-            top: anchor.top,
-            left: anchor.left,
-            maxWidth: anchor.maxWidth,
+            top: anchor.top + (isHorizontalSlide ? 14 : 10),
+            left: anchor.left + (isHorizontalSlide ? 14 : 10),
+            maxWidth: isHorizontalSlide
+              ? Math.max(72, Math.min(anchor.maxWidth - 32, 120))
+              : Math.max(88, Math.min(anchor.maxWidth - 20, 180)),
           }}
           data-lightbox-caption=""
         >
           {hasTitle ? (
-            <p className="text-[12px] leading-snug font-semibold tracking-[-0.01em] sm:text-[13px]">
+            <p
+              className={`leading-snug font-semibold tracking-[-0.01em] ${
+                isHorizontalSlide
+                  ? 'text-[6px] sm:text-[8px]'
+                  : 'text-[8px] sm:text-[10px]'
+              }`}
+            >
               {title}
             </p>
           ) : null}
           {hasDesc ? (
-            <p className="mt-0.5 text-[10px] leading-relaxed whitespace-pre-line text-white/90 sm:text-[11px]">
+            <p
+              className={`mt-0.5 leading-relaxed whitespace-pre-line text-white/92 ${
+                isHorizontalSlide
+                  ? 'text-[4px] sm:text-[6px]'
+                  : 'text-[6px] sm:text-[8px]'
+              }`}
+            >
               {desc}
             </p>
           ) : null}
