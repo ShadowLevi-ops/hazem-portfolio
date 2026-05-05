@@ -2,7 +2,6 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Menu, X, ChevronDown } from 'lucide-react';
 
 import {
@@ -124,14 +123,17 @@ export const Header = () => {
         }`}
       >
         <div className="flex h-16 w-full items-center justify-between px-6 md:h-20 md:px-10">
-          <Link href="/" className="flex shrink-0 items-center">
-            <Image
-              src="/favicon.png"
-              alt="Hazem Logo"
-              width={64}
-              height={16}
-              className="h-6 w-auto opacity-90"
-            />
+          <Link
+            href="/"
+            className="text-foreground/95 hover:text-foreground flex shrink-0 items-baseline gap-1.5 transition-colors"
+            aria-label="Giltmedia Studios home"
+          >
+            <span className="text-[12px] font-semibold tracking-[0.2em] uppercase md:text-[13px]">
+              Giltmedia
+            </span>
+            <span className="text-[10px] tracking-[0.14em] uppercase opacity-80 md:text-[11px]">
+              Studios
+            </span>
           </Link>
 
           <DropdownMenu
