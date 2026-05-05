@@ -100,21 +100,21 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
-                  <div className="absolute top-2.5 right-2.5 left-2.5 flex items-start justify-between gap-1.5 md:top-4 md:right-4 md:left-4 md:gap-2">
+                  <div className="absolute top-2 right-2 left-2 flex items-start justify-between gap-1 md:top-4 md:right-4 md:left-4 md:gap-2">
                     <motion.h3
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.3, delay: 0.05 }}
-                      className="line-clamp-2 max-w-[66%] font-serif text-xs leading-snug font-semibold tracking-tight text-white transition-transform duration-300 group-hover:-translate-y-1 min-[380px]:text-[13px] md:max-w-none md:text-base"
+                      className="line-clamp-2 max-w-[64%] font-serif text-[10px] leading-tight font-semibold tracking-tight text-white transition-transform duration-300 group-hover:-translate-y-1 min-[380px]:max-w-[66%] min-[380px]:text-[13px] min-[380px]:leading-snug md:max-w-none md:text-base"
                     >
                       {item.title}
                     </motion.h3>
-                    <span className="max-w-[34%] truncate rounded bg-black/45 px-1.5 py-0.5 text-[9px] tracking-[0.1em] text-white/90 uppercase backdrop-blur-sm min-[380px]:px-2 min-[380px]:py-1 min-[380px]:text-[10px] min-[380px]:tracking-[0.14em] md:max-w-none md:text-xs">
+                    <span className="max-w-[36%] truncate rounded bg-black/45 px-1 py-0.5 text-[8px] tracking-[0.08em] text-white/90 uppercase backdrop-blur-sm min-[380px]:max-w-[34%] min-[380px]:px-1.5 min-[380px]:py-0.5 min-[380px]:text-[9px] min-[380px]:tracking-[0.1em] min-[420px]:px-2 min-[420px]:py-1 min-[420px]:text-[10px] md:max-w-none md:text-xs">
                       {tag}
                     </span>
                   </div>
-                  <div className="absolute right-0 bottom-0 left-0 p-2.5 min-[380px]:p-3 md:p-5">
+                  <div className="absolute right-0 bottom-0 left-0 p-2 min-[380px]:p-2.5 min-[420px]:p-3 md:p-5">
                     <motion.div
                       initial={{ opacity: 0, y: 8 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -123,29 +123,29 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                         duration: 0.28,
                         delay: Math.min(idx * 0.02, 0.16),
                       }}
-                      className="mt-2 translate-y-0 rounded-md border border-white/20 bg-black/55 p-2.5 text-left opacity-100 backdrop-blur-sm transition-all duration-300 min-[380px]:mt-3 min-[380px]:p-3 md:translate-y-1 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100"
+                      className="mt-1.5 translate-y-0 rounded border border-white/20 bg-black/55 p-2 text-left opacity-100 backdrop-blur-sm transition-all duration-300 min-[380px]:mt-2 min-[380px]:rounded-md min-[380px]:p-2.5 min-[420px]:mt-3 min-[420px]:p-3 md:translate-y-1 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100"
                     >
-                      <p className="text-[9px] tracking-[0.1em] text-white/70 uppercase min-[380px]:text-[10px] min-[380px]:tracking-[0.14em]">
+                      <p className="text-[8px] tracking-[0.08em] text-white/70 uppercase min-[380px]:text-[9px] min-[380px]:tracking-[0.1em] min-[420px]:text-[10px] min-[420px]:tracking-[0.14em]">
                         Project Brief
                       </p>
-                      <p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-white min-[380px]:line-clamp-3 min-[380px]:text-xs md:line-clamp-2 md:text-sm">
+                      <p className="mt-0.5 line-clamp-2 text-[10px] leading-snug text-white min-[380px]:mt-1 min-[380px]:text-[11px] min-[380px]:leading-relaxed min-[420px]:line-clamp-3 min-[420px]:text-xs md:line-clamp-2 md:text-sm">
                         {teaser ||
                           'Campaign-focused visual storytelling piece.'}
                       </p>
-                      <div className="mt-1.5 grid grid-cols-2 gap-1.5 text-[9px] min-[380px]:mt-2 min-[380px]:gap-2 min-[380px]:text-[10px] md:text-xs">
+                      <div className="mt-1 grid grid-cols-2 gap-1 text-[8px] min-[380px]:mt-1.5 min-[380px]:gap-1.5 min-[380px]:text-[9px] min-[420px]:mt-2 min-[420px]:gap-2 min-[420px]:text-[10px] md:text-xs">
                         <div>
-                          <p className="tracking-[0.1em] text-white/70 uppercase min-[380px]:tracking-[0.12em]">
+                          <p className="tracking-[0.08em] text-white/70 uppercase min-[380px]:tracking-[0.1em] min-[420px]:tracking-[0.12em]">
                             Client
                           </p>
-                          <p className="mt-0.5 line-clamp-1 text-white">
+                          <p className="mt-px line-clamp-1 text-[9px] text-white min-[380px]:mt-0.5 min-[380px]:text-[10px] md:text-inherit">
                             {client}
                           </p>
                         </div>
                         <div>
-                          <p className="tracking-[0.1em] text-white/70 uppercase min-[380px]:tracking-[0.12em]">
+                          <p className="tracking-[0.08em] text-white/70 uppercase min-[380px]:tracking-[0.1em] min-[420px]:tracking-[0.12em]">
                             Industry
                           </p>
-                          <p className="mt-0.5 line-clamp-1 text-white">
+                          <p className="mt-px line-clamp-1 text-[9px] text-white min-[380px]:mt-0.5 min-[380px]:text-[10px] md:text-inherit">
                             {industry}
                           </p>
                         </div>

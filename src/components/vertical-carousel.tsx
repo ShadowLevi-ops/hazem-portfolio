@@ -202,7 +202,7 @@ export function VerticalCarousel({
           className="p-4 will-change-transform md:p-8"
         >
           {/* Refined grid layout */}
-          <div className="grid grid-cols-3 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8">
+          <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8">
             {items.map((item, index) => {
               const isVideo =
                 item.type === 'videography' || item.type === 'film';
@@ -265,7 +265,7 @@ export function VerticalCarousel({
                       alt={item.title}
                       fill
                       className="object-cover transition-transform duration-200 ease-out will-change-transform group-hover:scale-105"
-                      sizes="(max-width: 768px) 33vw, (max-width: 1200px) 25vw, 20vw"
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                       loading={index < 6 ? 'eager' : 'lazy'}
                       quality={index < 4 ? 85 : 70}
                       priority={index < 4}
@@ -310,7 +310,7 @@ export function VerticalCarousel({
                   )}
 
                   {!isOngoingProject && (
-                    <div className="absolute right-1.5 bottom-1.5 left-1.5 min-[380px]:right-2 min-[380px]:bottom-2 min-[380px]:left-2 md:right-3 md:bottom-3 md:left-3">
+                    <div className="absolute right-1 bottom-1 left-1 min-[380px]:right-1.5 min-[380px]:bottom-1.5 min-[380px]:left-1.5 min-[420px]:right-2 min-[420px]:bottom-2 min-[420px]:left-2 md:right-3 md:bottom-3 md:left-3">
                       <motion.div
                         initial={{ opacity: 0, y: 8 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -319,12 +319,12 @@ export function VerticalCarousel({
                           duration: 0.28,
                           delay: Math.min(index * 0.02, 0.16),
                         }}
-                        className="translate-y-0 rounded-md bg-black/72 px-1.5 py-1 opacity-100 backdrop-blur-sm transition-all duration-300 min-[380px]:px-2 min-[380px]:py-1.5 md:translate-y-1 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100"
+                        className="translate-y-0 rounded bg-black/72 px-1 py-0.5 opacity-100 backdrop-blur-sm transition-all duration-300 min-[380px]:rounded-md min-[380px]:px-1.5 min-[380px]:py-1 min-[420px]:px-2 min-[420px]:py-1.5 md:translate-y-1 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100"
                       >
-                        <p className="line-clamp-2 font-serif text-[10px] leading-snug font-semibold tracking-tight text-white min-[380px]:text-[11px] md:text-sm">
+                        <p className="line-clamp-2 font-serif text-[9px] leading-tight font-semibold tracking-tight text-white min-[380px]:text-[10px] min-[380px]:leading-snug min-[420px]:text-[11px] md:text-sm">
                           {item.title}
                         </p>
-                        <p className="mt-0.5 line-clamp-2 text-[9px] leading-relaxed text-white/90 min-[380px]:line-clamp-3 min-[380px]:text-[10px] md:line-clamp-2 md:text-xs">
+                        <p className="mt-px line-clamp-2 text-[8px] leading-snug text-white/90 min-[380px]:mt-0.5 min-[380px]:line-clamp-3 min-[380px]:text-[9px] min-[380px]:leading-relaxed min-[420px]:text-[10px] md:line-clamp-2 md:text-xs">
                           {brief}
                         </p>
                       </motion.div>

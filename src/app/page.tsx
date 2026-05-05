@@ -317,7 +317,7 @@ export default function Home() {
               transition={{ duration: 0.4 }}
             >
               <motion.h2
-                className="section-title"
+                className="font-serif text-lg leading-tight font-semibold tracking-[-0.02em] sm:text-xl md:text-5xl"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -326,7 +326,7 @@ export default function Home() {
                 Portfolio
               </motion.h2>
               <motion.p
-                className="section-copy mt-3 md:mt-4"
+                className="text-muted-foreground mx-auto mt-2 max-w-2xl px-1 text-xs leading-relaxed md:mt-4 md:px-0 md:text-base"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -335,7 +335,7 @@ export default function Home() {
                 Explore selected work and tap any card to view full details.
               </motion.p>
               <motion.div
-                className="bg-primary/30 mx-auto mt-4 h-px w-16 md:mt-6 md:w-24"
+                className="bg-primary/30 mx-auto mt-3 h-px w-12 md:mt-6 md:w-24"
                 initial={{ scaleX: 0 }}
                 whileInView={{ scaleX: 1 }}
                 viewport={{ once: true }}
