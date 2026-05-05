@@ -1,13 +1,6 @@
 'use client';
 
-import React, {
-  useState,
-  useMemo,
-  useCallback,
-  Suspense,
-  useRef,
-  useLayoutEffect,
-} from 'react';
+import React, { useState, useMemo, useCallback, Suspense } from 'react';
 import { portfolioItems } from '@/data/portfolio-items';
 import Video from 'yet-another-react-lightbox/plugins/video';
 import type { Slide } from 'yet-another-react-lightbox';
@@ -89,153 +82,84 @@ const Lightbox = dynamic(() => import('yet-another-react-lightbox'), {
   loading: () => null,
 });
 
-/**
- * Wraps slide media and pins the caption to the real video/img box. Video slides use a
- * full-size wrapper div (100%×100%), so absolute top/left on the outer box lands in the
- * letterboxing — we measure `video` / `img.yarl__slide_image` instead.
- */
-function PortfolioLightboxSlideContainer({
-  slide,
-  children,
-}: {
-  slide: Slide;
-  children: React.ReactNode;
-}) {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const [anchor, setAnchor] = useState<{
-    top: number;
-    left: number;
-    maxWidth: number;
-    mediaWidth: number;
-  } | null>(null);
-
+/** Fullscreen info footer rendered under footage (no overlap). */
+function PortfolioLightboxSlideFooter({ slide }: { slide: Slide }) {
   const { title, description: desc } = slide as Slide & {
     title?: React.ReactNode;
     description?: React.ReactNode;
   };
-  const slideSize = slide as Slide & { width?: number; height?: number };
-  const isHorizontalSlide =
-    typeof slideSize.width === 'number' &&
-    typeof slideSize.height === 'number' &&
-    slideSize.width > slideSize.height;
   const hasTitle =
     title != null && (typeof title !== 'string' || title.trim().length > 0);
   const hasDesc =
     desc != null && (typeof desc !== 'string' || desc.trim().length > 0);
 
-  const measure = useCallback(() => {
-    const root = wrapRef.current;
-    if (!root) return;
-
-    const media = root.querySelector<HTMLElement>(
-      'video, img.yarl__slide_image'
-    );
-    if (!media) {
-      setAnchor(prev => (prev === null ? prev : null));
-      return;
-    }
-
-    const rr = root.getBoundingClientRect();
-    const mr = media.getBoundingClientRect();
-    if (mr.width < 2 || mr.height < 2) {
-      setAnchor(prev => (prev === null ? prev : null));
-      return;
-    }
-
-    const next = {
-      top: mr.top - rr.top,
-      left: mr.left - rr.left,
-      maxWidth: Math.max(120, Math.min(mr.width - 8, 352)),
-      mediaWidth: mr.width,
-    };
-    setAnchor(prev => {
-      if (
-        prev &&
-        prev.top === next.top &&
-        prev.left === next.left &&
-        prev.maxWidth === next.maxWidth &&
-        prev.mediaWidth === next.mediaWidth
-      ) {
-        return prev;
-      }
-      return next;
-    });
-  }, []);
-
-  useLayoutEffect(() => {
-    measure();
-    const raf = requestAnimationFrame(() => measure());
-
-    const root = wrapRef.current;
-    if (!root) {
-      return () => cancelAnimationFrame(raf);
-    }
-
-    const media = root.querySelector<HTMLElement>(
-      'video, img.yarl__slide_image'
-    );
-    const ro = new ResizeObserver(() => measure());
-    ro.observe(root);
-    if (media) ro.observe(media);
-
-    window.addEventListener('resize', measure);
-    return () => {
-      cancelAnimationFrame(raf);
-      ro.disconnect();
-      window.removeEventListener('resize', measure);
-    };
-  }, [measure, slide, children]);
-
   if (!hasTitle && !hasDesc) {
-    return <>{children}</>;
+    return null;
   }
 
+  const descLines =
+    typeof desc === 'string'
+      ? desc
+          .split('\n')
+          .map(line => line.trim())
+          .filter(Boolean)
+      : [];
+  const typeLine = descLines[0] || '';
+  const infoLines = descLines.slice(1);
+  const infoRows = infoLines.map((line, index) => {
+    const sep = line.indexOf('·');
+    if (sep >= 0) {
+      return {
+        id: `${index}-${line}`,
+        label: line.slice(0, sep).trim(),
+        value: line.slice(sep + 1).trim(),
+      };
+    }
+    return {
+      id: `${index}-${line}`,
+      label: 'Details',
+      value: line,
+    };
+  });
+
   return (
-    <div ref={wrapRef} className="relative h-full min-h-0 w-full min-w-0">
-      {children}
-      {anchor ? (
-        <div
-          className={`pointer-events-none absolute z-[2] rounded-br-md border border-white/15 bg-black/78 text-left text-white shadow-sm backdrop-blur-sm ${
-            isHorizontalSlide
-              ? 'w-[120px] px-1 py-0.5 sm:w-[240px] sm:px-2.5 sm:py-2 md:w-[360px] md:px-5 md:py-3 lg:w-[460px] lg:px-6 lg:py-4'
-              : 'px-1.5 py-1 sm:px-3 sm:py-2.5 md:px-3.5 md:py-3'
-          }`}
-          style={{
-            top: anchor.top + (isHorizontalSlide ? 14 : 6),
-            left: anchor.left + (isHorizontalSlide ? 14 : 6),
-            width: isHorizontalSlide
-              ? Math.max(140, Math.min(anchor.mediaWidth * 0.42, 520))
-              : undefined,
-            maxWidth: isHorizontalSlide
-              ? Math.max(140, anchor.maxWidth - 20)
-              : Math.max(120, Math.min(anchor.maxWidth - 12, 250)),
-          }}
-          data-lightbox-caption=""
-        >
-          {hasTitle ? (
-            <p
-              className={`leading-snug font-semibold tracking-[-0.01em] ${
-                isHorizontalSlide
-                  ? 'text-[7px] sm:text-[9px] md:text-[10px] lg:text-[11px]'
-                  : 'text-[8px] sm:text-[9px] md:text-[11px] lg:text-[12px]'
-              }`}
-            >
-              {title}
-            </p>
-          ) : null}
-          {hasDesc ? (
-            <p
-              className={`mt-0.5 leading-relaxed break-words whitespace-pre-line text-white ${
-                isHorizontalSlide
-                  ? 'text-[5px] sm:text-[7px] md:text-[8px] lg:text-[9px]'
-                  : 'text-[6px] sm:text-[7px] md:text-[9px] lg:text-[10px]'
-              }`}
-            >
-              {desc}
-            </p>
-          ) : null}
-        </div>
-      ) : null}
+    <div className="pointer-events-none mx-auto w-full max-w-5xl px-3 pb-5 sm:px-4 md:px-6 md:pb-7">
+      <div
+        className="rounded-md border border-white/15 bg-black/78 px-3 py-2 text-left text-white shadow-sm backdrop-blur-sm md:px-4 md:py-3"
+        data-lightbox-caption=""
+      >
+        {hasTitle ? (
+          <p className="text-[11px] leading-snug font-semibold tracking-[-0.01em] sm:text-[13px] md:text-[15px]">
+            {title}
+          </p>
+        ) : null}
+        {typeLine ? (
+          <p className="mt-0.5 text-[9px] font-medium tracking-[0.08em] text-white/85 uppercase sm:text-[10px]">
+            {typeLine}
+          </p>
+        ) : null}
+        {infoRows.length > 0 ? (
+          <div className="mt-2 grid gap-2 sm:grid-cols-2 md:grid-cols-3">
+            {infoRows.map(row => (
+              <div
+                key={row.id}
+                className={`rounded border border-white/10 bg-black/35 px-2 py-1.5 md:px-2.5 md:py-2 ${
+                  row.label.toLowerCase() === 'project brief'
+                    ? 'sm:col-span-2 md:col-span-3'
+                    : ''
+                }`}
+              >
+                <p className="text-[8px] tracking-[0.08em] text-white/65 uppercase sm:text-[9px]">
+                  {row.label}
+                </p>
+                <p className="mt-0.5 text-[9px] leading-relaxed break-words text-white sm:text-[10px] md:text-[11px]">
+                  {row.value}
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }
@@ -552,10 +476,8 @@ export default function Home() {
         slides={allSlides}
         plugins={[Video]}
         render={{
-          slideContainer: ({ slide, children }) => (
-            <PortfolioLightboxSlideContainer slide={slide}>
-              {children}
-            </PortfolioLightboxSlideContainer>
+          slideFooter: ({ slide }) => (
+            <PortfolioLightboxSlideFooter slide={slide} />
           ),
         }}
         on={{

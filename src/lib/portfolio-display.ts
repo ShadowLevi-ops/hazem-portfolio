@@ -1,5 +1,5 @@
 import type { PortfolioItem } from '@/types/portfolio';
-import { CARD_TEASERS } from '@/lib/project-card-labels';
+import { CARD_TEASERS, projectCardIndustry } from '@/lib/project-card-labels';
 
 const TYPE_LABEL: Record<PortfolioItem['type'], string> = {
   photography: 'Photography',
@@ -101,17 +101,17 @@ export function lightboxCaptionDescription(item: PortfolioItem): string {
 
   lines.push(`Project Brief · ${brief}`);
 
-  if (item.projectDetails === 'ONGOING PROJECT') {
-    lines.push('In production');
-  } else if (
-    item.projectDetails?.trim() &&
-    !isPlaceholderProjectDetails(item.projectDetails)
-  ) {
-    lines.push(item.projectDetails.trim());
-  }
-
   if (item.client?.trim()) {
     lines.push(`Client · ${item.client.trim()}`);
+  }
+
+  const industry = projectCardIndustry(item);
+  if (industry) {
+    lines.push(`Industry · ${industry}`);
+  }
+
+  if (item.projectDetails === 'ONGOING PROJECT') {
+    lines.push('Status · In production');
   }
 
   if (lines.length === 0) return kind;
