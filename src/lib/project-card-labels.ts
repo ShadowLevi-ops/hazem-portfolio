@@ -40,6 +40,80 @@ export const CARD_TEASERS: Record<string, string> = {
   'video-19': 'Athlete profile focused on growth and ambition.',
 };
 
+/** Richer project brief copy for fullscreen/footer detail sections. */
+export const FULLSCREEN_BRIEFS: Record<string, string> = {
+  'photo-1':
+    'Editorial travel still capturing Uluwatu Temple atmosphere and sacred architecture.',
+  'photo-2':
+    'Destination hospitality frame built to sell place, pace, and premium escape.',
+  'photo-3':
+    'Cultural architecture composition highlighting texture, geometry, and context.',
+  'photo-4':
+    'Coastal landscape image emphasizing scale, horizon depth, and visual drama.',
+  'photo-5':
+    'Urban lifestyle portrait blending subject energy with modern architectural framing.',
+  'photo-6':
+    'Architecture study focused on symmetry, structure, and tonal contrast.',
+  'photo-7':
+    'Scenic hero frame centered on iconic form and clean visual balance.',
+  'photo-8':
+    'Travel lifestyle moment capturing warmth, movement, and destination authenticity.',
+  'photo-9':
+    'Event portrait documenting athletic energy and community atmosphere.',
+  'photo-10':
+    'Performance still prioritizing expression, costume detail, and stage intensity.',
+  'photo-11':
+    'Companion performance frame with stronger motion and narrative tension.',
+  'photo-12':
+    'Launch-phase stadium teaser introducing venue scale and anticipation.',
+  'photo-13':
+    'Follow-up campaign image reinforcing stadium identity and rollout momentum.',
+  'photo-14':
+    'Third campaign visual crafted for continuity across promotional touchpoints.',
+  'photo-15': 'Commercial product still with clean styling and premium finish.',
+  'photo-16': 'Alternate product hero angle designed for campaign consistency.',
+  'photo-17':
+    'Final hero product frame optimized for digital and social deployment.',
+  'video-1':
+    'Cinematic travel short combining iconic landmarks with social-native pacing.',
+  'video-2':
+    'Commercial architecture reel positioning the property as a premium destination.',
+  'video-3':
+    'Sports highlight cut built around match intensity and fan momentum.',
+  'video-4':
+    'Travel-commercial piece integrating destination aesthetics with product storytelling.',
+  'video-5':
+    'Live concert recap preserving stage emotion and audience-scale energy.',
+  'video-6':
+    'Brand and music crossover capturing performance grit and youth-culture tone.',
+  'video-7':
+    'Underwater lifestyle short focused on immersion and fluid camera movement.',
+  'video-8':
+    'Fast-cut travel montage tailored for retention-first social viewing.',
+  'video-9':
+    'Performance-led music edit balancing cinematic rhythm and live atmosphere.',
+  'video-10':
+    'Destination dive highlight showcasing marine exploration and travel context.',
+  'video-11':
+    'Phuket destination reel blending city rhythm with coastal atmosphere.',
+  'video-12':
+    'Culture-forward Japan travel edit with clean sequencing and transitions.',
+  'video-13':
+    'Vertical-first Spurs social reel focused on club energy and fan culture.',
+  'video-14':
+    'Seasonal CNY campaign connecting festive storytelling with Tottenham identity.',
+  'video-15':
+    'Community sports feature spotlighting regional fan culture and engagement.',
+  'video-16':
+    'Retail launch film combining product energy with streetwear brand positioning.',
+  'video-17':
+    'Interview-led profile focused on clarity, personality, and editorial pacing.',
+  'video-18':
+    'Follow-up interview installment extending depth while maintaining continuity.',
+  'video-19':
+    'Athlete journey profile highlighting progression, ambition, and next-step narrative.',
+};
+
 export const CARD_CLIENTS: Record<string, string> = {
   'video-1': 'Independent Project',
   'video-2': 'Triterra Metropolis',
@@ -89,6 +163,10 @@ export function projectCardTag(item: PortfolioItem): string {
 
 export function projectCardTeaser(item: PortfolioItem): string {
   return CARD_TEASERS[item.id] ?? '';
+}
+
+export function projectFullscreenBrief(item: PortfolioItem): string {
+  return FULLSCREEN_BRIEFS[item.id] ?? '';
 }
 
 export function projectCardClient(item: PortfolioItem): string {

@@ -1,5 +1,9 @@
 import type { PortfolioItem } from '@/types/portfolio';
-import { CARD_TEASERS, projectCardIndustry } from '@/lib/project-card-labels';
+import {
+  CARD_TEASERS,
+  projectCardIndustry,
+  projectFullscreenBrief,
+} from '@/lib/project-card-labels';
 
 const TYPE_LABEL: Record<PortfolioItem['type'], string> = {
   photography: 'Photography',
@@ -68,6 +72,9 @@ export function portfolioGridBlurb(item: PortfolioItem): string {
 }
 
 function lightboxProjectBrief(item: PortfolioItem): string {
+  const rich = projectFullscreenBrief(item).trim();
+  if (rich) return rich;
+
   const curated = CARD_TEASERS[item.id]?.trim();
   if (curated) {
     // Card teasers may be intentionally shortened; avoid trailing ellipses in fullscreen.
