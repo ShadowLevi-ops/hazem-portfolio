@@ -165,21 +165,20 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                 className="surface-card group hover:border-primary/45 relative flex w-full flex-col overflow-hidden rounded-md border border-transparent text-left transition-colors duration-300"
               >
                 <div className="bg-muted relative aspect-[4/5] w-full overflow-hidden md:aspect-[3/4]">
+                  <Image
+                    src={src}
+                    alt={displayTitle}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
                   {isVideo ? (
                     <FeaturedVideoPreview
                       src={item.previewMediaUrl ?? item.mediaUrl}
                       poster={item.thumbnailUrl}
                       isPriority={idx === 0}
                     />
-                  ) : (
-                    <Image
-                      src={src}
-                      alt={displayTitle}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  )}
+                  ) : null}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                   <div className="absolute top-2 right-2 left-2 flex items-start justify-between gap-1 md:top-4 md:right-4 md:left-4 md:gap-2">
                     <motion.h3
