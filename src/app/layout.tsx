@@ -154,10 +154,12 @@ export default function RootLayout({
           as="image"
           type="image/svg+xml"
         />
-        <link rel="preload" href="/images/p1.PNG" as="image" type="image/png" />
-        <link rel="preload" href="/images/p2.PNG" as="image" type="image/png" />
-        <link rel="preload" href="/images/p3.PNG" as="image" type="image/png" />
-        <link rel="preload" href="/images/p4.PNG" as="image" type="image/png" />
+        <link
+          rel="preload"
+          href="/videos/VT-11.png"
+          as="image"
+          type="image/png"
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

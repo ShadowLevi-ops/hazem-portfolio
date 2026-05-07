@@ -475,6 +475,8 @@ export default function Home() {
         index={lightboxIndex}
         slides={allSlides}
         plugins={[Video]}
+        carousel={{ preload: 2 }}
+        animation={{ fade: 260, swipe: 320 }}
         render={{
           slideContainer: ({ slide, children }) => (
             <div className="mx-auto flex h-full w-full max-w-[1400px] flex-col">

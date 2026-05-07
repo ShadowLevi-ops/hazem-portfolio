@@ -67,7 +67,6 @@ export function AnimatedHero() {
           <source src="/videos/11.mp4" type="video/mp4" />
         </video>
       </div>
-
       {/* Contrast overlays for text legibility */}
       <div className="absolute inset-0 -z-10 bg-black/52" />
       <div className="from-background/70 via-background/45 to-background/75 absolute inset-0 -z-10 bg-gradient-to-b" />

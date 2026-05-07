@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import type { PortfolioItem } from '@/types/portfolio';
 import { portfolioDisplayTitle } from '@/lib/portfolio-display';
 import {
@@ -15,6 +16,90 @@ type FeaturedWorkProps = {
   items: PortfolioItem[];
   onSelect: (item: PortfolioItem) => void;
 };
+
+function FeaturedVideoPreview({
+  src,
+  poster,
+  isPriority,
+}: {
+  src: string;
+  poster: string | undefined;
+  isPriority: boolean;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(isPriority);
+  const [isReady, setIsReady] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const connection = (
+      navigator as Navigator & {
+        connection?: { saveData?: boolean; effectiveType?: string };
+      }
+    ).connection;
+    const lowDataMode =
+      Boolean(connection?.saveData) ||
+      connection?.effectiveType?.includes('2g') ||
+      connection?.effectiveType === '3g';
+
+    if (lowDataMode) return;
+
+    const observer = new IntersectionObserver(
+      entries => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setShouldLoad(true);
+            observer.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.2, rootMargin: '220px' }
+    );
+
+    observer.observe(container);
+
+    const eagerLoadOnHover = () => setShouldLoad(true);
+    container.addEventListener('mouseenter', eagerLoadOnHover);
+    container.addEventListener('touchstart', eagerLoadOnHover, {
+      passive: true,
+    });
+
+    return () => {
+      observer.disconnect();
+      container.removeEventListener('mouseenter', eagerLoadOnHover);
+      container.removeEventListener('touchstart', eagerLoadOnHover);
+    };
+  }, []);
+
+  if (hasError) return null;
+
+  return (
+    <div ref={containerRef} className="absolute inset-0">
+      <video
+        ref={videoRef}
+        className={`h-full w-full object-cover transition-all duration-500 group-hover:scale-[1.03] ${
+          isReady ? 'opacity-100' : 'opacity-0'
+        }`}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload={shouldLoad ? 'metadata' : 'none'}
+        poster={poster}
+        aria-hidden="true"
+        onLoadedData={() => setIsReady(true)}
+        onError={() => setHasError(true)}
+      >
+        {shouldLoad ? <source src={src} type="video/mp4" /> : null}
+      </video>
+    </div>
+  );
+}
 
 export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
   return (
@@ -68,16 +153,10 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
               >
                 <div className="bg-muted relative aspect-[4/5] w-full overflow-hidden md:aspect-[3/4]">
                   {isVideo ? (
-                    <video
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    <FeaturedVideoPreview
                       src={item.mediaUrl}
                       poster={item.thumbnailUrl}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
-                      aria-label={displayTitle}
+                      isPriority={idx === 0}
                     />
                   ) : (
                     <Image
