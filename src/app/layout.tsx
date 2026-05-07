@@ -156,9 +156,9 @@ export default function RootLayout({
         />
         <link
           rel="preload"
-          href="/videos/VT-11.jpg"
+          href="/videos/VT-11.webp"
           as="image"
-          type="image/jpeg"
+          type="image/webp"
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link

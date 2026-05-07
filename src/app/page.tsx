@@ -263,7 +263,7 @@ export default function Home() {
         ],
         title: portfolioDisplayTitle(item),
         description: lightboxCaptionDescription(item),
-        poster: item.thumbnailUrl || '/videos/VT-1.png',
+        poster: item.thumbnailUrl || '/videos/VT-1.webp',
         // Horizontal 16:9 fills wide lightbox; vertical reels stay 9:16
         ...(isHorizontalVideoItem(item)
           ? { width: 1920, height: 1080 }

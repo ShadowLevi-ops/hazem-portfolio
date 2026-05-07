@@ -88,14 +88,14 @@ export function AnimatedHero() {
             loop
             playsInline
             preload="metadata"
-            poster="/videos/VT-11.jpg"
+            poster="/videos/VT-11.webp"
             aria-hidden="true"
           >
             <source src="/videos/11.mp4" type="video/mp4" />
           </video>
         ) : (
           <Image
-            src="/videos/VT-11.jpg"
+            src="/videos/VT-11.webp"
             alt=""
             fill
             priority

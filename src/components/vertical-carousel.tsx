@@ -272,7 +272,7 @@ export function VerticalCarousel({
                     <Image
                       src={
                         isVideo
-                          ? item.thumbnailUrl || '/images/p1.PNG'
+                          ? item.thumbnailUrl || '/images/p1.webp'
                           : item.mediaUrl
                       }
                       alt={displayTitle}
@@ -290,7 +290,7 @@ export function VerticalCarousel({
                       <VideoAutoPlay
                         src={previewVideoSrc}
                         fallbackSrc={fallbackVideoSrc}
-                        poster={item.thumbnailUrl || '/images/p1.PNG'}
+                        poster={item.thumbnailUrl || '/images/p1.webp'}
                         lowDataMode={lowDataMode}
                         {...(item.captionsUrl && {
                           captionsUrl: item.captionsUrl,
