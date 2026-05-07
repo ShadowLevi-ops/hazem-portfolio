@@ -48,21 +48,6 @@ function FeaturedVideoPreview({
 
     if (lowDataMode) return;
 
-    const observer = new IntersectionObserver(
-      entries => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setShouldLoad(true);
-            observer.disconnect();
-            break;
-          }
-        }
-      },
-      { threshold: 0.2, rootMargin: '220px' }
-    );
-
-    observer.observe(container);
-
     const eagerLoadOnHover = () => setShouldLoad(true);
     container.addEventListener('mouseenter', eagerLoadOnHover);
     container.addEventListener('touchstart', eagerLoadOnHover, {
@@ -70,7 +55,6 @@ function FeaturedVideoPreview({
     });
 
     return () => {
-      observer.disconnect();
       container.removeEventListener('mouseenter', eagerLoadOnHover);
       container.removeEventListener('touchstart', eagerLoadOnHover);
     };
@@ -154,7 +138,7 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                 <div className="bg-muted relative aspect-[4/5] w-full overflow-hidden md:aspect-[3/4]">
                   {isVideo ? (
                     <FeaturedVideoPreview
-                      src={item.mediaUrl}
+                      src={item.previewMediaUrl ?? item.mediaUrl}
                       poster={item.thumbnailUrl}
                       isPriority={idx === 0}
                     />

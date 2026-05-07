@@ -62,8 +62,8 @@ function VideoAutoPlay({
         });
       },
       {
-        threshold: 0.25,
-        rootMargin: '240px',
+        threshold: 0.5,
+        rootMargin: '60px',
       }
     );
 
@@ -276,7 +276,7 @@ export function VerticalCarousel({
 
                     {isVideo && (
                       <VideoAutoPlay
-                        src={item.mediaUrl}
+                        src={item.previewMediaUrl ?? item.mediaUrl}
                         poster={item.thumbnailUrl || '/images/p1.PNG'}
                         lowDataMode={lowDataMode}
                         {...(item.captionsUrl && {
