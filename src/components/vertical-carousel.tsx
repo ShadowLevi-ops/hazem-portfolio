@@ -95,6 +95,7 @@ function VideoAutoPlay({
     <div ref={containerRef} className="absolute inset-0">
       <video
         ref={videoRef}
+        src={src}
         className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-300 ease-out ${
           isVideoReady ? 'opacity-100' : 'opacity-0'
         }`}
@@ -120,7 +121,6 @@ function VideoAutoPlay({
           });
         }}
       >
-        {shouldLoad && <source src={src} type="video/mp4" />}
         {captionsUrl && (
           <track
             kind="captions"
