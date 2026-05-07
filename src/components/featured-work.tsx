@@ -1,5 +1,8 @@
+'use client';
+
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import type { PortfolioItem } from '@/types/portfolio';
 import { portfolioDisplayTitle } from '@/lib/portfolio-display';
 import {
@@ -13,6 +16,90 @@ type FeaturedWorkProps = {
   items: PortfolioItem[];
   onSelect: (item: PortfolioItem) => void;
 };
+
+function FeaturedVideoPreview({
+  src,
+  poster,
+  isPriority,
+}: {
+  src: string;
+  poster: string | undefined;
+  isPriority: boolean;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(isPriority);
+  const [isReady, setIsReady] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const connection = (
+      navigator as Navigator & {
+        connection?: { saveData?: boolean; effectiveType?: string };
+      }
+    ).connection;
+    const lowDataMode =
+      Boolean(connection?.saveData) ||
+      connection?.effectiveType?.includes('2g') ||
+      connection?.effectiveType === '3g';
+
+    if (lowDataMode) return;
+
+    const observer = new IntersectionObserver(
+      entries => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setShouldLoad(true);
+            observer.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.2, rootMargin: '220px' }
+    );
+
+    observer.observe(container);
+
+    const eagerLoadOnHover = () => setShouldLoad(true);
+    container.addEventListener('mouseenter', eagerLoadOnHover);
+    container.addEventListener('touchstart', eagerLoadOnHover, {
+      passive: true,
+    });
+
+    return () => {
+      observer.disconnect();
+      container.removeEventListener('mouseenter', eagerLoadOnHover);
+      container.removeEventListener('touchstart', eagerLoadOnHover);
+    };
+  }, []);
+
+  if (hasError) return null;
+
+  return (
+    <div ref={containerRef} className="absolute inset-0">
+      <video
+        ref={videoRef}
+        className={`h-full w-full object-cover transition-all duration-500 group-hover:scale-[1.03] ${
+          isReady ? 'opacity-100' : 'opacity-0'
+        }`}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload={shouldLoad ? 'metadata' : 'none'}
+        poster={poster}
+        aria-hidden="true"
+        onLoadedData={() => setIsReady(true)}
+        onError={() => setHasError(true)}
+      >
+        {shouldLoad ? <source src={src} type="video/mp4" /> : null}
+      </video>
+    </div>
+  );
+}
 
 export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
   return (
@@ -65,13 +152,21 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                 className="surface-card group hover:border-primary/45 relative flex w-full flex-col overflow-hidden rounded-md border border-transparent text-left transition-colors duration-300"
               >
                 <div className="bg-muted relative aspect-[4/5] w-full overflow-hidden md:aspect-[3/4]">
-                  <Image
-                    src={src}
-                    alt={displayTitle}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
+                  {isVideo ? (
+                    <FeaturedVideoPreview
+                      src={item.mediaUrl}
+                      poster={item.thumbnailUrl}
+                      isPriority={idx === 0}
+                    />
+                  ) : (
+                    <Image
+                      src={src}
+                      alt={displayTitle}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                   <div className="absolute top-2 right-2 left-2 flex items-start justify-between gap-1 md:top-4 md:right-4 md:left-4 md:gap-2">
                     <motion.h3
