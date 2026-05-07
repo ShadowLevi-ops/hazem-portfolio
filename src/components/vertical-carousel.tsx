@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { Expand } from 'lucide-react';
 import type { PortfolioItem } from '@/types/portfolio';
@@ -14,127 +14,6 @@ import {
 } from '@/lib/project-card-labels';
 import { analytics } from '@/lib/analytics';
 
-// Auto-playing video component with Intersection Observer
-function VideoAutoPlay({
-  src,
-  poster,
-  captionsUrl,
-  lowDataMode,
-}: {
-  src: string;
-  poster?: string;
-  captionsUrl?: string;
-  lowDataMode: boolean;
-}) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isInViewRef = useRef(false);
-  const [shouldLoad, setShouldLoad] = useState(false);
-  const [isVideoReady, setIsVideoReady] = useState(false);
-  const [hasError, setHasError] = useState(false);
-
-  useEffect(() => {
-    if (lowDataMode) return;
-
-    const video = videoRef.current;
-    const container = containerRef.current;
-    if (!video || !container) return;
-
-    const playWhenReady = () => {
-      if (isInViewRef.current && video.readyState >= 2) {
-        setIsVideoReady(true);
-        video.play().catch(() => {
-          // Silently handle autoplay restrictions (e.g. some mobile browsers)
-        });
-      }
-    };
-
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          isInViewRef.current = entry.isIntersecting;
-          if (entry.isIntersecting) {
-            setShouldLoad(true);
-            // Play once video has loaded (handled by canplay listener)
-            playWhenReady();
-          } else {
-            video.pause();
-          }
-        });
-      },
-      {
-        threshold: 0.25,
-        rootMargin: '240px',
-      }
-    );
-
-    observer.observe(container);
-
-    video.addEventListener('canplay', playWhenReady);
-    video.addEventListener('loadeddata', playWhenReady);
-
-    const eagerLoadOnHover = () => setShouldLoad(true);
-    container.addEventListener('mouseenter', eagerLoadOnHover);
-    container.addEventListener('touchstart', eagerLoadOnHover, {
-      passive: true,
-    });
-
-    return () => {
-      observer.disconnect();
-      video.removeEventListener('canplay', playWhenReady);
-      video.removeEventListener('loadeddata', playWhenReady);
-      container.removeEventListener('mouseenter', eagerLoadOnHover);
-      container.removeEventListener('touchstart', eagerLoadOnHover);
-      video.pause();
-    };
-  }, [src, lowDataMode]);
-
-  if (hasError || lowDataMode) return null;
-
-  return (
-    <div ref={containerRef} className="absolute inset-0">
-      <video
-        ref={videoRef}
-        src={src}
-        className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-300 ease-out ${
-          isVideoReady ? 'opacity-100' : 'opacity-0'
-        }`}
-        autoPlay
-        muted
-        loop
-        playsInline
-        controls={false}
-        preload={shouldLoad ? 'metadata' : 'none'}
-        poster={poster}
-        onError={() => {
-          setHasError(true);
-          analytics.track({
-            name: 'preview_video_error',
-            properties: { component: 'vertical_carousel' },
-          });
-        }}
-        onLoadedData={() => {
-          setIsVideoReady(true);
-          analytics.track({
-            name: 'preview_video_loaded',
-            properties: { component: 'vertical_carousel' },
-          });
-        }}
-      >
-        {captionsUrl && (
-          <track
-            kind="captions"
-            srcLang="en"
-            src={captionsUrl}
-            label="English captions"
-            default
-          />
-        )}
-      </video>
-    </div>
-  );
-}
-
 interface VerticalCarouselProps {
   items: PortfolioItem[];
   onItemClick: (index: number) => void;
@@ -146,7 +25,6 @@ export function VerticalCarousel({
 }: VerticalCarouselProps) {
   const showLabels = process.env.NEXT_PUBLIC_SHOW_LABELS === 'true';
   const reduceMotion = useReducedMotion();
-  const [lowDataMode, setLowDataMode] = useState(false);
   const PAGE_SIZE = 12;
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
@@ -159,51 +37,6 @@ export function VerticalCarousel({
     () => items.slice(0, Math.min(visibleCount, items.length)),
     [items, visibleCount]
   );
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(pointer: coarse)');
-
-    const getConnection = () =>
-      (
-        navigator as Navigator & {
-          connection?: {
-            saveData?: boolean;
-            effectiveType?: string;
-            addEventListener?: (type: string, listener: () => void) => void;
-            removeEventListener?: (type: string, listener: () => void) => void;
-          };
-        }
-      ).connection;
-
-    const shouldUseLowDataMode = () => {
-      const connection = getConnection();
-      const saveData = Boolean(connection?.saveData);
-      const effectiveType = connection?.effectiveType || '';
-      const isSlowConnection =
-        effectiveType.includes('2g') || effectiveType === '3g';
-      const prefersReducedMotion = Boolean(reduceMotion);
-
-      // Mobile/coarse pointers and reduced-motion devices get poster-first cards.
-      return (
-        saveData ||
-        isSlowConnection ||
-        mediaQuery.matches ||
-        prefersReducedMotion
-      );
-    };
-
-    const updateMode = () => setLowDataMode(shouldUseLowDataMode());
-    updateMode();
-
-    const connection = getConnection();
-    mediaQuery.addEventListener('change', updateMode);
-    connection?.addEventListener?.('change', updateMode);
-
-    return () => {
-      mediaQuery.removeEventListener('change', updateMode);
-      connection?.removeEventListener?.('change', updateMode);
-    };
-  }, [reduceMotion]);
 
   if (items.length === 0) {
     return (
@@ -295,16 +128,7 @@ export function VerticalCarousel({
                       blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                     />
 
-                    {isVideo && (
-                      <VideoAutoPlay
-                        src={item.previewMediaUrl ?? item.mediaUrl}
-                        poster={item.thumbnailUrl || '/images/p1.PNG'}
-                        lowDataMode={lowDataMode}
-                        {...(item.captionsUrl && {
-                          captionsUrl: item.captionsUrl,
-                        })}
-                      />
-                    )}
+                    {/* Thumbnail-only cards for maximum playback reliability; full video opens in lightbox. */}
                   </div>
 
                   {/* Always-on bottom gradient for legibility */}

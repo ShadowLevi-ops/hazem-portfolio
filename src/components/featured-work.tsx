@@ -1,8 +1,5 @@
-'use client';
-
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
 import type { PortfolioItem } from '@/types/portfolio';
 import { portfolioDisplayTitle } from '@/lib/portfolio-display';
 import {
@@ -11,67 +8,11 @@ import {
   projectCardClient,
   projectCardIndustry,
 } from '@/lib/project-card-labels';
-import { analytics } from '@/lib/analytics';
 
 type FeaturedWorkProps = {
   items: PortfolioItem[];
   onSelect: (item: PortfolioItem) => void;
 };
-
-function FeaturedVideoPreview({
-  src,
-  poster,
-  isPriority,
-}: {
-  src: string;
-  poster: string | undefined;
-  isPriority: boolean;
-}) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isReady, setIsReady] = useState(false);
-  const [hasError, setHasError] = useState(false);
-
-  useEffect(() => {
-    if (isPriority) {
-      setIsReady(false);
-    }
-  }, [isPriority]);
-
-  if (hasError) return null;
-
-  return (
-    <div className="absolute inset-0">
-      <video
-        ref={videoRef}
-        src={src}
-        className={`h-full w-full object-cover transition-all duration-500 group-hover:scale-[1.03] ${
-          isReady ? 'opacity-100' : 'opacity-0'
-        }`}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload={isPriority ? 'auto' : 'metadata'}
-        poster={poster}
-        aria-hidden="true"
-        onLoadedData={() => {
-          setIsReady(true);
-          analytics.track({
-            name: 'preview_video_loaded',
-            properties: { component: 'featured_work' },
-          });
-        }}
-        onError={() => {
-          setHasError(true);
-          analytics.track({
-            name: 'preview_video_error',
-            properties: { component: 'featured_work' },
-          });
-        }}
-      />
-    </div>
-  );
-}
 
 export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
   return (
@@ -131,13 +72,6 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
-                  {isVideo ? (
-                    <FeaturedVideoPreview
-                      src={item.previewMediaUrl ?? item.mediaUrl}
-                      poster={item.thumbnailUrl}
-                      isPriority={idx === 0}
-                    />
-                  ) : null}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                   <div className="absolute top-2 right-2 left-2 flex items-start justify-between gap-1 md:top-4 md:right-4 md:left-4 md:gap-2">
                     <motion.h3
