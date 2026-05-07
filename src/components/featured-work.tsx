@@ -11,6 +11,7 @@ import {
   projectCardClient,
   projectCardIndustry,
 } from '@/lib/project-card-labels';
+import { analytics } from '@/lib/analytics';
 
 type FeaturedWorkProps = {
   items: PortfolioItem[];
@@ -92,8 +93,20 @@ function FeaturedVideoPreview({
         preload={shouldLoad ? 'metadata' : 'none'}
         poster={poster}
         aria-hidden="true"
-        onLoadedData={() => setIsReady(true)}
-        onError={() => setHasError(true)}
+        onLoadedData={() => {
+          setIsReady(true);
+          analytics.track({
+            name: 'preview_video_loaded',
+            properties: { component: 'featured_work' },
+          });
+        }}
+        onError={() => {
+          setHasError(true);
+          analytics.track({
+            name: 'preview_video_error',
+            properties: { component: 'featured_work' },
+          });
+        }}
       >
         {shouldLoad ? <source src={src} type="video/mp4" /> : null}
       </video>
@@ -154,7 +167,7 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                 <div className="bg-muted relative aspect-[4/5] w-full overflow-hidden md:aspect-[3/4]">
                   {isVideo ? (
                     <FeaturedVideoPreview
-                      src={item.mediaUrl}
+                      src={item.previewMediaUrl ?? item.mediaUrl}
                       poster={item.thumbnailUrl}
                       isPriority={idx === 0}
                     />

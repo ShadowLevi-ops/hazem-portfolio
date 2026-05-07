@@ -10,6 +10,7 @@ import { AnimatedHero } from '@/components/animated-hero';
 import { FeaturedWork } from '@/components/featured-work';
 import dynamic from 'next/dynamic';
 import { analytics } from '@/lib/analytics';
+import Link from 'next/link';
 import {
   PortfolioFilterSkeleton,
   VerticalCarouselSkeleton,
@@ -181,9 +182,9 @@ export default function Home() {
     []
   );
   const services = [
-    'Videography',
-    'Photography',
-    'Social Media',
+    { label: 'Videography', href: '/services/videography' },
+    { label: 'Photography', href: '/services/photography' },
+    { label: 'Social Media', href: '/services/social-media' },
     'Branding',
     'Websites',
     'Creative Strategy',
@@ -344,16 +345,52 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
             {services.map(service => (
               <motion.div
-                key={service}
+                key={typeof service === 'string' ? service : service.label}
                 className="surface-card hover:border-primary/40 rounded-md px-3 py-3 text-center text-xs tracking-[0.14em] uppercase transition-all duration-300 hover:-translate-y-0.5 md:px-4 md:py-4 md:text-sm"
                 whileHover={{ y: -2, scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
               >
-                {service}
+                {typeof service === 'string' ? (
+                  service
+                ) : (
+                  <Link href={service.href} className="inline-block w-full">
+                    {service.label}
+                  </Link>
+                )}
               </motion.div>
             ))}
           </div>
         </motion.div>
+      </section>
+
+      <section className="section-shell pb-8 md:pb-12">
+        <div className="mx-auto max-w-5xl">
+          <div className="surface-card rounded-xl p-5 md:p-6">
+            <p className="text-muted-foreground text-[11px] tracking-[0.14em] uppercase">
+              Case Studies
+            </p>
+            <div className="mt-3 flex flex-wrap gap-3 text-sm">
+              <Link
+                href="/case-studies/puma-solewhat-launch"
+                className="underline underline-offset-4"
+              >
+                PUMA x SOLEWHAT Launch
+              </Link>
+              <Link
+                href="/case-studies/tottenham-cny-campaign"
+                className="underline underline-offset-4"
+              >
+                Tottenham CNY Campaign
+              </Link>
+              <Link
+                href="/case-studies/scuba-recap"
+                className="underline underline-offset-4"
+              >
+                Scuba Recap
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Industries Section */}
@@ -551,6 +588,18 @@ export default function Home() {
             >
               hazem@noveltyventures.uk
             </a>
+            <Link
+              href="/book"
+              className="text-muted-foreground hover:text-primary rounded-full border border-white/20 px-3.5 py-1.5 text-[11px] tracking-[0.12em] uppercase backdrop-blur-sm transition-colors duration-300 md:px-4 md:py-2 md:text-sm"
+              onClick={() =>
+                analytics.track({
+                  name: 'cta_book_click',
+                  properties: { channel: 'book_page' },
+                })
+              }
+            >
+              Brief Form
+            </Link>
           </motion.div>
         </motion.div>
       </section>

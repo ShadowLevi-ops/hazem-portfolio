@@ -4,7 +4,17 @@ export interface PortfolioItem {
   id: string;
   title: string;
   type: PortfolioItemType;
-  mediaUrl: string; // URL to the image or video file
+  /**
+   * Canonical/full-quality media URL.
+   * - For video: used by the fullscreen lightbox player.
+   * - For photos: used directly.
+   */
+  mediaUrl: string;
+  /**
+   * Optional lightweight preview video for grid/featured cards.
+   * When omitted, components fall back to `mediaUrl`.
+   */
+  previewMediaUrl?: string;
   thumbnailUrl?: string; // Optional thumbnail for videos or galleries
   client?: string; // Optional client name
   projectDetails?: string; // Added project details/category (optional)

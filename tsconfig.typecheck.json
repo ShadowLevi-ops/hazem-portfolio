@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx", "next-env.d.ts"],
+  "exclude": [
+    "node_modules",
+    ".next",
+    "out",
+    "playwright-report",
+    "test-results"
+  ]
+}

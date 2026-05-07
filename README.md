@@ -18,6 +18,7 @@ A professional photography and videography portfolio website built with modern w
 ## 🛠️ Tech Stack
 
 ### Core Technologies
+
 - **Framework**: Next.js 15 with App Router
 - **Language**: TypeScript with strict mode
 - **Styling**: Tailwind CSS v4 with custom design system
@@ -26,6 +27,7 @@ A professional photography and videography portfolio website built with modern w
 - **Icons**: Lucide React
 
 ### Development Tools
+
 - **Linting**: ESLint with Next.js, TypeScript, and accessibility rules
 - **Formatting**: Prettier with Tailwind CSS plugin
 - **Pre-commit**: Husky with lint-staged
@@ -34,6 +36,7 @@ A professional photography and videography portfolio website built with modern w
 - **Performance**: Lighthouse CI
 
 ### Deployment & Monitoring
+
 - **Static Export**: Optimized for CDN deployment
 - **Analytics**: Custom analytics with Web Vitals tracking
 - **Error Monitoring**: Built-in error boundary and tracking
@@ -42,11 +45,13 @@ A professional photography and videography portfolio website built with modern w
 ## 📦 Installation
 
 ### Prerequisites
+
 - Node.js 18.x or 20.x
 - npm or yarn package manager
 - Git
 
 ### Setup
+
 ```bash
 # Clone the repository
 git clone https://github.com/your-username/hazem-portfolio.git
@@ -111,6 +116,7 @@ npm run lighthouse       # Run Lighthouse performance audit
 ## 🧪 Testing
 
 ### Unit Testing
+
 - **Framework**: Jest with React Testing Library
 - **Coverage**: 70% minimum threshold
 - **Location**: `src/**/*.test.{ts,tsx}`
@@ -120,6 +126,7 @@ npm run test:coverage
 ```
 
 ### E2E Testing
+
 - **Framework**: Playwright
 - **Browsers**: Chromium, Firefox, WebKit
 - **Location**: `tests/e2e/**/*.spec.ts`
@@ -129,27 +136,51 @@ npm run test:e2e
 ```
 
 ### Accessibility Testing
+
 - **Automated**: ESLint jsx-a11y rules
 - **Manual**: Keyboard navigation, screen reader testing
 - **Tools**: Lighthouse accessibility audit
 
 ## 🚀 Deployment
 
-### Static Export
-The project is configured for static export, making it suitable for CDN deployment:
+### Vercel / Next.js Runtime
+
+This project is configured for standard Next.js deployments (recommended on Vercel).
 
 ```bash
 npm run build
-# Output in 'out' directory
+npm run start
 ```
 
 ### Deployment Platforms
-- **Netlify**: `netlify.toml` configuration included
-- **Vercel**: Zero-config deployment
-- **GitHub Pages**: Static export compatible
-- **AWS S3 + CloudFront**: CDN-optimized
+
+- **Vercel**: Recommended
+- **Netlify**: Supported
+
+## 🎞️ Video previews (fast hover/load)
+
+To keep the grid smooth, the site supports optional lightweight preview videos for cards while keeping fullscreen/lightbox playback on the original full-quality files.
+
+- **Full video**: `mediaUrl`
+- **Preview video**: `previewMediaUrl` (optional)
+
+### Generate previews
+
+Requires `ffmpeg` installed and available on your PATH.
+
+```bash
+npm run videos:previews
+```
+
+This generates preview MP4s into `public/videos/previews/`.
+Then, set `previewMediaUrl` in `src/data/portfolio-items.ts` like:
+
+```ts
+previewMediaUrl: '/videos/previews/11.mp4';
+```
 
 ### Environment Variables
+
 Create `.env.local` for local development:
 
 ```bash
@@ -166,11 +197,13 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com
 ## 📊 Performance
 
 ### Core Web Vitals
+
 - **LCP**: < 2.5s (Largest Contentful Paint)
 - **FID**: < 100ms (First Input Delay)
 - **CLS**: < 0.1 (Cumulative Layout Shift)
 
 ### Optimization Features
+
 - Image optimization with Next.js Image component
 - Code splitting with dynamic imports
 - Font optimization with `next/font`
@@ -178,6 +211,7 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com
 - Service worker for caching (PWA)
 
 ### Monitoring
+
 - Web Vitals tracking with analytics
 - Error monitoring and reporting
 - Performance observer for detailed metrics
@@ -186,12 +220,14 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com
 ## 🔒 Security
 
 ### Security Headers
+
 - X-Frame-Options: DENY
 - X-Content-Type-Options: nosniff
 - Referrer-Policy: strict-origin-when-cross-origin
 - Permissions-Policy: Restricted camera, microphone, geolocation
 
 ### Best Practices
+
 - Content Security Policy ready
 - No exposed sensitive data
 - Secure cookie handling
@@ -201,16 +237,19 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com
 ## 🎨 Design System
 
 ### Colors
+
 - Primary: Custom color palette with dark/light mode support
 - Semantic: Success, warning, error, info colors
 - Neutral: Gray scale for text and backgrounds
 
 ### Typography
+
 - Font stack: System fonts with fallbacks
 - Scale: Responsive typography scale
 - Weights: 400 (normal), 500 (medium), 600 (semibold), 700 (bold)
 
 ### Components
+
 - Design tokens in `globals.css`
 - Consistent spacing and sizing
 - Accessibility-first approach
@@ -226,6 +265,7 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com
 6. Submit a pull request
 
 ### Commit Convention
+
 ```
 type(scope): description
 
@@ -245,12 +285,14 @@ This project is private and proprietary. All rights reserved.
 ## 🤝 Support
 
 For support or questions:
+
 - Email: hazem@noveltyventures.uk
 - WhatsApp: [+44 1737 67247](https://wa.me/0173767247)
 
 ## 🏗️ Architecture
 
 ### Project Structure
+
 ```
 src/
 ├── app/                 # Next.js app directory
@@ -272,6 +314,7 @@ public/
 ```
 
 ### Key Design Decisions
+
 - **App Router**: Using Next.js 13+ App Router for better performance
 - **TypeScript Strict**: Enabled for better type safety
 - **Static Export**: For optimal CDN performance

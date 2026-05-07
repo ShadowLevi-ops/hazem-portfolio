@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Expand } from 'lucide-react';
 import type { PortfolioItem } from '@/types/portfolio';
@@ -12,6 +12,7 @@ import {
   projectCardClient,
   projectCardIndustry,
 } from '@/lib/project-card-labels';
+import { analytics } from '@/lib/analytics';
 
 // Auto-playing video component with Intersection Observer
 function VideoAutoPlay({
@@ -106,9 +107,17 @@ function VideoAutoPlay({
         poster={poster}
         onError={() => {
           setHasError(true);
+          analytics.track({
+            name: 'preview_video_error',
+            properties: { component: 'vertical_carousel' },
+          });
         }}
         onLoadedData={() => {
           setIsVideoReady(true);
+          analytics.track({
+            name: 'preview_video_loaded',
+            properties: { component: 'vertical_carousel' },
+          });
         }}
       >
         {shouldLoad && <source src={src} type="video/mp4" />}
@@ -138,6 +147,18 @@ export function VerticalCarousel({
   const showLabels = process.env.NEXT_PUBLIC_SHOW_LABELS === 'true';
   const reduceMotion = useReducedMotion();
   const [lowDataMode, setLowDataMode] = useState(false);
+  const PAGE_SIZE = 12;
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  useEffect(() => {
+    // Reset pagination when the filter / items list changes.
+    setVisibleCount(PAGE_SIZE);
+  }, [items]);
+
+  const visibleItems = useMemo(
+    () => items.slice(0, Math.min(visibleCount, items.length)),
+    [items, visibleCount]
+  );
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(pointer: coarse)');
@@ -204,7 +225,7 @@ export function VerticalCarousel({
         >
           {/* Fewer columns = larger cards; info uses compact type */}
           <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-7 lg:grid-cols-3 lg:gap-8">
-            {items.map((item, index) => {
+            {visibleItems.map((item, index) => {
               const isVideo =
                 item.type === 'videography' || item.type === 'film';
               const isOngoingProject =
@@ -276,7 +297,7 @@ export function VerticalCarousel({
 
                     {isVideo && (
                       <VideoAutoPlay
-                        src={item.mediaUrl}
+                        src={item.previewMediaUrl ?? item.mediaUrl}
                         poster={item.thumbnailUrl || '/images/p1.PNG'}
                         lowDataMode={lowDataMode}
                         {...(item.captionsUrl && {
@@ -396,6 +417,31 @@ export function VerticalCarousel({
               );
             })}
           </div>
+
+          {visibleCount < items.length ? (
+            <div className="mt-10 flex justify-center">
+              <button
+                type="button"
+                className="surface-card hover:border-primary/40 text-foreground rounded-full border border-white/15 px-5 py-2 text-[11px] font-semibold tracking-[0.14em] uppercase transition-all duration-300 hover:-translate-y-0.5"
+                onClick={() => {
+                  const nextCount = Math.min(
+                    items.length,
+                    visibleCount + PAGE_SIZE
+                  );
+                  setVisibleCount(nextCount);
+                  analytics.track({
+                    name: 'portfolio_load_more',
+                    properties: {
+                      next_count: nextCount,
+                      total: items.length,
+                    },
+                  });
+                }}
+              >
+                Load more
+              </button>
+            </div>
+          ) : null}
         </motion.div>
       </div>
     </div>

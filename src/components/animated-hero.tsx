@@ -1,10 +1,12 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { MapPin, Mail } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { analytics } from '@/lib/analytics';
 
 export function AnimatedHero() {
   const scrollToSection = (sectionId: string) => {
@@ -16,11 +18,46 @@ export function AnimatedHero() {
 
   const ref = useRef(null);
   const controls = useAnimation();
+  const [shouldPlayHeroVideo, setShouldPlayHeroVideo] = useState(false);
+
+  const lowDataMode = useMemo(() => {
+    if (typeof window === 'undefined') return false;
+    const connection = (
+      navigator as Navigator & {
+        connection?: { saveData?: boolean; effectiveType?: string };
+      }
+    ).connection;
+    const saveData = Boolean(connection?.saveData);
+    const effectiveType = connection?.effectiveType || '';
+    const isSlow = effectiveType.includes('2g') || effectiveType === '3g';
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    return saveData || isSlow || reducedMotion;
+  }, []);
 
   useEffect(() => {
     // Start animation immediately for faster perceived loading
     controls.start('visible');
   }, [controls]);
+
+  useEffect(() => {
+    if (lowDataMode) return;
+
+    // Poster-first: start video after first paint/idle-ish.
+    const start = () => {
+      setShouldPlayHeroVideo(true);
+      analytics.track({ name: 'hero_video_enable' });
+    };
+
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      requestIdleCallback(start, { timeout: 1200 });
+      return;
+    }
+
+    const timeout = globalThis.setTimeout(start, 350);
+    return () => globalThis.clearTimeout(timeout);
+  }, [lowDataMode]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -54,18 +91,29 @@ export function AnimatedHero() {
     >
       {/* Hero background video (Asset 11 style treatment) */}
       <div className="absolute inset-0 -z-20">
-        <video
-          className="h-full w-full object-cover object-center"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster="/videos/VT-11.png"
-          aria-hidden="true"
-        >
-          <source src="/videos/11.mp4" type="video/mp4" />
-        </video>
+        {shouldPlayHeroVideo ? (
+          <video
+            className="h-full w-full object-cover object-center"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="/videos/VT-11.png"
+            aria-hidden="true"
+          >
+            <source src="/videos/11.mp4" type="video/mp4" />
+          </video>
+        ) : (
+          <Image
+            src="/videos/VT-11.png"
+            alt=""
+            fill
+            priority
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+        )}
       </div>
       {/* Contrast overlays for text legibility */}
       <div className="absolute inset-0 -z-10 bg-black/52" />
@@ -158,17 +206,38 @@ export function AnimatedHero() {
             <Button
               size="lg"
               className="from-primary to-primary/80 hover:to-primary rounded-full border border-transparent bg-gradient-to-r px-7 tracking-[0.12em] uppercase shadow-md shadow-black/10 hover:-translate-y-0.5"
-              onClick={() => scrollToSection('portfolio')}
+              asChild
             >
-              View Portfolio
+              <Link
+                href="#portfolio"
+                onClick={() => {
+                  scrollToSection('portfolio');
+                  analytics.track({
+                    name: 'hero_cta_click',
+                    properties: { cta: 'portfolio' },
+                  });
+                }}
+              >
+                View Portfolio
+              </Link>
             </Button>
             <Button
               size="lg"
               variant="outline"
               className="bg-background/50 hover:bg-background/70 rounded-full border-white/20 px-7 tracking-[0.12em] uppercase backdrop-blur-sm"
-              onClick={() => scrollToSection('contact')}
+              asChild
             >
-              Start a Project
+              <Link
+                href="/book"
+                onClick={() =>
+                  analytics.track({
+                    name: 'hero_cta_click',
+                    properties: { cta: 'book' },
+                  })
+                }
+              >
+                Start a Project
+              </Link>
             </Button>
           </motion.div>
         </motion.div>
