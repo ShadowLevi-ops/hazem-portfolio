@@ -136,21 +136,25 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                 className="surface-card group hover:border-primary/45 relative flex w-full flex-col overflow-hidden rounded-md border border-transparent text-left transition-colors duration-300"
               >
                 <div className="bg-muted relative aspect-[4/5] w-full overflow-hidden md:aspect-[3/4]">
+                  <Image
+                    src={src}
+                    alt={displayTitle}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    loading={idx < 3 ? 'eager' : 'lazy'}
+                    priority={idx < 2}
+                    quality={idx < 3 ? 70 : 55}
+                    placeholder="blur"
+                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                  />
                   {isVideo ? (
                     <FeaturedVideoPreview
                       src={item.previewMediaUrl ?? item.mediaUrl}
                       poster={item.thumbnailUrl}
-                      isPriority={idx === 0}
+                      isPriority={idx < 3}
                     />
-                  ) : (
-                    <Image
-                      src={src}
-                      alt={displayTitle}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  )}
+                  ) : null}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                   <div className="absolute top-2 right-2 left-2 flex items-start justify-between gap-1 md:top-4 md:right-4 md:left-4 md:gap-2">
                     <motion.h3

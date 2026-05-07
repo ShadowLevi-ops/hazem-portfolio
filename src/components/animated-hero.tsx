@@ -43,20 +43,9 @@ export function AnimatedHero() {
 
   useEffect(() => {
     if (lowDataMode) return;
-
-    // Poster-first: start video after first paint/idle-ish.
-    const start = () => {
-      setShouldPlayHeroVideo(true);
-      analytics.track({ name: 'hero_video_enable' });
-    };
-
-    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-      requestIdleCallback(start, { timeout: 1200 });
-      return;
-    }
-
-    const timeout = globalThis.setTimeout(start, 350);
-    return () => globalThis.clearTimeout(timeout);
+    // Start immediately on capable connections for snappier hero motion.
+    setShouldPlayHeroVideo(true);
+    analytics.track({ name: 'hero_video_enable' });
   }, [lowDataMode]);
 
   const containerVariants = {

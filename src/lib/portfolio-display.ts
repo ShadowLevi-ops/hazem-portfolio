@@ -11,6 +11,15 @@ const TYPE_LABEL: Record<PortfolioItem['type'], string> = {
   film: 'Film',
 };
 
+const HIGHLIGHT_CASE_STUDIES: Record<string, string> = {
+  'video-16':
+    'PUMA x SOLEWHAT launch: modular capture and edit flow built for rapid social deployment, combining hero moments with platform-native cutdowns for longer campaign shelf life.',
+  'video-14':
+    'Tottenham CNY campaign: culturally tuned storytelling delivered under tight timelines while preserving global brand consistency across social placements.',
+  'video-10':
+    'Scuba recap: long-form destination footage restructured into retention-focused short edits with clear narrative progression and reusable campaign snippets.',
+};
+
 /** Data-entry placeholders — hide from portfolio info copy */
 const PLACEHOLDER_PROJECT_DETAILS = new Set([
   'project category',
@@ -121,9 +130,13 @@ export function lightboxCaptionDescription(item: PortfolioItem): string {
   const lines: string[] = [];
   const brief = lightboxProjectBrief(item);
   const extendedBrief = lightboxExtendedBrief(item, brief);
+  const highlightCaseStudy = HIGHLIGHT_CASE_STUDIES[item.id];
 
   lines.push(`Project Brief · ${brief}`);
   lines.push(`Extended Brief · ${extendedBrief}`);
+  if (highlightCaseStudy) {
+    lines.push(`Case Study · ${highlightCaseStudy}`);
+  }
 
   if (item.client?.trim()) {
     lines.push(`Client · ${item.client.trim()}`);
