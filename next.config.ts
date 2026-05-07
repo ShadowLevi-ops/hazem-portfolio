@@ -41,7 +41,6 @@ const nextConfig: NextConfig = {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
           },
-          { key: 'Content-Encoding', value: 'identity' },
         ],
       },
       {
@@ -63,15 +62,6 @@ const nextConfig: NextConfig = {
         fs: false,
       };
     }
-
-    // Preserve video quality - don't compress video files
-    config.module.rules.push({
-      test: /\.(mp4|webm|ogg)$/,
-      type: 'asset/resource',
-      generator: {
-        filename: 'videos/[name][ext]',
-      },
-    });
 
     return config;
   },
