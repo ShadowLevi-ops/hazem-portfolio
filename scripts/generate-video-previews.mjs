@@ -1,5 +1,5 @@
 import { spawn } from 'node:child_process';
-import { readdir } from 'node:fs/promises';
+import { mkdir, readdir } from 'node:fs/promises';
 import { join, extname, basename } from 'node:path';
 
 const SOURCE_DIR = join(process.cwd(), 'public', 'videos');
@@ -30,10 +30,7 @@ async function main() {
   }
 
   // Create output folder (ffmpeg will fail if it doesn't exist).
-  await run('node', [
-    '-e',
-    `require('fs').mkdirSync(${JSON.stringify(OUT_DIR)}, { recursive: true })`,
-  ]);
+  await mkdir(OUT_DIR, { recursive: true });
 
   // Preview encoding targets:
   // - fast to load, good enough for hover previews

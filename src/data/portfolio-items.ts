@@ -218,7 +218,7 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'Phuket Travellogue Shorts',
     type: 'videography',
     mediaUrl: '/videos/11.mp4',
-    thumbnailUrl: '/videos/VT-11.png',
+    thumbnailUrl: '/videos/VT-11.jpg',
     projectDetails: 'Creative Video',
   },
   {

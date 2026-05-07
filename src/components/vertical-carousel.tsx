@@ -16,11 +16,13 @@ import {
 // Auto-playing video component with Intersection Observer
 function VideoAutoPlay({
   src,
+  fallbackSrc,
   poster,
   captionsUrl,
   lowDataMode,
 }: {
   src: string;
+  fallbackSrc: string;
   poster?: string;
   captionsUrl?: string;
   lowDataMode: boolean;
@@ -112,6 +114,9 @@ function VideoAutoPlay({
         }}
       >
         {shouldLoad && <source src={src} type="video/mp4" />}
+        {shouldLoad && src !== fallbackSrc ? (
+          <source src={fallbackSrc} type="video/mp4" />
+        ) : null}
         {captionsUrl && (
           <track
             kind="captions"
@@ -207,6 +212,13 @@ export function VerticalCarousel({
             {items.map((item, index) => {
               const isVideo =
                 item.type === 'videography' || item.type === 'film';
+              const fallbackVideoSrc = item.mediaUrl;
+              const inferredPreviewSrc = fallbackVideoSrc.replace(
+                '/videos/',
+                '/videos/previews/'
+              );
+              const previewVideoSrc =
+                item.previewMediaUrl ?? inferredPreviewSrc;
               const isOngoingProject =
                 item.projectDetails === 'ONGOING PROJECT';
               const displayTitle = portfolioDisplayTitle(item);
@@ -276,7 +288,8 @@ export function VerticalCarousel({
 
                     {isVideo && (
                       <VideoAutoPlay
-                        src={item.previewMediaUrl ?? item.mediaUrl}
+                        src={previewVideoSrc}
+                        fallbackSrc={fallbackVideoSrc}
                         poster={item.thumbnailUrl || '/images/p1.PNG'}
                         lowDataMode={lowDataMode}
                         {...(item.captionsUrl && {

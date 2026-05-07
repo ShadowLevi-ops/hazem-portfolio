@@ -88,14 +88,14 @@ export function AnimatedHero() {
             loop
             playsInline
             preload="metadata"
-            poster="/videos/VT-11.png"
+            poster="/videos/VT-11.jpg"
             aria-hidden="true"
           >
             <source src="/videos/11.mp4" type="video/mp4" />
           </video>
         ) : (
           <Image
-            src="/videos/VT-11.png"
+            src="/videos/VT-11.jpg"
             alt=""
             fill
             priority
@@ -160,8 +160,8 @@ export function AnimatedHero() {
             >
               GiltMedia is a Kuala Lumpur studio for brands, agencies, and
               visionaries who want culturally tuned visual work—from campaign
-              films and social-first edits to photography that feels premium and
-              built to perform.
+              films and social-first edits that feels premium and built to
+              perform.
             </motion.p>
           </motion.div>
 

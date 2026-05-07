@@ -19,10 +19,12 @@ type FeaturedWorkProps = {
 
 function FeaturedVideoPreview({
   src,
+  fallbackSrc,
   poster,
   isPriority,
 }: {
   src: string;
+  fallbackSrc: string;
   poster: string | undefined;
   isPriority: boolean;
 }) {
@@ -80,6 +82,9 @@ function FeaturedVideoPreview({
         onError={() => setHasError(true)}
       >
         {shouldLoad ? <source src={src} type="video/mp4" /> : null}
+        {shouldLoad && src !== fallbackSrc ? (
+          <source src={fallbackSrc} type="video/mp4" />
+        ) : null}
       </video>
     </div>
   );
@@ -113,6 +118,12 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
         <div className="grid gap-4 md:grid-cols-3 md:gap-5">
           {items.map((item, idx) => {
             const isVideo = item.type === 'videography' || item.type === 'film';
+            const fallbackVideoSrc = item.mediaUrl;
+            const inferredPreviewSrc = fallbackVideoSrc.replace(
+              '/videos/',
+              '/videos/previews/'
+            );
+            const previewVideoSrc = item.previewMediaUrl ?? inferredPreviewSrc;
             const src = isVideo
               ? item.thumbnailUrl || item.mediaUrl
               : item.mediaUrl;
@@ -150,7 +161,8 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                   />
                   {isVideo ? (
                     <FeaturedVideoPreview
-                      src={item.previewMediaUrl ?? item.mediaUrl}
+                      src={previewVideoSrc}
+                      fallbackSrc={fallbackVideoSrc}
                       poster={item.thumbnailUrl}
                       isPriority={idx < 3}
                     />
