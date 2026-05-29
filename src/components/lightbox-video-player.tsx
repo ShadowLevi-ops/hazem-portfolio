@@ -50,7 +50,7 @@ export function LightboxVideoPlayer({
       playsInline
       loop
       preload="auto"
-      className="lightbox-video-player max-h-[min(78vh,920px)] w-auto max-w-[min(96vw,1400px)] bg-black"
+      className="lightbox-video-player w-auto max-w-[min(96vw,1400px)] bg-black"
     />
   );
 }

@@ -136,7 +136,7 @@ function PortfolioLightboxSlideFooter({ slide }: { slide: Slide }) {
   );
 
   return (
-    <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-20 mx-auto w-full max-w-4xl px-3 pb-3 sm:px-4 md:px-6 md:pb-5">
+    <div className="lightbox-portfolio-footer w-full max-w-4xl shrink-0 px-3 sm:px-4">
       <div
         className="rounded-lg border border-white/15 bg-black/82 px-3 py-2.5 text-left text-white shadow-lg backdrop-blur-md sm:px-4 sm:py-3"
         data-lightbox-caption=""
@@ -152,37 +152,41 @@ function PortfolioLightboxSlideFooter({ slide }: { slide: Slide }) {
           </p>
         ) : null}
 
-        {caseStudyRow ? (
-          <div className="border-primary/30 bg-primary/10 mt-3 rounded-md border px-3 py-2.5 sm:px-3.5 sm:py-3">
-            <p className="text-primary/90 text-[10px] tracking-[0.12em] uppercase">
-              Case Study
-            </p>
-            <p className="mt-1.5 text-xs leading-relaxed text-white/95 sm:text-sm">
-              {caseStudyRow.value}
-            </p>
-          </div>
-        ) : null}
-
-        {detailRows.length > 0 ? (
-          <div className="mt-3 grid gap-2 sm:grid-cols-2">
-            {detailRows.map(row => (
-              <div
-                key={row.id}
-                className={`rounded-md border border-white/10 bg-black/40 px-2.5 py-2 sm:px-3 sm:py-2.5 ${
-                  row.label.toLowerCase() === 'project brief' ||
-                  row.label.toLowerCase() === 'extended brief'
-                    ? 'sm:col-span-2'
-                    : ''
-                }`}
-              >
-                <p className="text-[9px] tracking-[0.1em] text-white/60 uppercase sm:text-[10px]">
-                  {row.label}
+        {caseStudyRow || detailRows.length > 0 ? (
+          <div className="lightbox-portfolio-footer-details mt-3 space-y-3">
+            {caseStudyRow ? (
+              <div className="border-primary/30 bg-primary/10 rounded-md border px-3 py-2.5 sm:px-3.5 sm:py-3">
+                <p className="text-primary/90 text-[10px] tracking-[0.12em] uppercase">
+                  Case Study
                 </p>
-                <p className="mt-1 text-[11px] leading-relaxed text-white/95 sm:text-xs">
-                  {row.value}
+                <p className="mt-1.5 text-xs leading-relaxed text-white/95 sm:text-sm">
+                  {caseStudyRow.value}
                 </p>
               </div>
-            ))}
+            ) : null}
+
+            {detailRows.length > 0 ? (
+              <div className="grid gap-2 sm:grid-cols-2">
+                {detailRows.map(row => (
+                  <div
+                    key={row.id}
+                    className={`rounded-md border border-white/10 bg-black/40 px-2.5 py-2 sm:px-3 sm:py-2.5 ${
+                      row.label.toLowerCase() === 'project brief' ||
+                      row.label.toLowerCase() === 'extended brief'
+                        ? 'sm:col-span-2'
+                        : ''
+                    }`}
+                  >
+                    <p className="text-[9px] tracking-[0.1em] text-white/60 uppercase sm:text-[10px]">
+                      {row.label}
+                    </p>
+                    <p className="mt-1 text-[11px] leading-relaxed text-white/95 sm:text-xs">
+                      {row.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </div>
         ) : null}
       </div>
@@ -475,7 +479,23 @@ export default function Home() {
         slides={allSlides as Slide[]}
         carousel={{ preload: 2 }}
         animation={{ fade: 260, swipe: 320 }}
+        styles={{
+          slide: {
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            overflowY: 'auto',
+            gap: '0.75rem',
+            paddingTop: '3rem',
+            paddingBottom: '1rem',
+          },
+        }}
         render={{
+          slideContainer: ({ children }) => (
+            <div className="flex min-h-0 w-full flex-1 items-center justify-center">
+              {children}
+            </div>
+          ),
           slide: ({ slide, offset }) => {
             const portfolioSlide = slide as PortfolioSlide;
             if (

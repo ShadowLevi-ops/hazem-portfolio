@@ -382,6 +382,13 @@ video::-webkit-media-controls {
   display: block;
   margin: 0 auto;
   background: #000;
+  max-height: min(calc(100dvh - 14rem), 920px);
 }
 
-/* Lightbox caption overlay is rendered via render.slideFooter in page.tsx */
+.lightbox-portfolio-footer-details {
+  max-height: min(28vh, 240px);
+  overflow-y: auto;
+  padding-right: 0.125rem;
+}
+
+/* Lightbox caption sits below footage via render.slideFooter in page.tsx */
