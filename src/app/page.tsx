@@ -6,7 +6,6 @@ import type { Slide } from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AnimatedHero } from '@/components/animated-hero';
-import { FeaturedWork } from '@/components/featured-work';
 import { CaseStudiesSection } from '@/components/case-studies-section';
 import { LightboxVideoPlayer } from '@/components/lightbox-video-player';
 import dynamic from 'next/dynamic';
@@ -36,12 +35,6 @@ type PortfolioVideoSlide = {
 };
 
 type PortfolioSlide = Slide | PortfolioVideoSlide;
-
-const FEATURED_PROJECT_IDS: readonly string[] = [
-  'video-16',
-  'video-14',
-  'video-10',
-];
 
 const getItemSortTimestamp = (item: PortfolioItem): number => {
   const idMatch = item.id.match(/-(\d+)$/);
@@ -206,13 +199,6 @@ export default function Home() {
     []
   );
 
-  const featuredItems = useMemo(
-    () =>
-      FEATURED_PROJECT_IDS.map(id =>
-        portfolioItems.find(item => item.id === id)
-      ).filter((item): item is PortfolioItem => Boolean(item)),
-    []
-  );
   const services = [
     { label: 'Videography', href: '/services/videography' },
     { label: 'Photography', href: '/services/photography' },
@@ -316,22 +302,6 @@ export default function Home() {
     analytics.track({ name: 'lightbox_open', properties: { index } });
   }, []);
 
-  const openPortfolioItem = useCallback(
-    (item: PortfolioItem) => {
-      const isVideo = item.type === 'videography' || item.type === 'film';
-      const slideIndex = isVideo
-        ? videoItems.findIndex(v => v.id === item.id)
-        : videoItems.length + photographyItems.findIndex(p => p.id === item.id);
-      if (slideIndex < 0) return;
-      openLightbox(slideIndex);
-      analytics.track({
-        name: 'featured_work_click',
-        properties: { id: item.id },
-      });
-    },
-    [videoItems, photographyItems, openLightbox]
-  );
-
   return (
     <ErrorBoundary>
       {/* Skip to content link for accessibility */}
@@ -344,9 +314,7 @@ export default function Home() {
 
       <AnimatedHero />
 
-      {featuredItems.length > 0 ? (
-        <FeaturedWork items={featuredItems} onSelect={openPortfolioItem} />
-      ) : null}
+      <CaseStudiesSection />
 
       {/* Services Section */}
       <section id="services" className="section-shell pb-16 md:pb-24">
@@ -386,8 +354,6 @@ export default function Home() {
           </div>
         </motion.div>
       </section>
-
-      <CaseStudiesSection />
 
       {/* Industries Section */}
       <section id="industries" className="section-shell pb-16 md:pb-24">

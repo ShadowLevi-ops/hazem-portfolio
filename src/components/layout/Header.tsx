@@ -15,7 +15,7 @@ import {
 import { cn } from '@/lib/utils';
 
 const SECTION_IDS = [
-  'featured',
+  'case-studies',
   'portfolio',
   'services',
   'industries',
@@ -29,7 +29,7 @@ const NAV_GROUPS: {
   {
     label: 'Work',
     items: [
-      { id: 'featured', label: 'Featured' },
+      { id: 'case-studies', label: 'Case studies' },
       { id: 'portfolio', label: 'Portfolio' },
     ],
   },
