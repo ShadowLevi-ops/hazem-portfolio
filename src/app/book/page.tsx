@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import { BookFormClient } from '@/components/book-form-client';
 
 export const metadata: Metadata = {
@@ -9,8 +11,16 @@ export const metadata: Metadata = {
 
 export default function BookPage() {
   return (
-    <main className="section-shell section-block">
+    <main className="section-shell pt-6 pb-16 md:pt-8 md:pb-24">
       <section className="mx-auto max-w-4xl">
+        <Link
+          href="/"
+          className="text-muted-foreground hover:text-foreground -mt-1 mb-6 inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.14em] uppercase transition-colors md:mb-8"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" aria-hidden />
+          Back
+        </Link>
+
         <div className="section-header">
           <p className="section-kicker">Bookings</p>
           <h1 className="section-title">Start Your Project</h1>
