@@ -50,13 +50,8 @@ export function VerticalCarousel({
         effectiveType.includes('2g') || effectiveType === '3g';
       const prefersReducedMotion = Boolean(reduceMotion);
 
-      // Mobile/coarse pointers and reduced-motion devices get poster-first cards.
-      return (
-        saveData ||
-        isSlowConnection ||
-        mediaQuery.matches ||
-        prefersReducedMotion
-      );
+      // Only disable inline previews on slow connections or reduced motion.
+      return saveData || isSlowConnection || prefersReducedMotion;
     };
 
     const updateMode = () => setLowDataMode(shouldUseLowDataMode());

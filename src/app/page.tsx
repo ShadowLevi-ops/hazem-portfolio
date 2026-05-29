@@ -2,13 +2,13 @@
 
 import React, { useState, useMemo, useCallback, Suspense } from 'react';
 import { portfolioItems } from '@/data/portfolio-items';
-import Video from 'yet-another-react-lightbox/plugins/video';
 import type { Slide } from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AnimatedHero } from '@/components/animated-hero';
 import { FeaturedWork } from '@/components/featured-work';
 import { CaseStudiesSection } from '@/components/case-studies-section';
+import { LightboxVideoPlayer } from '@/components/lightbox-video-player';
 import dynamic from 'next/dynamic';
 import { analytics } from '@/lib/analytics';
 import Link from 'next/link';
@@ -24,6 +24,18 @@ import {
   lightboxCaptionDescription,
   portfolioDisplayTitle,
 } from '@/lib/portfolio-display';
+
+type PortfolioVideoSlide = {
+  type: 'video';
+  sources: Array<{ src: string; type: string }>;
+  poster?: string;
+  width?: number;
+  height?: number;
+  title?: string;
+  description?: string;
+};
+
+type PortfolioSlide = Slide | PortfolioVideoSlide;
 
 const FEATURED_PROJECT_IDS: readonly string[] = [
   'video-16',
@@ -271,7 +283,7 @@ export default function Home() {
   }, [portfolioItemsVisible]);
 
   // Memoized slides array
-  const allSlides: Slide[] = useMemo(
+  const allSlides: PortfolioSlide[] = useMemo(
     () => [
       ...videoItems.map(item => ({
         type: 'video' as const,
@@ -284,16 +296,9 @@ export default function Home() {
         title: portfolioDisplayTitle(item),
         description: lightboxCaptionDescription(item),
         poster: item.thumbnailUrl || '/videos/VT-1.webp',
-        // Horizontal 16:9 fills wide lightbox; vertical reels stay 9:16
         ...(isHorizontalVideoItem(item)
           ? { width: 1920, height: 1080 }
           : { width: 1080, height: 1920 }),
-        controls: true,
-        autoPlay: true,
-        loop: true,
-        muted: true,
-        playsInline: true,
-        preload: 'auto' as const,
       })),
       ...photographyItems.map(item => ({
         src: item.mediaUrl,
@@ -501,18 +506,31 @@ export default function Home() {
           analytics.track({ name: 'lightbox_close' });
         }}
         index={lightboxIndex}
-        slides={allSlides}
-        plugins={[Video]}
+        slides={allSlides as Slide[]}
         carousel={{ preload: 2 }}
         animation={{ fade: 260, swipe: 320 }}
-        video={{
-          autoPlay: true,
-          controls: true,
-          playsInline: true,
-          preload: 'auto',
-          muted: true,
-        }}
         render={{
+          slide: ({ slide, offset }) => {
+            const portfolioSlide = slide as PortfolioSlide;
+            if (
+              !('type' in portfolioSlide) ||
+              portfolioSlide.type !== 'video' ||
+              offset !== 0
+            ) {
+              return undefined;
+            }
+
+            const src = portfolioSlide.sources[0]?.src;
+            if (!src) return undefined;
+
+            return (
+              <LightboxVideoPlayer
+                src={src}
+                poster={portfolioSlide.poster}
+                isActive={lightboxOpen && offset === 0}
+              />
+            );
+          },
           slideFooter: ({ slide }) => (
             <PortfolioLightboxSlideFooter slide={slide} />
           ),

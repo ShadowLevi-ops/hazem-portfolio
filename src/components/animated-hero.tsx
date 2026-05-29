@@ -17,6 +17,7 @@ export function AnimatedHero() {
   };
 
   const ref = useRef(null);
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
   const controls = useAnimation();
   const [shouldPlayHeroVideo, setShouldPlayHeroVideo] = useState(false);
 
@@ -47,6 +48,16 @@ export function AnimatedHero() {
     setShouldPlayHeroVideo(true);
     analytics.track({ name: 'hero_video_enable' });
   }, [lowDataMode]);
+
+  useEffect(() => {
+    if (!shouldPlayHeroVideo) return;
+    const video = heroVideoRef.current;
+    if (!video) return;
+    video.load();
+    void video.play().catch(() => {
+      // Poster remains visible if autoplay is blocked.
+    });
+  }, [shouldPlayHeroVideo]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -82,6 +93,7 @@ export function AnimatedHero() {
       <div className="absolute inset-0 -z-20">
         {shouldPlayHeroVideo ? (
           <video
+            ref={heroVideoRef}
             className="h-full w-full object-cover object-center"
             src="/videos/11.mp4"
             autoPlay

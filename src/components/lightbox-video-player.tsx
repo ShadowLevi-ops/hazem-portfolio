@@ -1,0 +1,57 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
+
+type LightboxVideoPlayerProps = {
+  src: string;
+  poster: string | undefined;
+  isActive: boolean;
+};
+
+export function LightboxVideoPlayer({
+  src,
+  poster,
+  isActive,
+}: LightboxVideoPlayerProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (!isActive) {
+      video.pause();
+      return;
+    }
+
+    video.load();
+    const play = () => {
+      void video.play().catch(() => {
+        // User can press play via native controls if autoplay is blocked.
+      });
+    };
+
+    video.addEventListener('canplay', play);
+    play();
+
+    return () => {
+      video.removeEventListener('canplay', play);
+      video.pause();
+    };
+  }, [src, isActive]);
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      poster={poster}
+      controls
+      autoPlay
+      muted
+      playsInline
+      loop
+      preload="auto"
+      className="lightbox-video-player max-h-[min(78vh,920px)] w-auto max-w-[min(96vw,1400px)] bg-black"
+    />
+  );
+}

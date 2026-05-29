@@ -378,16 +378,9 @@ video::-webkit-media-controls {
   -webkit-filter: none;
 }
 
-/* Lightbox video sizing — keep native player visible and playable */
-.yarl__slide_video,
-.yarl__slide_video video {
-  max-height: min(78vh, 920px);
-  max-width: min(96vw, 1400px);
-  width: auto;
-  height: auto;
-}
-
-.yarl__slide_video video {
+.lightbox-video-player {
+  display: block;
+  margin: 0 auto;
   background: #000;
 }
 

@@ -21,17 +21,23 @@ export function PortfolioVideoPreview({
 }: PortfolioVideoPreviewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [activeSrc, setActiveSrc] = useState<string | null>(eager ? src : null);
-  const [isReady, setIsReady] = useState(false);
-  const [hasError, setHasError] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(eager);
+  const [currentSrc, setCurrentSrc] = useState(src);
 
   useEffect(() => {
-    if (eager) return;
+    setCurrentSrc(src);
+  }, [src]);
+
+  useEffect(() => {
+    if (eager) {
+      setShouldLoad(true);
+      return;
+    }
 
     const container = containerRef.current;
     if (!container) return;
 
-    const startLoad = () => setActiveSrc(current => current ?? src);
+    const startLoad = () => setShouldLoad(true);
     container.addEventListener('mouseenter', startLoad);
     container.addEventListener('touchstart', startLoad, { passive: true });
 
@@ -45,17 +51,14 @@ export function PortfolioVideoPreview({
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
-          const video = videoRef.current;
-          if (!video) return;
-
           if (entry.isIntersecting) {
-            setActiveSrc(current => current ?? src);
+            setShouldLoad(true);
           } else {
-            video.pause();
+            videoRef.current?.pause();
           }
         });
       },
-      { threshold: 0.35, rootMargin: '80px' }
+      { threshold: 0.2, rootMargin: '120px' }
     );
 
     observer.observe(container);
@@ -65,59 +68,48 @@ export function PortfolioVideoPreview({
       container.removeEventListener('mouseenter', startLoad);
       container.removeEventListener('touchstart', startLoad);
     };
-  }, [eager, observeVisibility, src]);
+  }, [eager, observeVisibility]);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !activeSrc) return;
+    if (!video || !shouldLoad) return;
 
-    setIsReady(false);
-    setHasError(false);
-    video.src = activeSrc;
-    video.load();
-
-    const playWhenReady = () => {
-      setIsReady(true);
+    const play = () => {
       void video.play().catch(() => {
-        // Autoplay may be blocked on some mobile browsers.
+        // Autoplay may be blocked; poster remains visible underneath.
       });
     };
 
-    video.addEventListener('canplay', playWhenReady);
-    video.addEventListener('loadeddata', playWhenReady);
+    video.addEventListener('loadeddata', play);
+    video.addEventListener('canplay', play);
+    play();
 
     return () => {
-      video.removeEventListener('canplay', playWhenReady);
-      video.removeEventListener('loadeddata', playWhenReady);
-      video.pause();
+      video.removeEventListener('loadeddata', play);
+      video.removeEventListener('canplay', play);
     };
-  }, [activeSrc]);
+  }, [shouldLoad, currentSrc]);
 
-  const handleError = () => {
-    if (activeSrc === src && fallbackSrc !== src) {
-      setActiveSrc(fallbackSrc);
-      return;
-    }
-    setHasError(true);
-  };
-
-  if (hasError) return null;
+  if (!shouldLoad) return null;
 
   return (
-    <div ref={containerRef} className={`absolute inset-0 ${className}`}>
+    <div ref={containerRef} className={`absolute inset-0 z-[1] ${className}`}>
       <video
         ref={videoRef}
-        className={`pointer-events-none h-full w-full object-cover transition-opacity duration-300 ${
-          isReady ? 'opacity-100' : 'opacity-0'
-        }`}
+        src={currentSrc}
+        className="pointer-events-none h-full w-full object-cover"
         autoPlay
         muted
         loop
         playsInline
-        preload={activeSrc ? 'auto' : 'none'}
+        preload="auto"
         poster={poster}
         aria-hidden="true"
-        onError={handleError}
+        onError={() => {
+          if (currentSrc !== fallbackSrc) {
+            setCurrentSrc(fallbackSrc);
+          }
+        }}
       />
     </div>
   );
