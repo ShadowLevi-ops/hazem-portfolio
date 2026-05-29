@@ -378,4 +378,17 @@ video::-webkit-media-controls {
   -webkit-filter: none;
 }
 
-/* Lightbox caption overlay is rendered via render.slideContainer in page.tsx (on media, not letterboxing). */
+/* Lightbox video sizing — keep native player visible and playable */
+.yarl__slide_video,
+.yarl__slide_video video {
+  max-height: min(78vh, 920px);
+  max-width: min(96vw, 1400px);
+  width: auto;
+  height: auto;
+}
+
+.yarl__slide_video video {
+  background: #000;
+}
+
+/* Lightbox caption overlay is rendered via render.slideFooter in page.tsx */

@@ -8,6 +8,7 @@ import 'yet-another-react-lightbox/styles.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AnimatedHero } from '@/components/animated-hero';
 import { FeaturedWork } from '@/components/featured-work';
+import { CaseStudiesSection } from '@/components/case-studies-section';
 import dynamic from 'next/dynamic';
 import { analytics } from '@/lib/analytics';
 import Link from 'next/link';
@@ -122,38 +123,57 @@ function PortfolioLightboxSlideFooter({ slide }: { slide: Slide }) {
       value: line,
     };
   });
+  const caseStudyRow = infoRows.find(
+    row => row.label.toLowerCase() === 'case study'
+  );
+  const detailRows = infoRows.filter(
+    row => row.label.toLowerCase() !== 'case study'
+  );
 
   return (
-    <div className="pointer-events-none mx-auto w-full max-w-4xl px-3 pb-3 sm:px-4 md:px-6 md:pb-4">
+    <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-20 mx-auto w-full max-w-4xl px-3 pb-3 sm:px-4 md:px-6 md:pb-5">
       <div
-        className="rounded-md border border-white/15 bg-black/78 px-2.5 py-1.5 text-left text-white shadow-sm backdrop-blur-sm md:px-3 md:py-2"
+        className="rounded-lg border border-white/15 bg-black/82 px-3 py-2.5 text-left text-white shadow-lg backdrop-blur-md sm:px-4 sm:py-3"
         data-lightbox-caption=""
       >
         {hasTitle ? (
-          <p className="text-[10px] leading-snug font-semibold tracking-[-0.01em] sm:text-[12px] md:text-[13px]">
+          <p className="text-sm leading-snug font-semibold tracking-[-0.01em] sm:text-base">
             {title}
           </p>
         ) : null}
         {typeLine ? (
-          <p className="mt-0.5 text-[8px] font-medium tracking-[0.08em] text-white/85 uppercase sm:text-[9px]">
+          <p className="mt-1 text-[10px] font-medium tracking-[0.1em] text-white/75 uppercase sm:text-[11px]">
             {typeLine}
           </p>
         ) : null}
-        {infoRows.length > 0 ? (
-          <div className="mt-1.5 grid gap-1.5 sm:grid-cols-2 md:grid-cols-3">
-            {infoRows.map(row => (
+
+        {caseStudyRow ? (
+          <div className="border-primary/30 bg-primary/10 mt-3 rounded-md border px-3 py-2.5 sm:px-3.5 sm:py-3">
+            <p className="text-primary/90 text-[10px] tracking-[0.12em] uppercase">
+              Case Study
+            </p>
+            <p className="mt-1.5 text-xs leading-relaxed text-white/95 sm:text-sm">
+              {caseStudyRow.value}
+            </p>
+          </div>
+        ) : null}
+
+        {detailRows.length > 0 ? (
+          <div className="mt-3 grid gap-2 sm:grid-cols-2">
+            {detailRows.map(row => (
               <div
                 key={row.id}
-                className={`rounded border border-white/10 bg-black/35 px-2 py-1 md:px-2 md:py-1.5 ${
-                  row.label.toLowerCase() === 'project brief'
-                    ? 'sm:col-span-2 md:col-span-3'
+                className={`rounded-md border border-white/10 bg-black/40 px-2.5 py-2 sm:px-3 sm:py-2.5 ${
+                  row.label.toLowerCase() === 'project brief' ||
+                  row.label.toLowerCase() === 'extended brief'
+                    ? 'sm:col-span-2'
                     : ''
                 }`}
               >
-                <p className="text-[7px] tracking-[0.08em] text-white/65 uppercase sm:text-[8px]">
+                <p className="text-[9px] tracking-[0.1em] text-white/60 uppercase sm:text-[10px]">
                   {row.label}
                 </p>
-                <p className="mt-0.5 text-[8px] leading-relaxed break-words text-white sm:text-[9px] md:text-[10px]">
+                <p className="mt-1 text-[11px] leading-relaxed text-white/95 sm:text-xs">
                   {row.value}
                 </p>
               </div>
@@ -273,8 +293,7 @@ export default function Home() {
         loop: true,
         muted: true,
         playsInline: true,
-        preload: 'metadata' as const,
-        controlsList: 'nodownload noplaybackrate' as const,
+        preload: 'auto' as const,
       })),
       ...photographyItems.map(item => ({
         src: item.mediaUrl,
@@ -363,35 +382,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <section className="section-shell pb-8 md:pb-12">
-        <div className="mx-auto max-w-5xl">
-          <div className="surface-card rounded-xl p-5 md:p-6">
-            <p className="text-muted-foreground text-[11px] tracking-[0.14em] uppercase">
-              Case Studies
-            </p>
-            <div className="mt-3 flex flex-wrap gap-3 text-sm">
-              <Link
-                href="/case-studies/puma-solewhat-launch"
-                className="underline underline-offset-4"
-              >
-                PUMA x SOLEWHAT Launch
-              </Link>
-              <Link
-                href="/case-studies/tottenham-cny-campaign"
-                className="underline underline-offset-4"
-              >
-                Tottenham CNY Campaign
-              </Link>
-              <Link
-                href="/case-studies/scuba-recap"
-                className="underline underline-offset-4"
-              >
-                Scuba Recap
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CaseStudiesSection />
 
       {/* Industries Section */}
       <section id="industries" className="section-shell pb-16 md:pb-24">
@@ -514,16 +505,16 @@ export default function Home() {
         plugins={[Video]}
         carousel={{ preload: 2 }}
         animation={{ fade: 260, swipe: 320 }}
+        video={{
+          autoPlay: true,
+          controls: true,
+          playsInline: true,
+          preload: 'auto',
+          muted: true,
+        }}
         render={{
-          slideContainer: ({ slide, children }) => (
-            <div className="mx-auto flex h-full w-full max-w-[1400px] flex-col">
-              <div className="flex min-h-0 flex-1 items-center justify-center overflow-hidden">
-                {children}
-              </div>
-              <div className="w-full shrink-0 pb-2 sm:pb-3">
-                <PortfolioLightboxSlideFooter slide={slide} />
-              </div>
-            </div>
+          slideFooter: ({ slide }) => (
+            <PortfolioLightboxSlideFooter slide={slide} />
           ),
         }}
         on={{

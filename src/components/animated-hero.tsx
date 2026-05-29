@@ -83,16 +83,15 @@ export function AnimatedHero() {
         {shouldPlayHeroVideo ? (
           <video
             className="h-full w-full object-cover object-center"
+            src="/videos/11.mp4"
             autoPlay
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
             poster="/videos/VT-11.webp"
             aria-hidden="true"
-          >
-            <source src="/videos/11.mp4" type="video/mp4" />
-          </video>
+          />
         ) : (
           <Image
             src="/videos/VT-11.webp"

@@ -4,6 +4,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { Layout } from '@/components/layout/Layout';
 import './globals.css';
 import { cn } from '@/lib/utils';
+import { SITE_URL } from '@/lib/site';
 
 const montserrat = Montserrat({
   variable: '--font-serif',
@@ -18,6 +19,8 @@ const inter = Inter({
   weight: ['300', '400', '500', '600'],
   display: 'swap',
 });
+
+const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION;
 
 export const metadata: Metadata = {
   title: {
@@ -47,9 +50,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || 'https://hazem-designs.vercel.app'
-  ),
+  metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: '/',
   },
@@ -96,6 +97,9 @@ export const metadata: Metadata = {
     apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
   },
   manifest: '/manifest.json',
+  ...(googleSiteVerification
+    ? { verification: { google: googleSiteVerification } }
+    : {}),
 };
 
 export const viewport: Viewport = {
@@ -115,7 +119,7 @@ const structuredData = {
   '@type': 'Person',
   name: 'Hazem',
   jobTitle: 'Photographer & Videographer',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://hazem-designs.vercel.app',
+  url: SITE_URL,
   image: '/images/profile.jpg', // Add your profile image
   email: 'hazem@noveltyventures.uk',
   telephone: '+44 1737 67247',

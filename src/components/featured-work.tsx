@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
 import type { PortfolioItem } from '@/types/portfolio';
 import { portfolioDisplayTitle } from '@/lib/portfolio-display';
 import {
@@ -11,84 +10,12 @@ import {
   projectCardClient,
   projectCardIndustry,
 } from '@/lib/project-card-labels';
+import { PortfolioVideoPreview } from '@/components/portfolio-video-preview';
 
 type FeaturedWorkProps = {
   items: PortfolioItem[];
   onSelect: (item: PortfolioItem) => void;
 };
-
-function FeaturedVideoPreview({
-  src,
-  fallbackSrc,
-  poster,
-  isPriority,
-}: {
-  src: string;
-  fallbackSrc: string;
-  poster: string | undefined;
-  isPriority: boolean;
-}) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [shouldLoad, setShouldLoad] = useState(isPriority);
-  const [isReady, setIsReady] = useState(false);
-  const [hasError, setHasError] = useState(false);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const connection = (
-      navigator as Navigator & {
-        connection?: { saveData?: boolean; effectiveType?: string };
-      }
-    ).connection;
-    const lowDataMode =
-      Boolean(connection?.saveData) ||
-      connection?.effectiveType?.includes('2g') ||
-      connection?.effectiveType === '3g';
-
-    if (lowDataMode) return;
-
-    const eagerLoadOnHover = () => setShouldLoad(true);
-    container.addEventListener('mouseenter', eagerLoadOnHover);
-    container.addEventListener('touchstart', eagerLoadOnHover, {
-      passive: true,
-    });
-
-    return () => {
-      container.removeEventListener('mouseenter', eagerLoadOnHover);
-      container.removeEventListener('touchstart', eagerLoadOnHover);
-    };
-  }, []);
-
-  if (hasError) return null;
-
-  return (
-    <div ref={containerRef} className="absolute inset-0">
-      <video
-        ref={videoRef}
-        className={`h-full w-full object-cover transition-all duration-500 group-hover:scale-[1.03] ${
-          isReady ? 'opacity-100' : 'opacity-0'
-        }`}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload={shouldLoad ? 'metadata' : 'none'}
-        poster={poster}
-        aria-hidden="true"
-        onLoadedData={() => setIsReady(true)}
-        onError={() => setHasError(true)}
-      >
-        {shouldLoad ? <source src={src} type="video/mp4" /> : null}
-        {shouldLoad && src !== fallbackSrc ? (
-          <source src={fallbackSrc} type="video/mp4" />
-        ) : null}
-      </video>
-    </div>
-  );
-}
 
 export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
   return (
@@ -134,9 +61,10 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
             const displayTitle = portfolioDisplayTitle(item);
 
             return (
-              <motion.button
+              <motion.div
                 key={item.id}
-                type="button"
+                role="button"
+                tabIndex={0}
                 initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -144,7 +72,13 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                 whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.99 }}
                 onClick={() => onSelect(item)}
-                className="surface-card group hover:border-primary/45 relative flex w-full flex-col overflow-hidden rounded-md border border-transparent text-left transition-colors duration-300"
+                onKeyDown={event => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    onSelect(item);
+                  }
+                }}
+                className="surface-card group hover:border-primary/45 focus-visible:ring-primary/60 relative flex w-full cursor-pointer flex-col overflow-hidden rounded-md border border-transparent text-left transition-colors duration-300 outline-none focus-visible:ring-2"
               >
                 <div className="bg-muted relative aspect-[4/5] w-full overflow-hidden md:aspect-[3/4]">
                   <Image
@@ -160,11 +94,12 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                     blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                   />
                   {isVideo ? (
-                    <FeaturedVideoPreview
+                    <PortfolioVideoPreview
                       src={previewVideoSrc}
                       fallbackSrc={fallbackVideoSrc}
                       poster={item.thumbnailUrl}
-                      isPriority={idx < 3}
+                      eager={idx < 3}
+                      className="transition-all duration-500 group-hover:scale-[1.03]"
                     />
                   ) : null}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
@@ -221,7 +156,7 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                     </motion.div>
                   </div>
                 </div>
-              </motion.button>
+              </motion.div>
             );
           })}
         </div>

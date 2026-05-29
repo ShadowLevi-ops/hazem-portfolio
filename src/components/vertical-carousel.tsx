@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Expand } from 'lucide-react';
 import type { PortfolioItem } from '@/types/portfolio';
@@ -12,124 +12,7 @@ import {
   projectCardClient,
   projectCardIndustry,
 } from '@/lib/project-card-labels';
-
-// Auto-playing video component with Intersection Observer
-function VideoAutoPlay({
-  src,
-  fallbackSrc,
-  poster,
-  captionsUrl,
-  lowDataMode,
-}: {
-  src: string;
-  fallbackSrc: string;
-  poster?: string;
-  captionsUrl?: string;
-  lowDataMode: boolean;
-}) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isInViewRef = useRef(false);
-  const [shouldLoad, setShouldLoad] = useState(false);
-  const [isVideoReady, setIsVideoReady] = useState(false);
-  const [hasError, setHasError] = useState(false);
-
-  useEffect(() => {
-    if (lowDataMode) return;
-
-    const video = videoRef.current;
-    const container = containerRef.current;
-    if (!video || !container) return;
-
-    const playWhenReady = () => {
-      if (isInViewRef.current && video.readyState >= 2) {
-        setIsVideoReady(true);
-        video.play().catch(() => {
-          // Silently handle autoplay restrictions (e.g. some mobile browsers)
-        });
-      }
-    };
-
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          isInViewRef.current = entry.isIntersecting;
-          if (entry.isIntersecting) {
-            setShouldLoad(true);
-            // Play once video has loaded (handled by canplay listener)
-            playWhenReady();
-          } else {
-            video.pause();
-          }
-        });
-      },
-      {
-        threshold: 0.5,
-        rootMargin: '60px',
-      }
-    );
-
-    observer.observe(container);
-
-    video.addEventListener('canplay', playWhenReady);
-    video.addEventListener('loadeddata', playWhenReady);
-
-    const eagerLoadOnHover = () => setShouldLoad(true);
-    container.addEventListener('mouseenter', eagerLoadOnHover);
-    container.addEventListener('touchstart', eagerLoadOnHover, {
-      passive: true,
-    });
-
-    return () => {
-      observer.disconnect();
-      video.removeEventListener('canplay', playWhenReady);
-      video.removeEventListener('loadeddata', playWhenReady);
-      container.removeEventListener('mouseenter', eagerLoadOnHover);
-      container.removeEventListener('touchstart', eagerLoadOnHover);
-      video.pause();
-    };
-  }, [src, lowDataMode]);
-
-  if (hasError || lowDataMode) return null;
-
-  return (
-    <div ref={containerRef} className="absolute inset-0">
-      <video
-        ref={videoRef}
-        className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-300 ease-out ${
-          isVideoReady ? 'opacity-100' : 'opacity-0'
-        }`}
-        autoPlay
-        muted
-        loop
-        playsInline
-        controls={false}
-        preload={shouldLoad ? 'metadata' : 'none'}
-        poster={poster}
-        onError={() => {
-          setHasError(true);
-        }}
-        onLoadedData={() => {
-          setIsVideoReady(true);
-        }}
-      >
-        {shouldLoad && <source src={src} type="video/mp4" />}
-        {shouldLoad && src !== fallbackSrc ? (
-          <source src={fallbackSrc} type="video/mp4" />
-        ) : null}
-        {captionsUrl && (
-          <track
-            kind="captions"
-            srcLang="en"
-            src={captionsUrl}
-            label="English captions"
-            default
-          />
-        )}
-      </video>
-    </div>
-  );
-}
+import { PortfolioVideoPreview } from '@/components/portfolio-video-preview';
 
 interface VerticalCarouselProps {
   items: PortfolioItem[];
@@ -286,15 +169,12 @@ export function VerticalCarousel({
                       blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                     />
 
-                    {isVideo && (
-                      <VideoAutoPlay
+                    {!lowDataMode && isVideo && (
+                      <PortfolioVideoPreview
                         src={previewVideoSrc}
                         fallbackSrc={fallbackVideoSrc}
                         poster={item.thumbnailUrl || '/images/p1.webp'}
-                        lowDataMode={lowDataMode}
-                        {...(item.captionsUrl && {
-                          captionsUrl: item.captionsUrl,
-                        })}
+                        observeVisibility
                       />
                     )}
                   </div>

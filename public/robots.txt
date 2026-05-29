@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://your-domain.com/sitemap.xml
+Sitemap: https://www.giltmedia.work/sitemap.xml
 
 # Specific rules for different bots
 User-agent: Googlebot
