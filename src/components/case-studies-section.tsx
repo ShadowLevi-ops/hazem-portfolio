@@ -59,7 +59,7 @@ export function CaseStudiesSection() {
             Case studies
           </h2>
           <p className="section-copy">
-            Campaign films and social-first edits—tap a card to read the full
+            Campaign films and social-first edits. Tap a card to read the full
             case study or watch the piece in the portfolio below.
           </p>
         </div>
