@@ -43,7 +43,7 @@ export function CaseStudiesSection() {
   return (
     <section
       id="case-studies"
-      className="section-shell border-border/40 border-b pb-16 md:pb-24"
+      className="section-shell border-border/40 border-b pt-12 pb-16 md:pt-16 md:pb-24"
       aria-labelledby="case-studies-heading"
     >
       <motion.div
