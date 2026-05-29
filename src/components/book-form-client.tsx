@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, type FormEvent } from 'react';
 import { analytics } from '@/lib/analytics';
+import { buildProjectBriefMessage, getWhatsAppUrl } from '@/lib/whatsapp';
 
 const BUDGET_OPTIONS = [
   'Under $1,000',
@@ -10,25 +11,44 @@ const BUDGET_OPTIONS = [
   '$7,000+',
 ];
 
+const QUICK_WHATSAPP_MESSAGE = "Hi Hazem, I'd like to discuss a new project.";
+
 export function BookFormClient() {
   useEffect(() => {
     analytics.track({ name: 'book_form_view' });
   }, []);
 
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const message = buildProjectBriefMessage({
+      name: String(formData.get('name') ?? ''),
+      brand: String(formData.get('brand') ?? ''),
+      budget: String(formData.get('budget') ?? ''),
+      timeline: String(formData.get('timeline') ?? ''),
+      brief: String(formData.get('brief') ?? ''),
+    });
+
+    analytics.track({
+      name: 'book_form_submit',
+      properties: { channel: 'whatsapp' },
+    });
+
+    window.open(getWhatsAppUrl(message), '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="grid gap-6 md:grid-cols-[1.15fr_0.85fr]">
       <form
         className="surface-card space-y-4 rounded-xl p-5 md:p-6"
-        action="mailto:hazem@noveltyventures.uk"
-        method="post"
-        encType="text/plain"
-        onSubmit={() =>
-          analytics.track({
-            name: 'book_form_submit',
-            properties: { channel: 'mailto' },
-          })
-        }
+        onSubmit={handleSubmit}
       >
+        <p className="text-muted-foreground text-sm leading-relaxed">
+          Fill in your project details and we&apos;ll open WhatsApp with
+          everything pre-filled — just tap send.
+        </p>
+
         <div className="grid gap-4 md:grid-cols-2">
           <label className="flex flex-col gap-1.5">
             <span className="text-muted-foreground text-xs tracking-[0.1em] uppercase">
@@ -108,7 +128,7 @@ export function BookFormClient() {
           type="submit"
           className="from-primary to-primary/80 text-primary-foreground hover:to-primary rounded-full border border-transparent bg-gradient-to-r px-6 py-2.5 text-xs font-semibold tracking-[0.13em] uppercase transition-all duration-300 hover:-translate-y-0.5"
         >
-          Send Inquiry
+          Send via WhatsApp
         </button>
       </form>
 
@@ -124,12 +144,10 @@ export function BookFormClient() {
         </div>
         <div className="surface-card rounded-xl p-5">
           <p className="text-muted-foreground text-[11px] tracking-[0.13em] uppercase">
-            Prefer WhatsApp?
+            Quick message
           </p>
           <a
-            href={`https://wa.me/60173767247?text=${encodeURIComponent(
-              `Hi Hazem, I'd like to discuss a new project.`
-            )}`}
+            href={getWhatsAppUrl(QUICK_WHATSAPP_MESSAGE)}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-2 inline-block text-sm underline underline-offset-4"
@@ -140,7 +158,7 @@ export function BookFormClient() {
               })
             }
           >
-            Open WhatsApp chat
+            Open WhatsApp without the form
           </a>
         </div>
         <div className="surface-card rounded-xl p-5">
