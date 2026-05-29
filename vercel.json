@@ -9,6 +9,18 @@
     },
     {
       "source": "/:path*",
+      "has": [{ "type": "host", "value": "hazemdesign.work" }],
+      "destination": "https://www.giltmedia.work/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.hazemdesign.work" }],
+      "destination": "https://www.giltmedia.work/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
       "has": [{ "type": "host", "value": "hazem-designs.vercel.app" }],
       "destination": "https://www.giltmedia.work/:path*",
       "permanent": true

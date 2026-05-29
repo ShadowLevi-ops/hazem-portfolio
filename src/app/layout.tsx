@@ -24,27 +24,26 @@ const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION;
 
 export const metadata: Metadata = {
   title: {
-    default: 'Hazem Designs Work - Professional Photography & Videography',
-    template: '%s | Hazem Designs',
+    default: 'GiltMedia | Social Campaign Film & Videography',
+    template: '%s | GiltMedia',
   },
   description:
-    'Professional photography, videography, and film portfolio showcasing creative visual storytelling. Specializing in portrait, commercial, and artistic photography with cutting-edge videography services.',
+    'GiltMedia produces social-first campaign films, brand videography, and content for sports, travel, and lifestyle brands. Based in Kuala Lumpur, Malaysia.',
   keywords: [
-    'photography',
+    'GiltMedia',
     'videography',
-    'film',
-    'portfolio',
-    'creative',
+    'social media content',
+    'campaign film',
+    'brand video',
+    'photography',
+    'Kuala Lumpur',
+    'Malaysia',
     'visual storytelling',
-    'commercial photography',
-    'portrait photography',
-    'artistic photography',
-    'video production',
-    'cinematography',
+    'content production',
   ],
   authors: [{ name: 'Hazem', url: 'mailto:hazem@noveltyventures.uk' }],
-  creator: 'Hazem',
-  publisher: 'Hazem Designs',
+  creator: 'GiltMedia',
+  publisher: 'GiltMedia',
   formatDetection: {
     email: false,
     address: false,
@@ -58,24 +57,24 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: '/',
-    title: 'Hazem Designs Work - Professional Photography & Videography',
+    title: 'GiltMedia | Social Campaign Film & Videography',
     description:
-      'Professional photography, videography, and film portfolio showcasing creative visual storytelling.',
-    siteName: 'Hazem Designs',
+      'Social-first campaign films, brand videography, and content production for sports, travel, and lifestyle brands.',
+    siteName: 'GiltMedia',
     images: [
       {
-        url: '/images/og-image.jpg', // Create this image
+        url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Hazem Designs - Professional Photography & Videography',
+        alt: 'GiltMedia — Social Campaign Film & Videography',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Hazem Designs Work - Professional Photography & Videography',
+    title: 'GiltMedia | Social Campaign Film & Videography',
     description:
-      'Professional photography, videography, and film portfolio showcasing creative visual storytelling.',
+      'Social-first campaign films, brand videography, and content production for sports, travel, and lifestyle brands.',
     images: ['/images/og-image.jpg'],
   },
   robots: {
@@ -116,31 +115,27 @@ export const viewport: Viewport = {
 // Structured Data
 const structuredData = {
   '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: 'Hazem',
-  jobTitle: 'Photographer & Videographer',
+  '@type': 'ProfessionalService',
+  name: 'GiltMedia',
   url: SITE_URL,
-  image: '/images/profile.jpg', // Add your profile image
+  image: '/images/profile.jpg',
   email: 'hazem@noveltyventures.uk',
-  telephone: '+44 1737 67247',
+  telephone: '+60173767247',
   address: {
     '@type': 'PostalAddress',
-    addressCountry: 'UK',
+    addressLocality: 'Kuala Lumpur',
+    addressCountry: 'MY',
   },
-  sameAs: [
-    // Add your social media profiles
-    'https://wa.me/0173767247',
-  ],
+  sameAs: ['https://wa.me/60173767247'],
+  description:
+    'Social-first campaign films, brand videography, and content production.',
+  areaServed: 'Malaysia',
   knowsAbout: [
-    'Photography',
     'Videography',
-    'Film Production',
+    'Social Media Content',
+    'Campaign Film',
     'Visual Storytelling',
   ],
-  hasOccupation: {
-    '@type': 'Occupation',
-    name: 'Professional Photographer and Videographer',
-  },
 };
 
 export default function RootLayout({

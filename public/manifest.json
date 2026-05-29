@@ -1,7 +1,7 @@
 {
-  "name": "Hazem Designs Work - Professional Photography & Videography",
-  "short_name": "Hazem Designs",
-  "description": "Professional photography, videography, and film portfolio showcasing creative visual storytelling.",
+  "name": "GiltMedia | Social Campaign Film & Videography",
+  "short_name": "GiltMedia",
+  "description": "Social-first campaign films, brand videography, and content production.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -26,7 +26,7 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["photography", "portfolio", "art"],
+  "categories": ["photography", "portfolio", "business"],
   "lang": "en",
   "dir": "ltr",
   "scope": "/",
@@ -36,14 +36,14 @@
       "sizes": "1280x720",
       "type": "image/jpeg",
       "form_factor": "wide",
-      "label": "Desktop view of Hazem Designs portfolio"
+      "label": "Desktop view of GiltMedia portfolio"
     },
     {
       "src": "/images/screenshot-mobile.jpg",
       "sizes": "375x667",
       "type": "image/jpeg",
       "form_factor": "narrow",
-      "label": "Mobile view of Hazem Designs portfolio"
+      "label": "Mobile view of GiltMedia portfolio"
     }
   ]
-} 
+}

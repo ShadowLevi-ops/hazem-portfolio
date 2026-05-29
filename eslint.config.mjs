@@ -51,10 +51,6 @@ const eslintConfig = [
       "jsx-a11y/role-supports-aria-props": "error",
     },
   },
-  {
-    files: ["**/__tests__/**/*", "**/*.{test,spec}.*"],
-    ...compat.extends("plugin:testing-library/react"),
-  },
 ];
 
 export default eslintConfig;
