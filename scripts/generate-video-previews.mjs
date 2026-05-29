@@ -33,10 +33,8 @@ async function main() {
   await mkdir(OUT_DIR, { recursive: true });
 
   // Preview encoding targets:
-  // - fast to load, good enough for hover previews
-  // - strip audio
-  // - cap resolution; keep aspect
-  // - frequent keyframes for snappy seeking
+  // - 1080p cap for sharp grid/hero previews on retina displays
+  // - strip audio; faststart for streaming
   for (const file of videos) {
     const inPath = join(SOURCE_DIR, file);
     const outName = `${basename(file, extname(file))}.mp4`;
@@ -50,15 +48,15 @@ async function main() {
       inPath,
       '-an',
       '-vf',
-      "scale='min(720,iw)':-2",
+      "scale='min(1920,iw)':-2",
       '-c:v',
       'libx264',
       '-profile:v',
-      'main',
+      'high',
       '-preset',
-      'veryfast',
+      'slow',
       '-crf',
-      '30',
+      '22',
       '-movflags',
       '+faststart',
       '-g',

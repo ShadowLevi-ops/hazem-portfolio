@@ -3,8 +3,10 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   attachTouchVideoUnlock,
+  isCoarsePointerDevice,
   pausePreviewVideo,
   playPreviewVideo,
+  shouldPreferStaticMedia,
 } from '@/lib/video-playback';
 
 type PortfolioVideoPreviewProps = {
@@ -31,12 +33,14 @@ export function PortfolioVideoPreview({
   const [currentSrc, setCurrentSrc] = useState(src);
 
   useEffect(() => {
-    attachTouchVideoUnlock();
-  }, []);
+    const useFullQuality =
+      !isCoarsePointerDevice() && !shouldPreferStaticMedia();
+    setCurrentSrc(useFullQuality ? fallbackSrc : src);
+  }, [src, fallbackSrc]);
 
   useEffect(() => {
-    setCurrentSrc(src);
-  }, [src]);
+    attachTouchVideoUnlock();
+  }, []);
 
   useEffect(() => {
     if (eager) {
@@ -129,8 +133,8 @@ export function PortfolioVideoPreview({
           poster={poster}
           aria-hidden="true"
           onError={() => {
-            if (currentSrc !== fallbackSrc) {
-              setCurrentSrc(fallbackSrc);
+            if (currentSrc !== src) {
+              setCurrentSrc(src);
             }
           }}
         />
