@@ -99,10 +99,11 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                       fallbackSrc={fallbackVideoSrc}
                       poster={item.thumbnailUrl}
                       eager={idx < 3}
+                      observeVisibility
                       className="transition-all duration-500 group-hover:scale-[1.03]"
                     />
                   ) : null}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                   <div className="absolute top-2 right-2 left-2 flex items-start justify-between gap-1 md:top-4 md:right-4 md:left-4 md:gap-2">
                     <motion.h3
                       initial={{ opacity: 0, y: 10 }}

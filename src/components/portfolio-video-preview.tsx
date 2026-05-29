@@ -90,27 +90,27 @@ export function PortfolioVideoPreview({
     };
   }, [shouldLoad, currentSrc]);
 
-  if (!shouldLoad) return null;
-
   return (
     <div ref={containerRef} className={`absolute inset-0 z-[1] ${className}`}>
-      <video
-        ref={videoRef}
-        src={currentSrc}
-        className="pointer-events-none h-full w-full object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        poster={poster}
-        aria-hidden="true"
-        onError={() => {
-          if (currentSrc !== fallbackSrc) {
-            setCurrentSrc(fallbackSrc);
-          }
-        }}
-      />
+      {shouldLoad ? (
+        <video
+          ref={videoRef}
+          src={currentSrc}
+          className="pointer-events-none h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster={poster}
+          aria-hidden="true"
+          onError={() => {
+            if (currentSrc !== fallbackSrc) {
+              setCurrentSrc(fallbackSrc);
+            }
+          }}
+        />
+      ) : null}
     </div>
   );
 }

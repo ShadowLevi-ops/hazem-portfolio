@@ -175,7 +175,7 @@ export function VerticalCarousel({
                   </div>
 
                   {/* Always-on bottom gradient for legibility */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/45 to-transparent" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/88 via-black/45 to-transparent" />
 
                   {/* Ongoing Project Overlay */}
                   {isOngoingProject && (
