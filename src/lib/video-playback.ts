@@ -1,6 +1,7 @@
+let activePreviewVideo: HTMLVideoElement | null = null;
+
 export function prepareVideoElement(video: HTMLVideoElement) {
   video.muted = true;
-  video.defaultMuted = true;
   video.playsInline = true;
   video.setAttribute('playsinline', '');
   video.setAttribute('webkit-playsinline', '');
@@ -14,6 +15,22 @@ export async function attemptVideoPlay(video: HTMLVideoElement) {
     return true;
   } catch {
     return false;
+  }
+}
+
+export async function playPreviewVideo(video: HTMLVideoElement) {
+  if (activePreviewVideo && activePreviewVideo !== video) {
+    activePreviewVideo.pause();
+  }
+
+  activePreviewVideo = video;
+  return attemptVideoPlay(video);
+}
+
+export function pausePreviewVideo(video: HTMLVideoElement) {
+  video.pause();
+  if (activePreviewVideo === video) {
+    activePreviewVideo = null;
   }
 }
 
@@ -45,11 +62,25 @@ export function attachTouchVideoUnlock() {
   touchUnlockAttached = true;
 
   const unlock = () => {
-    document.querySelectorAll('video').forEach(video => {
-      void attemptVideoPlay(video);
-    });
+    const visiblePreview = document.querySelector<HTMLVideoElement>(
+      'video[data-portfolio-preview="true"]:not([paused])'
+    );
+    const target =
+      visiblePreview ??
+      document.querySelector<HTMLVideoElement>(
+        'video[data-portfolio-preview="true"]'
+      );
+
+    if (target) {
+      void playPreviewVideo(target);
+    }
   };
 
   window.addEventListener('touchstart', unlock, { once: true, passive: true });
   window.addEventListener('click', unlock, { once: true });
+}
+
+export function getPreviewVideoSrc(mediaUrl: string, previewMediaUrl?: string) {
+  if (previewMediaUrl) return previewMediaUrl;
+  return mediaUrl.replace('/videos/', '/videos/previews/');
 }

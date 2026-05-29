@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { attemptVideoPlay } from '@/lib/video-playback';
 
 type LightboxVideoPlayerProps = {
   src: string;
@@ -26,9 +27,7 @@ export function LightboxVideoPlayer({
 
     video.load();
     const play = () => {
-      void video.play().catch(() => {
-        // User can press play via native controls if autoplay is blocked.
-      });
+      void attemptVideoPlay(video);
     };
 
     video.addEventListener('canplay', play);

@@ -13,7 +13,10 @@ import {
   projectCardIndustry,
 } from '@/lib/project-card-labels';
 import { PortfolioVideoPreview } from '@/components/portfolio-video-preview';
-import { shouldPreferStaticMedia } from '@/lib/video-playback';
+import {
+  getPreviewVideoSrc,
+  shouldPreferStaticMedia,
+} from '@/lib/video-playback';
 
 interface VerticalCarouselProps {
   items: PortfolioItem[];
@@ -43,10 +46,7 @@ export function VerticalCarousel({
         }
       ).connection;
 
-    const shouldUseLowDataMode = () => {
-      const prefersReducedMotion = Boolean(reduceMotion);
-      return shouldPreferStaticMedia() || prefersReducedMotion;
-    };
+    const shouldUseLowDataMode = () => shouldPreferStaticMedia();
 
     const updateMode = () => setLowDataMode(shouldUseLowDataMode());
     updateMode();
@@ -85,12 +85,10 @@ export function VerticalCarousel({
               const isVideo =
                 item.type === 'videography' || item.type === 'film';
               const fallbackVideoSrc = item.mediaUrl;
-              const inferredPreviewSrc = fallbackVideoSrc.replace(
-                '/videos/',
-                '/videos/previews/'
+              const previewVideoSrc = getPreviewVideoSrc(
+                fallbackVideoSrc,
+                item.previewMediaUrl
               );
-              const previewVideoSrc =
-                item.previewMediaUrl ?? inferredPreviewSrc;
               const isOngoingProject =
                 item.projectDetails === 'ONGOING PROJECT';
               const displayTitle = portfolioDisplayTitle(item);
@@ -158,14 +156,15 @@ export function VerticalCarousel({
                       blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                     />
 
-                    {!lowDataMode && isVideo && (
+                    {!lowDataMode && isVideo ? (
                       <PortfolioVideoPreview
                         src={previewVideoSrc}
                         fallbackSrc={fallbackVideoSrc}
                         poster={item.thumbnailUrl || '/images/p1.webp'}
                         observeVisibility
+                        eager={index < 2}
                       />
-                    )}
+                    ) : null}
                   </div>
 
                   {/* Always-on bottom gradient for legibility */}

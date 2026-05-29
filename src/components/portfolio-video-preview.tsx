@@ -1,7 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { attemptVideoPlay, attachTouchVideoUnlock } from '@/lib/video-playback';
+import {
+  attachTouchVideoUnlock,
+  pausePreviewVideo,
+  playPreviewVideo,
+} from '@/lib/video-playback';
 
 type PortfolioVideoPreviewProps = {
   src: string;
@@ -23,7 +27,7 @@ export function PortfolioVideoPreview({
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [shouldLoad, setShouldLoad] = useState(eager);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(eager);
   const [currentSrc, setCurrentSrc] = useState(src);
 
   useEffect(() => {
@@ -37,12 +41,17 @@ export function PortfolioVideoPreview({
   useEffect(() => {
     if (eager) {
       setShouldLoad(true);
+      setIsVisible(true);
     }
 
     const container = containerRef.current;
     if (!container) return;
 
-    const startLoad = () => setShouldLoad(true);
+    const startLoad = () => {
+      setShouldLoad(true);
+      setIsVisible(true);
+    };
+
     container.addEventListener('mouseenter', startLoad);
     container.addEventListener('touchstart', startLoad, { passive: true });
 
@@ -57,7 +66,7 @@ export function PortfolioVideoPreview({
       entries => {
         entries.forEach(entry => {
           const visible =
-            entry.isIntersecting && entry.intersectionRatio >= 0.35;
+            entry.isIntersecting && entry.intersectionRatio >= 0.12;
           setIsVisible(visible);
 
           if (visible) {
@@ -65,10 +74,12 @@ export function PortfolioVideoPreview({
             return;
           }
 
-          videoRef.current?.pause();
+          if (videoRef.current) {
+            pausePreviewVideo(videoRef.current);
+          }
         });
       },
-      { threshold: [0, 0.35, 0.6], rootMargin: '80px' }
+      { threshold: [0, 0.12, 0.35, 0.6], rootMargin: '160px 0px' }
     );
 
     observer.observe(container);
@@ -86,12 +97,12 @@ export function PortfolioVideoPreview({
 
     const shouldPlay = observeVisibility ? isVisible : true;
     if (!shouldPlay) {
-      video.pause();
+      pausePreviewVideo(video);
       return;
     }
 
     const play = () => {
-      void attemptVideoPlay(video);
+      void playPreviewVideo(video);
     };
 
     video.addEventListener('loadeddata', play);
@@ -103,6 +114,7 @@ export function PortfolioVideoPreview({
       video.removeEventListener('loadeddata', play);
       video.removeEventListener('canplay', play);
       video.removeEventListener('canplaythrough', play);
+      pausePreviewVideo(video);
     };
   }, [shouldLoad, currentSrc, isVisible, observeVisibility]);
 
@@ -111,13 +123,14 @@ export function PortfolioVideoPreview({
       {shouldLoad ? (
         <video
           ref={videoRef}
+          data-portfolio-preview="true"
           src={currentSrc}
           className="pointer-events-none h-full w-full object-cover"
           autoPlay
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           poster={poster}
           aria-hidden="true"
           onError={() => {

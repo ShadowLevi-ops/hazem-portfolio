@@ -15,7 +15,10 @@ import {
   projectCardTeaser,
 } from '@/lib/project-card-labels';
 import { PortfolioVideoPreview } from '@/components/portfolio-video-preview';
-import { isCoarsePointerDevice } from '@/lib/video-playback';
+import {
+  getPreviewVideoSrc,
+  isCoarsePointerDevice,
+} from '@/lib/video-playback';
 
 export function CaseStudiesSection() {
   const [isMobile, setIsMobile] = useState(false);
@@ -65,11 +68,10 @@ export function CaseStudiesSection() {
           {studies.map(({ href, item }, index) => {
             const isVideo = item.type === 'videography' || item.type === 'film';
             const fallbackVideoSrc = item.mediaUrl;
-            const inferredPreviewSrc = fallbackVideoSrc.replace(
-              '/videos/',
-              '/videos/previews/'
+            const previewVideoSrc = getPreviewVideoSrc(
+              fallbackVideoSrc,
+              item.previewMediaUrl
             );
-            const previewVideoSrc = item.previewMediaUrl ?? inferredPreviewSrc;
             const imageSrc = isVideo
               ? item.thumbnailUrl || item.mediaUrl
               : item.mediaUrl;
