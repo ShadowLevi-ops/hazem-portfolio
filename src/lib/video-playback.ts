@@ -1,5 +1,3 @@
-let activePreviewVideo: HTMLVideoElement | null = null;
-
 export function prepareVideoElement(video: HTMLVideoElement) {
   video.muted = true;
   video.playsInline = true;
@@ -19,19 +17,11 @@ export async function attemptVideoPlay(video: HTMLVideoElement) {
 }
 
 export async function playPreviewVideo(video: HTMLVideoElement) {
-  if (activePreviewVideo && activePreviewVideo !== video) {
-    activePreviewVideo.pause();
-  }
-
-  activePreviewVideo = video;
   return attemptVideoPlay(video);
 }
 
 export function pausePreviewVideo(video: HTMLVideoElement) {
   video.pause();
-  if (activePreviewVideo === video) {
-    activePreviewVideo = null;
-  }
 }
 
 export function shouldPreferStaticMedia() {
@@ -54,6 +44,11 @@ export function isCoarsePointerDevice() {
   return window.matchMedia('(pointer: coarse)').matches;
 }
 
+function isPreviewInViewport(video: HTMLVideoElement) {
+  const rect = video.getBoundingClientRect();
+  return rect.bottom > 0 && rect.top < window.innerHeight;
+}
+
 let touchUnlockAttached = false;
 
 export function attachTouchVideoUnlock() {
@@ -62,18 +57,15 @@ export function attachTouchVideoUnlock() {
   touchUnlockAttached = true;
 
   const unlock = () => {
-    const visiblePreview = document.querySelector<HTMLVideoElement>(
-      'video[data-portfolio-preview="true"]:not([paused])'
-    );
-    const target =
-      visiblePreview ??
-      document.querySelector<HTMLVideoElement>(
+    document
+      .querySelectorAll<HTMLVideoElement>(
         'video[data-portfolio-preview="true"]'
-      );
-
-    if (target) {
-      void playPreviewVideo(target);
-    }
+      )
+      .forEach(video => {
+        if (isPreviewInViewport(video)) {
+          void attemptVideoPlay(video);
+        }
+      });
   };
 
   window.addEventListener('touchstart', unlock, { once: true, passive: true });

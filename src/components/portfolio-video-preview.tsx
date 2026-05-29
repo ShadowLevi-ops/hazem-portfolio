@@ -27,7 +27,7 @@ export function PortfolioVideoPreview({
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [shouldLoad, setShouldLoad] = useState(eager);
-  const [isVisible, setIsVisible] = useState(eager);
+  const [isVisible, setIsVisible] = useState(false);
   const [currentSrc, setCurrentSrc] = useState(src);
 
   useEffect(() => {
@@ -41,16 +41,12 @@ export function PortfolioVideoPreview({
   useEffect(() => {
     if (eager) {
       setShouldLoad(true);
-      setIsVisible(true);
     }
 
     const container = containerRef.current;
     if (!container) return;
 
-    const startLoad = () => {
-      setShouldLoad(true);
-      setIsVisible(true);
-    };
+    const startLoad = () => setShouldLoad(true);
 
     container.addEventListener('mouseenter', startLoad);
     container.addEventListener('touchstart', startLoad, { passive: true });
@@ -66,7 +62,7 @@ export function PortfolioVideoPreview({
       entries => {
         entries.forEach(entry => {
           const visible =
-            entry.isIntersecting && entry.intersectionRatio >= 0.12;
+            entry.isIntersecting && entry.intersectionRatio >= 0.08;
           setIsVisible(visible);
 
           if (visible) {
@@ -79,7 +75,7 @@ export function PortfolioVideoPreview({
           }
         });
       },
-      { threshold: [0, 0.12, 0.35, 0.6], rootMargin: '160px 0px' }
+      { threshold: [0, 0.08, 0.2, 0.45], rootMargin: '200px 0px' }
     );
 
     observer.observe(container);
@@ -114,7 +110,6 @@ export function PortfolioVideoPreview({
       video.removeEventListener('loadeddata', play);
       video.removeEventListener('canplay', play);
       video.removeEventListener('canplaythrough', play);
-      pausePreviewVideo(video);
     };
   }, [shouldLoad, currentSrc, isVisible, observeVisibility]);
 
