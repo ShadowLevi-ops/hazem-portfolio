@@ -72,12 +72,12 @@ export function VerticalCarousel({
   return (
     <div className="relative mx-auto w-full max-w-7xl">
       {/* Refined container */}
-      <div className="surface-card relative overflow-hidden rounded-lg backdrop-blur-sm md:rounded-xl">
+      <div className="surface-card relative overflow-hidden rounded-lg md:rounded-xl">
         <motion.div
           initial={{ opacity: 0, transform: 'translate3d(0,0,0)' }}
           animate={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
           transition={{ duration: 0.4, ease: 'easeOut' }}
-          className="p-5 will-change-transform md:p-10"
+          className="p-5 md:p-10"
         >
           {/* Fewer columns = larger cards; info uses compact type */}
           <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-7 lg:grid-cols-3 lg:gap-8">
@@ -100,7 +100,7 @@ export function VerticalCarousel({
               return (
                 <motion.article
                   key={item.id}
-                  className="group border-border/30 focus-visible:ring-primary bg-card/25 hover:border-primary/35 hover:bg-card/40 relative aspect-[9/16] cursor-pointer overflow-hidden rounded-md border transition-all duration-300 will-change-transform outline-none focus-visible:ring-2 focus-visible:ring-offset-2 md:rounded-lg"
+                  className="group border-border/30 focus-visible:ring-primary bg-card/25 hover:border-primary/35 hover:bg-card/40 relative aspect-[9/16] cursor-pointer overflow-hidden rounded-md border transition-[border-color,background-color] duration-300 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 md:rounded-lg"
                   role="button"
                   aria-label={`View ${displayTitle} - ${item.type}`}
                   aria-describedby={`item-description-${item.id}`}
@@ -136,7 +136,7 @@ export function VerticalCarousel({
                   </span>
                   {/* Optimized image with optional video hover preview */}
                   <div
-                    className="relative h-full w-full will-change-transform"
+                    className="relative h-full w-full"
                     style={{ backgroundColor: item.dominantColor || '#0b0b0b' }}
                   >
                     <Image
@@ -147,7 +147,7 @@ export function VerticalCarousel({
                       }
                       alt={displayTitle}
                       fill
-                      className="object-cover transition-transform duration-200 ease-out will-change-transform group-hover:scale-105"
+                      className="object-cover transition-transform duration-200 ease-out group-hover:scale-105"
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 34vw"
                       loading={index < 3 ? 'eager' : 'lazy'}
                       quality={index < 3 ? 70 : 55}

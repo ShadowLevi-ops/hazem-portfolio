@@ -3,10 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   attachTouchVideoUnlock,
-  isCoarsePointerDevice,
   pausePreviewVideo,
   playPreviewVideo,
-  shouldPreferStaticMedia,
 } from '@/lib/video-playback';
 
 type PortfolioVideoPreviewProps = {
@@ -33,10 +31,8 @@ export function PortfolioVideoPreview({
   const [currentSrc, setCurrentSrc] = useState(src);
 
   useEffect(() => {
-    const useFullQuality =
-      !isCoarsePointerDevice() && !shouldPreferStaticMedia();
-    setCurrentSrc(useFullQuality ? fallbackSrc : src);
-  }, [src, fallbackSrc]);
+    setCurrentSrc(src);
+  }, [src]);
 
   useEffect(() => {
     attachTouchVideoUnlock();
@@ -66,7 +62,7 @@ export function PortfolioVideoPreview({
       entries => {
         entries.forEach(entry => {
           const visible =
-            entry.isIntersecting && entry.intersectionRatio >= 0.08;
+            entry.isIntersecting && entry.intersectionRatio >= 0.35;
           setIsVisible(visible);
 
           if (visible) {
@@ -79,7 +75,7 @@ export function PortfolioVideoPreview({
           }
         });
       },
-      { threshold: [0, 0.08, 0.2, 0.45], rootMargin: '200px 0px' }
+      { threshold: [0, 0.35, 0.6], rootMargin: '40px 0px' }
     );
 
     observer.observe(container);
@@ -117,6 +113,8 @@ export function PortfolioVideoPreview({
     };
   }, [shouldLoad, currentSrc, isVisible, observeVisibility]);
 
+  const shouldPreload = observeVisibility ? isVisible : shouldLoad;
+
   return (
     <div ref={containerRef} className={`absolute inset-0 z-[1] ${className}`}>
       {shouldLoad ? (
@@ -129,12 +127,12 @@ export function PortfolioVideoPreview({
           muted
           loop
           playsInline
-          preload="auto"
+          preload={shouldPreload ? 'auto' : 'metadata'}
           poster={poster}
           aria-hidden="true"
           onError={() => {
-            if (currentSrc !== src) {
-              setCurrentSrc(src);
+            if (currentSrc !== fallbackSrc) {
+              setCurrentSrc(fallbackSrc);
             }
           }}
         />

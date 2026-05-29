@@ -485,6 +485,7 @@ export default function Home() {
             justifyContent: 'flex-start',
             alignItems: 'center',
             overflowY: 'auto',
+            overscrollBehavior: 'contain',
             gap: '0.75rem',
             paddingTop: '3rem',
             paddingBottom: '1rem',

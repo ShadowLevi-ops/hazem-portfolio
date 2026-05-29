@@ -143,6 +143,12 @@
   html {
     scroll-behavior: smooth;
   }
+
+  @media (pointer: coarse) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
   a,
   button {
     @apply transition-all duration-200;
@@ -154,7 +160,7 @@
 
 @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
   body {
-    background-attachment: fixed;
+    background-attachment: scroll;
   }
 }
 
@@ -388,7 +394,34 @@ video::-webkit-media-controls {
 .lightbox-portfolio-footer-details {
   max-height: min(28vh, 240px);
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   padding-right: 0.125rem;
+}
+
+.animated-bg-particle {
+  position: absolute;
+  border-radius: 9999px;
+  opacity: 0.18;
+  animation: bg-particle-float 4s ease-in-out infinite;
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .animated-bg-particle {
+    display: none;
+  }
+}
+
+@keyframes bg-particle-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.16;
+  }
+  50% {
+    transform: translate3d(0, -8px, 0) scale(1.12);
+    opacity: 0.28;
+  }
 }
 
 /* Lightbox caption sits below footage via render.slideFooter in page.tsx */

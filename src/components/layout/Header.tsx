@@ -78,15 +78,16 @@ export const Header = () => {
   }, [isMenuOpen]);
 
   useEffect(() => {
+    let frame = 0;
+
     const updateActiveSection = () => {
       const scrollPosition = window.scrollY + 140;
       const maxScroll =
         document.documentElement.scrollHeight - window.innerHeight;
 
-      setIsScrolled(window.scrollY > 16);
-      setScrollProgress(
-        maxScroll > 0 ? Math.min(100, (window.scrollY / maxScroll) * 100) : 0
-      );
+      const nextIsScrolled = window.scrollY > 16;
+      const nextProgress =
+        maxScroll > 0 ? Math.min(100, (window.scrollY / maxScroll) * 100) : 0;
 
       let next: string | null = null;
       for (let i = SECTION_IDS.length - 1; i >= 0; i -= 1) {
@@ -99,12 +100,26 @@ export const Header = () => {
           break;
         }
       }
-      setActiveSection(next);
+
+      setIsScrolled(prev => (prev === nextIsScrolled ? prev : nextIsScrolled));
+      setScrollProgress(prev => (prev === nextProgress ? prev : nextProgress));
+      setActiveSection(prev => (prev === next ? prev : next));
+    };
+
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        updateActiveSection();
+      });
     };
 
     updateActiveSection();
-    window.addEventListener('scroll', updateActiveSection, { passive: true });
-    return () => window.removeEventListener('scroll', updateActiveSection);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
 
   const scrollToSection =
@@ -116,7 +131,7 @@ export const Header = () => {
   return (
     <>
       <header
-        className={`border-border/60 supports-[backdrop-filter]:bg-background/55 sticky top-0 z-50 w-full border-b backdrop-blur-2xl transition-all duration-300 ${
+        className={`border-border/60 supports-[backdrop-filter]:bg-background/70 sticky top-0 z-50 w-full border-b backdrop-blur-md transition-[background-color,box-shadow] duration-300 ${
           isScrolled
             ? 'bg-background/90 shadow-[0_16px_42px_rgba(0,0,0,0.22)]'
             : 'bg-background/72'
