@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import type { PortfolioItem } from '@/types/portfolio';
 import { portfolioDisplayTitle } from '@/lib/portfolio-display';
 import {
@@ -11,6 +12,7 @@ import {
   projectCardIndustry,
 } from '@/lib/project-card-labels';
 import { PortfolioVideoPreview } from '@/components/portfolio-video-preview';
+import { isCoarsePointerDevice } from '@/lib/video-playback';
 
 type FeaturedWorkProps = {
   items: PortfolioItem[];
@@ -18,6 +20,12 @@ type FeaturedWorkProps = {
 };
 
 export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(isCoarsePointerDevice());
+  }, []);
+
   return (
     <section
       id="featured"
@@ -98,7 +106,7 @@ export function FeaturedWork({ items, onSelect }: FeaturedWorkProps) {
                       src={previewVideoSrc}
                       fallbackSrc={fallbackVideoSrc}
                       poster={item.thumbnailUrl}
-                      eager={idx < 3}
+                      eager={isMobile ? idx === 0 : idx < 3}
                       observeVisibility
                       className="transition-all duration-500 group-hover:scale-[1.03]"
                     />

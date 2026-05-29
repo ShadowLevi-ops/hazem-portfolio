@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { attemptVideoPlay, attachTouchVideoUnlock } from '@/lib/video-playback';
 
 type PortfolioVideoPreviewProps = {
   src: string;
@@ -22,7 +23,12 @@ export function PortfolioVideoPreview({
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [shouldLoad, setShouldLoad] = useState(eager);
+  const [isVisible, setIsVisible] = useState(false);
   const [currentSrc, setCurrentSrc] = useState(src);
+
+  useEffect(() => {
+    attachTouchVideoUnlock();
+  }, []);
 
   useEffect(() => {
     setCurrentSrc(src);
@@ -31,7 +37,6 @@ export function PortfolioVideoPreview({
   useEffect(() => {
     if (eager) {
       setShouldLoad(true);
-      return;
     }
 
     const container = containerRef.current;
@@ -51,14 +56,19 @@ export function PortfolioVideoPreview({
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
+          const visible =
+            entry.isIntersecting && entry.intersectionRatio >= 0.35;
+          setIsVisible(visible);
+
+          if (visible) {
             setShouldLoad(true);
-          } else {
-            videoRef.current?.pause();
+            return;
           }
+
+          videoRef.current?.pause();
         });
       },
-      { threshold: 0.2, rootMargin: '120px' }
+      { threshold: [0, 0.35, 0.6], rootMargin: '80px' }
     );
 
     observer.observe(container);
@@ -74,21 +84,27 @@ export function PortfolioVideoPreview({
     const video = videoRef.current;
     if (!video || !shouldLoad) return;
 
+    const shouldPlay = observeVisibility ? isVisible : true;
+    if (!shouldPlay) {
+      video.pause();
+      return;
+    }
+
     const play = () => {
-      void video.play().catch(() => {
-        // Autoplay may be blocked; poster remains visible underneath.
-      });
+      void attemptVideoPlay(video);
     };
 
     video.addEventListener('loadeddata', play);
     video.addEventListener('canplay', play);
+    video.addEventListener('canplaythrough', play);
     play();
 
     return () => {
       video.removeEventListener('loadeddata', play);
       video.removeEventListener('canplay', play);
+      video.removeEventListener('canplaythrough', play);
     };
-  }, [shouldLoad, currentSrc]);
+  }, [shouldLoad, currentSrc, isVisible, observeVisibility]);
 
   return (
     <div ref={containerRef} className={`absolute inset-0 z-[1] ${className}`}>
@@ -101,7 +117,7 @@ export function PortfolioVideoPreview({
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           poster={poster}
           aria-hidden="true"
           onError={() => {

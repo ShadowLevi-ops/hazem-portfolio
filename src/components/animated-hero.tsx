@@ -7,6 +7,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { analytics } from '@/lib/analytics';
+import {
+  attemptVideoPlay,
+  attachTouchVideoUnlock,
+  isCoarsePointerDevice,
+  shouldPreferStaticMedia,
+} from '@/lib/video-playback';
 
 export function AnimatedHero() {
   const scrollToSection = (sectionId: string) => {
@@ -16,25 +22,21 @@ export function AnimatedHero() {
     });
   };
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement>(null);
   const heroVideoRef = useRef<HTMLVideoElement>(null);
   const controls = useAnimation();
   const [shouldPlayHeroVideo, setShouldPlayHeroVideo] = useState(false);
+  const [heroInView, setHeroInView] = useState(true);
 
-  const lowDataMode = useMemo(() => {
-    if (typeof window === 'undefined') return false;
-    const connection = (
-      navigator as Navigator & {
-        connection?: { saveData?: boolean; effectiveType?: string };
-      }
-    ).connection;
-    const saveData = Boolean(connection?.saveData);
-    const effectiveType = connection?.effectiveType || '';
-    const isSlow = effectiveType.includes('2g') || effectiveType === '3g';
-    const reducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
-    return saveData || isSlow || reducedMotion;
+  const preferStaticMedia = useMemo(() => shouldPreferStaticMedia(), []);
+  const heroVideoSrc = useMemo(
+    () =>
+      isCoarsePointerDevice() ? '/videos/previews/11.mp4' : '/videos/11.mp4',
+    []
+  );
+
+  useEffect(() => {
+    attachTouchVideoUnlock();
   }, []);
 
   useEffect(() => {
@@ -43,21 +45,53 @@ export function AnimatedHero() {
   }, [controls]);
 
   useEffect(() => {
-    if (lowDataMode) return;
-    // Start immediately on capable connections for snappier hero motion.
+    if (preferStaticMedia) return;
     setShouldPlayHeroVideo(true);
     analytics.track({ name: 'hero_video_enable' });
-  }, [lowDataMode]);
+  }, [preferStaticMedia]);
 
   useEffect(() => {
-    if (!shouldPlayHeroVideo) return;
+    const hero = ref.current;
+    if (!hero) return;
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          setHeroInView(entry.isIntersecting);
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const video = heroVideoRef.current;
-    if (!video) return;
+    if (!video || !shouldPlayHeroVideo) return;
+
+    if (!heroInView) {
+      video.pause();
+      return;
+    }
+
+    const play = () => {
+      void attemptVideoPlay(video);
+    };
+
+    video.addEventListener('loadeddata', play);
+    video.addEventListener('canplay', play);
+    video.addEventListener('canplaythrough', play);
     video.load();
-    void video.play().catch(() => {
-      // Poster remains visible if autoplay is blocked.
-    });
-  }, [shouldPlayHeroVideo]);
+    play();
+
+    return () => {
+      video.removeEventListener('loadeddata', play);
+      video.removeEventListener('canplay', play);
+      video.removeEventListener('canplaythrough', play);
+    };
+  }, [shouldPlayHeroVideo, heroInView, heroVideoSrc]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -95,12 +129,12 @@ export function AnimatedHero() {
           <video
             ref={heroVideoRef}
             className="h-full w-full object-cover object-center"
-            src="/videos/11.mp4"
+            src={heroVideoSrc}
             autoPlay
             muted
             loop
             playsInline
-            preload="auto"
+            preload="metadata"
             poster="/videos/VT-11.webp"
             aria-hidden="true"
           />

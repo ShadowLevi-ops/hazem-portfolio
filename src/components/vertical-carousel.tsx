@@ -13,6 +13,7 @@ import {
   projectCardIndustry,
 } from '@/lib/project-card-labels';
 import { PortfolioVideoPreview } from '@/components/portfolio-video-preview';
+import { shouldPreferStaticMedia } from '@/lib/video-playback';
 
 interface VerticalCarouselProps {
   items: PortfolioItem[];
@@ -43,15 +44,8 @@ export function VerticalCarousel({
       ).connection;
 
     const shouldUseLowDataMode = () => {
-      const connection = getConnection();
-      const saveData = Boolean(connection?.saveData);
-      const effectiveType = connection?.effectiveType || '';
-      const isSlowConnection =
-        effectiveType.includes('2g') || effectiveType === '3g';
       const prefersReducedMotion = Boolean(reduceMotion);
-
-      // Only disable inline previews on slow connections or reduced motion.
-      return saveData || isSlowConnection || prefersReducedMotion;
+      return shouldPreferStaticMedia() || prefersReducedMotion;
     };
 
     const updateMode = () => setLowDataMode(shouldUseLowDataMode());
