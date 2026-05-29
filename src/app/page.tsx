@@ -136,9 +136,9 @@ function PortfolioLightboxSlideFooter({ slide }: { slide: Slide }) {
   );
 
   return (
-    <div className="lightbox-portfolio-footer w-full max-w-4xl shrink-0 px-3 sm:px-4">
+    <div className="lightbox-portfolio-footer min-h-0 w-full shrink-0 px-1 sm:px-2">
       <div
-        className="rounded-lg border border-white/15 bg-black/82 px-3 py-2.5 text-left text-white shadow-lg backdrop-blur-md sm:px-4 sm:py-3"
+        className="rounded-lg border border-white/15 bg-black/82 px-3 py-2 text-left text-white shadow-lg backdrop-blur-md sm:px-4 sm:py-2.5"
         data-lightbox-caption=""
       >
         {hasTitle ? (
@@ -481,20 +481,16 @@ export default function Home() {
         animation={{ fade: 260, swipe: 320 }}
         styles={{
           slide: {
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            overflowY: 'auto',
-            overscrollBehavior: 'contain',
-            gap: '0.75rem',
             paddingTop: '3rem',
             paddingBottom: '1rem',
+            overflow: 'hidden',
           },
         }}
         render={{
-          slideContainer: ({ children }) => (
-            <div className="flex min-h-0 w-full flex-1 items-center justify-center">
-              {children}
+          slideContainer: ({ slide, children }) => (
+            <div className="lightbox-portfolio-slide">
+              <div className="lightbox-portfolio-media">{children}</div>
+              <PortfolioLightboxSlideFooter slide={slide} />
             </div>
           ),
           slide: ({ slide, offset }) => {
@@ -518,9 +514,6 @@ export default function Home() {
               />
             );
           },
-          slideFooter: ({ slide }) => (
-            <PortfolioLightboxSlideFooter slide={slide} />
-          ),
         }}
         on={{
           view: ({ index }) =>
