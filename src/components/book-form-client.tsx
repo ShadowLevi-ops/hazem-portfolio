@@ -2,7 +2,11 @@
 
 import { useEffect, type FormEvent } from 'react';
 import { analytics } from '@/lib/analytics';
-import { buildProjectBriefMessage, getWhatsAppUrl } from '@/lib/whatsapp';
+import {
+  buildProjectBriefMessage,
+  getWhatsAppUrl,
+  QUICK_WHATSAPP_MESSAGE,
+} from '@/lib/whatsapp';
 
 const BUDGET_OPTIONS = [
   'Under RM 5,000',
@@ -10,8 +14,6 @@ const BUDGET_OPTIONS = [
   'RM 15,000 - RM 35,000',
   'RM 35,000+',
 ];
-
-const QUICK_WHATSAPP_MESSAGE = "Hi Hazem, I'd like to discuss a new project.";
 
 export function BookFormClient() {
   useEffect(() => {

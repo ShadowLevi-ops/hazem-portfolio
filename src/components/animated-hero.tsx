@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { analytics } from '@/lib/analytics';
+import { montserrat } from '@/lib/fonts';
 import {
   attemptVideoPlay,
   attachTouchVideoUnlock,
@@ -121,10 +122,10 @@ export function AnimatedHero() {
   return (
     <header
       ref={ref}
-      className="relative flex min-h-[74vh] w-full flex-col items-center justify-center overflow-hidden pt-0 pb-20 text-center md:min-h-[88vh] md:pt-0 md:pb-24"
+      className="relative isolate z-[1] flex min-h-[74vh] w-full flex-col items-center justify-center overflow-hidden pt-0 pb-20 text-center md:min-h-[88vh] md:pt-0 md:pb-24"
     >
       {/* Hero background video (Asset 11 style treatment) */}
-      <div className="absolute inset-0 -z-20">
+      <div className="absolute inset-0 z-0">
         {shouldPlayHeroVideo ? (
           <video
             ref={heroVideoRef}
@@ -150,11 +151,11 @@ export function AnimatedHero() {
         )}
       </div>
       {/* Contrast overlays for text legibility */}
-      <div className="absolute inset-0 -z-10 bg-black/52" />
-      <div className="from-background/70 via-background/45 to-background/75 absolute inset-0 -z-10 bg-gradient-to-b" />
+      <div className="absolute inset-0 z-[1] bg-black/52" />
+      <div className="from-background/70 via-background/45 to-background/75 absolute inset-0 z-[1] bg-gradient-to-b" />
 
       {/* Subtle accent glow on top of video */}
-      <div className="absolute inset-0 -z-10">
+      <div className="absolute inset-0 z-[1]">
         <motion.div
           className="bg-primary/10 absolute top-24 left-12 h-36 w-36 rounded-full blur-3xl will-change-transform md:top-36 md:left-24 md:h-56 md:w-56"
           animate={{ scale: [1, 1.05, 1], opacity: [0.35, 0.5, 0.35] }}
@@ -163,7 +164,7 @@ export function AnimatedHero() {
         />
       </div>
 
-      <div className="section-shell">
+      <div className="section-shell relative z-[2]">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -191,22 +192,24 @@ export function AnimatedHero() {
               />
             </motion.div>
 
-            {/* Subtitle */}
-            <motion.h2
-              className="text-muted-foreground text-center font-sans text-xs tracking-[0.2em] uppercase sm:text-sm md:text-base"
+            {/* Hero title */}
+            <motion.h1
+              className={`${montserrat.className} hero-title mx-auto max-w-3xl text-center text-base leading-snug font-semibold tracking-[0.04em] uppercase sm:text-lg md:text-xl`}
               variants={itemVariants}
             >
-              <span>At the intersection of culture and creativity</span>
-            </motion.h2>
+              We shoot in KL heat.
+              <span className="text-primary block sm:inline sm:px-1.5">
+                You post on time.
+              </span>
+            </motion.h1>
 
             <motion.p
               className="text-muted-foreground mx-auto max-w-2xl px-2 text-center font-sans text-sm leading-relaxed md:text-base"
               variants={itemVariants}
             >
-              GiltMedia is a Kuala Lumpur studio for brands, agencies, and
-              visionaries who want culturally tuned visual work—from campaign
-              films and social-first edits that feels premium and built to
-              perform.
+              GiltMedia is a KL production team for brands with a launch date.
+              We shoot campaign film and social cutdowns in one go — premium
+              look, feed-ready delivery.
             </motion.p>
           </motion.div>
 
@@ -252,7 +255,7 @@ export function AnimatedHero() {
                   });
                 }}
               >
-                View Portfolio
+                See the Work
               </Link>
             </Button>
             <Button
@@ -270,7 +273,7 @@ export function AnimatedHero() {
                   })
                 }
               >
-                Start a Project
+                Got a Launch?
               </Link>
             </Button>
           </motion.div>
@@ -279,7 +282,7 @@ export function AnimatedHero() {
 
       {/* Elegant scroll indicator */}
       <motion.div
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 transform md:bottom-16"
+        className="absolute bottom-12 left-1/2 z-[2] -translate-x-1/2 transform md:bottom-16"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.6 }}

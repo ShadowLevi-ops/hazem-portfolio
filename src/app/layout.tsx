@@ -1,24 +1,10 @@
 import type { Metadata, Viewport } from 'next';
-import { Montserrat, Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Layout } from '@/components/layout/Layout';
 import './globals.css';
 import { cn } from '@/lib/utils';
-import { SITE_URL } from '@/lib/site';
-
-const montserrat = Montserrat({
-  variable: '--font-serif',
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800', '900'],
-  display: 'swap',
-});
-
-const inter = Inter({
-  variable: '--font-sans',
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
-  display: 'swap',
-});
+import { SITE_URL, SITE_DESCRIPTION } from '@/lib/site';
+import { fontVariables } from '@/lib/fonts';
 
 const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION;
 
@@ -27,8 +13,7 @@ export const metadata: Metadata = {
     default: 'GiltMedia | Social Campaign Film & Videography',
     template: '%s | GiltMedia',
   },
-  description:
-    'GiltMedia produces social-first campaign films, brand videography, and content for sports, travel, and lifestyle brands. Based in Kuala Lumpur, Malaysia.',
+  description: SITE_DESCRIPTION,
   keywords: [
     'GiltMedia',
     'videography',
@@ -58,8 +43,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: '/',
     title: 'GiltMedia | Social Campaign Film & Videography',
-    description:
-      'Social-first campaign films, brand videography, and content production for sports, travel, and lifestyle brands.',
+    description: SITE_DESCRIPTION,
     siteName: 'GiltMedia',
     images: [
       {
@@ -73,8 +57,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'GiltMedia | Social Campaign Film & Videography',
-    description:
-      'Social-first campaign films, brand videography, and content production for sports, travel, and lifestyle brands.',
+    description: SITE_DESCRIPTION,
     images: ['/images/og-image.jpg'],
   },
   robots: {
@@ -127,8 +110,7 @@ const structuredData = {
     addressCountry: 'MY',
   },
   sameAs: ['https://wa.me/60173767247'],
-  description:
-    'Social-first campaign films, brand videography, and content production.',
+  description: SITE_DESCRIPTION,
   areaServed: 'Malaysia',
   knowsAbout: [
     'Videography',
@@ -175,8 +157,7 @@ export default function RootLayout({
       <body
         className={cn(
           'bg-background dark min-h-screen font-sans antialiased',
-          montserrat.variable,
-          inter.variable
+          fontVariables
         )}
       >
         <ThemeProvider

@@ -7,6 +7,7 @@ import 'yet-another-react-lightbox/styles.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AnimatedHero } from '@/components/animated-hero';
 import { CaseStudiesSection } from '@/components/case-studies-section';
+import { FieldNotesSection } from '@/components/field-notes-section';
 import { LightboxVideoPlayer } from '@/components/lightbox-video-player';
 import dynamic from 'next/dynamic';
 import { analytics } from '@/lib/analytics';
@@ -23,6 +24,7 @@ import {
   lightboxCaptionDescription,
   portfolioDisplayTitle,
 } from '@/lib/portfolio-display';
+import { getWhatsAppUrl, CONTACT_WHATSAPP_MESSAGE } from '@/lib/whatsapp';
 
 type PortfolioVideoSlide = {
   type: 'video';
@@ -318,6 +320,8 @@ export default function Home() {
 
       <AnimatedHero />
 
+      <FieldNotesSection />
+
       <CaseStudiesSection />
 
       {/* Services Section */}
@@ -330,11 +334,11 @@ export default function Home() {
           transition={{ duration: 0.4 }}
         >
           <div className="section-header">
-            <p className="section-kicker">Capabilities</p>
+            <p className="section-kicker">On set &amp; in edit</p>
             <h2 className="section-title">Services</h2>
             <p className="section-copy">
-              Strategy-led creative production built for social-first brands and
-              campaigns.
+              One shoot day. Hero film, Reels, Stories, cutdowns. Built to ship,
+              not sit in a folder.
             </p>
           </div>
 
@@ -370,7 +374,7 @@ export default function Home() {
         >
           <div className="mb-6 text-center md:mb-8">
             <h3 className="text-foreground text-lg font-semibold tracking-[0.12em] uppercase md:text-xl">
-              Industries We Work With
+              Usually finds us on set for
             </h3>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3">
@@ -417,7 +421,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0.15 }}
               >
-                Explore selected work and tap any card to view full details.
+                Scroll the feed. Tap anything. Full brief inside.
               </motion.p>
               <motion.div
                 className="bg-primary/30 mx-auto mt-3 h-px w-12 md:mt-6 md:w-24"
@@ -538,8 +542,17 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
-            Let&apos;s Talk
+            Got a drop date?
           </motion.h2>
+          <motion.p
+            className="text-muted-foreground mx-auto mb-6 max-w-md text-sm leading-relaxed"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.15 }}
+          >
+            WhatsApp is fastest. Brief form works too.
+          </motion.p>
           <motion.div
             className="bg-primary/30 mx-auto mb-6 h-px w-12 md:w-16"
             initial={{ scaleX: 0 }}
@@ -555,9 +568,7 @@ export default function Home() {
             transition={{ duration: 0.4, delay: 0.3 }}
           >
             <a
-              href={`https://wa.me/60173767247?text=${encodeURIComponent(
-                `Hi Hazem, I'd like to discuss a collaboration opportunity.`
-              )}`}
+              href={getWhatsAppUrl(CONTACT_WHATSAPP_MESSAGE)}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Contact Hazem via WhatsApp"

@@ -11,7 +11,7 @@ export function AnimatedBackground() {
       {Array.from({ length: PARTICLE_COUNT }, (_, id) => (
         <span
           key={id}
-          className="animated-bg-particle bg-primary/20 dark:bg-primary/30"
+          className="animated-bg-particle"
           style={{
             left: `${(id * 19 + 9) % 96}%`,
             top: `${(id * 27 + 13) % 94}%`,
@@ -23,7 +23,7 @@ export function AnimatedBackground() {
         />
       ))}
 
-      <div className="from-primary/5 to-secondary/5 dark:from-primary/10 dark:to-secondary/10 absolute inset-0 bg-gradient-to-br via-transparent" />
+      <div className="animated-bg-gradient absolute inset-0" />
     </div>
   );
 }

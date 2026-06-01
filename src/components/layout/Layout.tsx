@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { SITE_TAGLINE } from '@/lib/site';
 import { Header } from './Header';
 import { AnimatedBackground } from '../animated-background';
 
@@ -25,6 +26,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       </motion.main>
       <footer className="bg-background/88 text-muted-foreground border-border/50 border-t py-12 text-center backdrop-blur-sm md:py-16">
         <div className="container mx-auto px-4 md:px-6">
+          <p className="font-marker text-primary/80 mb-3 text-sm md:text-base">
+            {SITE_TAGLINE}
+          </p>
           <p className="text-[11px] font-medium tracking-[0.18em] uppercase md:text-xs">
             © {new Date().getFullYear()} GiltMedia Studios. All rights
             reserved.

@@ -54,13 +54,12 @@ export function CaseStudiesSection() {
         transition={{ duration: 0.45 }}
       >
         <div className="section-header mb-10 md:mb-14">
-          <p className="section-kicker">Selected work</p>
+          <p className="section-kicker">Launch logs</p>
           <h2 id="case-studies-heading" className="section-title">
             Case studies
           </h2>
           <p className="section-copy">
-            Campaign films and social-first edits. Tap a card to read the full
-            case study or watch the piece in the portfolio below.
+            Real launches. Tight timelines. Tap in for the full breakdown.
           </p>
         </div>
 

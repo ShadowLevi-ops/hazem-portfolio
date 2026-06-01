@@ -6,7 +6,7 @@ import { BookFormClient } from '@/components/book-form-client';
 export const metadata: Metadata = {
   title: 'Book a Project',
   description:
-    'Start a project with GiltMedia. Share your brand, timeline, and budget to receive a tailored production plan.',
+    'Tell GiltMedia what you are launching — share your brand, timeline, and budget to get a production plan.',
 };
 
 export default function BookPage() {
@@ -23,11 +23,10 @@ export default function BookPage() {
 
         <div className="section-header">
           <p className="section-kicker">Bookings</p>
-          <h1 className="section-title">Start Your Project</h1>
+          <h1 className="section-title">Tell us what you&apos;re launching</h1>
           <p className="section-copy">
-            Tell us what you are launching — your details open in WhatsApp
-            pre-filled so we can shape a creative plan around your goals,
-            timeline, and audience.
+            Drop your details below — we&apos;ll open WhatsApp pre-filled so you
+            can send it in one tap. Include timeline if you&apos;ve got one.
           </p>
         </div>
 
