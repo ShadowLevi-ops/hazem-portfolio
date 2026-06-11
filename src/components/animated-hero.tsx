@@ -197,9 +197,9 @@ export function AnimatedHero() {
               className={`${montserrat.className} hero-title mx-auto max-w-3xl text-center text-base leading-snug font-semibold tracking-[0.04em] uppercase sm:text-lg md:text-xl`}
               variants={itemVariants}
             >
-              We shoot in KL heat.
+              Your launch date won&apos;t wait.
               <span className="text-primary block sm:inline sm:px-1.5">
-                You post on time.
+                Neither do we.
               </span>
             </motion.h1>
 

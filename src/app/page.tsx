@@ -7,7 +7,6 @@ import 'yet-another-react-lightbox/styles.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AnimatedHero } from '@/components/animated-hero';
 import { CaseStudiesSection } from '@/components/case-studies-section';
-import { FieldNotesSection } from '@/components/field-notes-section';
 import { LightboxVideoPlayer } from '@/components/lightbox-video-player';
 import dynamic from 'next/dynamic';
 import { analytics } from '@/lib/analytics';
@@ -319,8 +318,6 @@ export default function Home() {
       </a>
 
       <AnimatedHero />
-
-      <FieldNotesSection />
 
       <CaseStudiesSection />
 
