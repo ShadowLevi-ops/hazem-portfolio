@@ -54,6 +54,39 @@ export function CaseStudyArticle({ study }: CaseStudyArticleProps) {
           </div>
         </section>
 
+        {study.results ? (
+          <section className="surface-card space-y-5 rounded-xl p-6">
+            <div className="space-y-2">
+              <h2 className="font-serif text-xl">Results</h2>
+              <p className="text-muted-foreground text-xs tracking-[0.1em] uppercase">
+                {study.results.platform}
+              </p>
+              <p className="text-muted-foreground text-xs tracking-[0.1em] uppercase">
+                {study.results.period}
+              </p>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                {study.results.summary}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+              {study.results.metrics.map(metric => (
+                <div
+                  key={metric.label}
+                  className="border-border/60 bg-background/50 rounded-lg border px-3 py-3"
+                >
+                  <p className="text-muted-foreground text-[10px] tracking-[0.1em] uppercase">
+                    {metric.label}
+                  </p>
+                  <p className="mt-1 font-serif text-xl font-semibold tracking-tight">
+                    {metric.value}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
         <p className="text-sm">
           Related service:{' '}
           <Link
