@@ -9,7 +9,7 @@ const routes = [
   'services/social-media',
   'case-studies/puma-solewhat-launch',
   'case-studies/tottenham-cny-campaign',
-  'case-studies/scuba-recap',
+  'case-studies/giancarlo-gallifuoco-interview',
 ] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {

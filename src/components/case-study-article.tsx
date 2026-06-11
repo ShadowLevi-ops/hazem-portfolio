@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import { CaseStudyVideo } from '@/components/case-study-video';
 import { getCaseStudyPortfolioItem, type CaseStudy } from '@/data/case-studies';
 
@@ -14,6 +15,14 @@ export function CaseStudyArticle({ study }: CaseStudyArticleProps) {
   return (
     <main className="section-shell section-block">
       <article className="mx-auto max-w-4xl space-y-8">
+        <Link
+          href="/#case-studies"
+          className="text-muted-foreground hover:text-foreground -mt-1 inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.14em] uppercase transition-colors"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" aria-hidden />
+          Back
+        </Link>
+
         <header className="section-header">
           <p className="section-kicker">Case Study</p>
           <h1 className="section-title">{study.title}</h1>

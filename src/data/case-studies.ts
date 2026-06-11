@@ -51,17 +51,17 @@ export const CASE_STUDIES: CaseStudy[] = [
     },
   },
   {
-    slug: 'scuba-recap',
-    portfolioId: 'video-10',
-    title: 'Redang Island Dive Centre: Scuba Trip Recap',
+    slug: 'giancarlo-gallifuoco-interview',
+    portfolioId: 'video-17',
+    title: 'Tottenham Hotspur: Giancarlo Gallifuoco Profile Interview',
     summary:
-      'A destination recap for Redang Island Dive Centre, translating raw trip and underwater coverage into a cinematic travel narrative built for social discovery, experience marketing, and long-term content reuse.',
+      'An interview-led profile film for Tottenham Hotspur featuring former academy graduate Giancarlo Gallifuoco, translating a personal football journey—from a sceptical Facebook message to training alongside Harry Kane—into an editorial piece built for regional storytelling, club heritage, and long-form social distribution.',
     challenge:
-      'Dive and travel footage is visually rich but structurally messy: mixed conditions, long days, and strong isolated moments that don’t naturally form a story. The objective was watch-through in short-form feeds while still conveying the scale, immersion, and aspiration of the Redang experience, and producing assets the client could repurpose without returning to shoot.',
+      'Academy alumni stories are emotionally rich but easy to tell generically: static talking heads, flat pacing, and narrative that fails to connect past club experience with present regional relevance. The brief required Tottenham-grade production values on an interview format, authentic delivery from the subject without feeling promotional, and assets that could anchor ASEAN fan engagement while meeting global club standards.',
     approach:
-      'We edited around narrative progression: surface arrival, human energy, descent, underwater immersion, and marine payoff, rather than a flat highlight reel. On the director side: fluid camera rhythm underwater, contrast between surface warmth and sub-surface cool tones, and cut points aligned to breath and movement so the piece feels like one journey. On the campaign side: the master recap was designed with extractable social modules, including hero hooks, 15 second snippets, and loop-friendly moments for ads, reposts, and seasonal pushes. Sound and pacing were calibrated for mobile-first viewing and silent-scroll tolerance where needed.',
+      'We structured the interview around narrative beats rather than a linear Q&A: origin and disbelief, arrival at Tottenham, formative years in the academy, training alongside first-team icons, and the arc from London to Southeast Asia. On the director side: controlled lighting and composition for editorial clarity, cut logic that intercuts reactive moments with establishing context, and pacing that lets personality land without dragging. On the campaign side: a horizontal master film for club and partner channels, with extractable vertical snippets and quote-led hooks for Reels, stories, and regional fanclub reposts.',
     outcome:
-      'A recap with stronger narrative cohesion and retention, not just beautiful clips, but a story that sells the trip. The client gained a primary film plus a set of reusable social assets suitable for organic, paid, and evergreen marketing without additional production.',
+      'A profile film that reads as genuine storytelling, not a press clip—with stronger retention through personal narrative and club credibility. Tottenham gained a reusable hero asset for ASEAN community content, plus modular cutdowns for ongoing fan engagement without additional production.',
     relatedService: {
       label: 'Videography',
       href: '/services/videography',

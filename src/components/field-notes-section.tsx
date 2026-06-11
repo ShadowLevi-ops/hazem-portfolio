@@ -8,63 +8,64 @@ const STEPS = [
     id: 'brief',
     number: '01',
     title: 'Brief',
-    copy: "What's launching, when, and where it needs to live.",
+    copy: "Who we're filming, the story arc, and which channels the cut needs to serve.",
     circleRotate: -8,
   },
   {
     id: 'shoot',
     number: '02',
     title: 'Shoot',
-    copy: 'One day on location. KL heat included.',
+    copy: 'Sit-down interview, two-camera. Room tone locked before the first question.',
     circleRotate: 12,
   },
   {
     id: 'ship',
     number: '03',
     title: 'Ship',
-    copy: 'Hero film + platform cutdowns, ready to post.',
+    copy: 'Horizontal master + quote-led cutdowns for club feeds and fanclub reposts.',
     circleRotate: -5,
   },
 ] as const;
 
 const MARGIN_NOTES = [
   {
-    id: 'drop',
+    id: 'format',
     side: 'left' as const,
     rotate: -7,
     top: '6%',
     content: (
       <>
-        drop date = <span className="field-marker-ring">non-negotiable</span>
+        format: <span className="field-marker-ring">16:9 master</span>
       </>
     ),
   },
   {
-    id: 'heat',
+    id: 'prep',
     side: 'left' as const,
     rotate: 4,
     top: '50%',
     content: (
       <>
-        heat index: <span className="field-marker-underline">high</span> ☀
+        talking points sent{' '}
+        <span className="field-marker-underline">day before</span>
       </>
     ),
   },
   {
-    id: 'typical',
+    id: 'pack',
     side: 'right' as const,
     rotate: 6,
     top: '10%',
-    content: <>typical pack → 1 hero + 4–6 cutdowns</>,
+    content: <>deliverables → 1 hero + 3–4 quote cuts</>,
   },
   {
-    id: 'timeline',
+    id: 'turnaround',
     side: 'right' as const,
     rotate: -5,
     top: '56%',
     content: (
       <>
-        yes we can do <span className="field-marker-underline">Friday</span>
+        rough cut by <span className="field-marker-underline">Wednesday</span>
       </>
     ),
   },
@@ -330,10 +331,10 @@ export function FieldNotesSection() {
 
         <div className="field-notes-map relative overflow-hidden rounded-xl px-4 py-10 md:px-10 md:py-14">
           <span className="field-notes-stamp" aria-hidden>
-            FIELD REPORT // GM-026
+            FIELD REPORT // GM-017
           </span>
           <span className="field-notes-grid-ref font-marker" aria-hidden>
-            GRID REF: GM-KL-026
+            GRID REF: GM-KL-017
           </span>
 
           <div

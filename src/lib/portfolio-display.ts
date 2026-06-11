@@ -16,8 +16,8 @@ const HIGHLIGHT_CASE_STUDIES: Record<string, string> = {
     'PUMA x SOLEWHAT launch: modular capture and edit flow built for rapid social deployment, combining hero moments with platform-native cutdowns for longer campaign shelf life.',
   'video-14':
     'Tottenham CNY campaign: culturally tuned storytelling delivered under tight timelines while preserving global brand consistency across social placements.',
-  'video-10':
-    'Scuba recap: long-form destination footage restructured into retention-focused short edits with clear narrative progression and reusable campaign snippets.',
+  'video-17':
+    'Gallifuoco profile interview: academy-to-ASEAN narrative structured for editorial clarity, with extractable social hooks and Tottenham-grade production on a talking-head format.',
 };
 
 /** Data-entry placeholders — hide from portfolio info copy */
