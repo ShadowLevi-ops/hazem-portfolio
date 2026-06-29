@@ -296,4 +296,13 @@ export const portfolioItems: PortfolioItem[] = [
     projectDetails: 'Sports',
     mediaOrientation: 'horizontal',
   },
+  {
+    id: 'video-20',
+    title: 'Tiger Shark Diving with Extreme Dive Fuvahmulah',
+    type: 'videography',
+    mediaUrl: '/videos/20.mp4',
+    thumbnailUrl: '/videos/VT-20.webp',
+    client: 'Extreme Dive Fuvahmulah',
+    projectDetails: 'Travel',
+  },
 ];

@@ -38,6 +38,8 @@ export const CARD_TEASERS: Record<string, string> = {
   'video-17': 'Interview-led sports piece with polished delivery.',
   'video-18': 'Second interview cut with deeper narrative beats.',
   'video-19': 'Athlete profile focused on growth and ambition.',
+  'video-20':
+    'Social feature spotlighting Fuvahmulah dive tourism and local economic growth.',
 };
 
 /** Richer project brief copy for fullscreen/footer detail sections. */
@@ -112,6 +114,8 @@ export const FULLSCREEN_BRIEFS: Record<string, string> = {
     'Follow-up interview installment extending depth while maintaining continuity.',
   'video-19':
     'Athlete journey profile highlighting progression, ambition, and next-step narrative.',
+  'video-20':
+    'Social media feature positioning Extreme Dive Fuvahmulah at the forefront of tiger shark diving in Fuvahmulah, Maldives—showcasing the centre as a driver of island tourism, community visibility, and local economic momentum.',
 };
 
 export const CARD_CLIENTS: Record<string, string> = {
@@ -133,6 +137,7 @@ export const CARD_CLIENTS: Record<string, string> = {
   'video-17': 'Tottenham Hotspurs',
   'video-18': 'Tottenham Hotspurs',
   'video-19': 'Tottenham Hotspurs',
+  'video-20': 'Extreme Dive Fuvahmulah',
 };
 
 export const CARD_INDUSTRIES: Record<string, string> = {
@@ -154,6 +159,7 @@ export const CARD_INDUSTRIES: Record<string, string> = {
   'video-17': 'Sports/Lifestyle',
   'video-18': 'Sports / Entertainment',
   'video-19': 'Sports / Entertainment',
+  'video-20': 'Travel',
 };
 
 export function projectCardTag(item: PortfolioItem): string {
