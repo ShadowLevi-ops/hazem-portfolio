@@ -7,6 +7,7 @@ import 'yet-another-react-lightbox/styles.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AnimatedHero } from '@/components/animated-hero';
 import { CaseStudiesSection } from '@/components/case-studies-section';
+import { ServicesSection } from '@/components/services-section';
 import { LightboxVideoPlayer } from '@/components/lightbox-video-player';
 import dynamic from 'next/dynamic';
 import { analytics } from '@/lib/analytics';
@@ -204,14 +205,6 @@ export default function Home() {
     []
   );
 
-  const services = [
-    { label: 'Videography', href: '/services/videography' },
-    { label: 'Photography', href: '/services/photography' },
-    { label: 'Social Media', href: '/services/social-media' },
-    'Branding',
-    'Websites',
-    'Creative Strategy',
-  ];
   const industries = [
     'Fashion',
     'Sports',
@@ -321,44 +314,7 @@ export default function Home() {
 
       <CaseStudiesSection />
 
-      {/* Services Section */}
-      <section id="services" className="section-shell pb-16 md:pb-24">
-        <motion.div
-          className="mx-auto max-w-5xl"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-        >
-          <div className="section-header">
-            <p className="section-kicker">On set &amp; in edit</p>
-            <h2 className="section-title">Services</h2>
-            <p className="section-copy">
-              One shoot day. Hero film, Reels, Stories, cutdowns. Built to ship,
-              not sit in a folder.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
-            {services.map(service => (
-              <motion.div
-                key={typeof service === 'string' ? service : service.label}
-                className="surface-card hover:border-primary/40 rounded-md px-3 py-3 text-center text-xs tracking-[0.14em] uppercase transition-all duration-300 hover:-translate-y-0.5 md:px-4 md:py-4 md:text-sm"
-                whileHover={{ y: -2, scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-              >
-                {typeof service === 'string' ? (
-                  service
-                ) : (
-                  <Link href={service.href} className="inline-block w-full">
-                    {service.label}
-                  </Link>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </section>
+      <ServicesSection />
 
       {/* Industries Section */}
       <section id="industries" className="section-shell pb-16 md:pb-24">
