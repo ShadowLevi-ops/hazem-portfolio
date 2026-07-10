@@ -167,12 +167,12 @@ export function VerticalCarousel({
                     ) : null}
                   </div>
 
-                  {/* Always-on bottom gradient for legibility */}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/88 via-black/45 to-transparent" />
+                  {/* Always-on bottom gradient for legibility (above the hover video preview) */}
+                  <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-black/88 via-black/45 to-transparent" />
 
                   {/* Ongoing Project Overlay */}
                   {isOngoingProject && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+                    <div className="absolute inset-0 z-[2] flex items-center justify-center bg-black/40 backdrop-blur-sm">
                       <div className="text-center">
                         <div className="rounded-lg border border-white/30 bg-white/20 px-2 py-1 backdrop-blur-sm">
                           <div className="text-[10px] font-bold tracking-wide text-white">
@@ -184,7 +184,7 @@ export function VerticalCarousel({
                   )}
 
                   {showLabels && !isOngoingProject && (
-                    <div className="absolute top-1.5 left-1.5 md:top-2 md:left-2">
+                    <div className="absolute top-1.5 left-1.5 z-[2] md:top-2 md:left-2">
                       <div className="rounded-md bg-black/60 px-2 py-1 text-xs font-medium tracking-[0.12em] text-white uppercase backdrop-blur-sm md:px-2.5 md:py-1.5 md:text-xs">
                         {item.projectDetails || item.type}
                       </div>
@@ -193,13 +193,13 @@ export function VerticalCarousel({
 
                   {!isOngoingProject ? (
                     <>
-                      <div className="absolute top-2 right-2 left-2 flex items-start justify-between gap-1.5 md:top-3 md:right-3 md:left-3 md:gap-2">
+                      <div className="absolute top-2 right-2 left-2 z-[2] flex items-start justify-between gap-1.5 md:top-3 md:right-3 md:left-3 md:gap-2">
                         <motion.h3
                           initial={{ opacity: 0, y: 10 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: true }}
                           transition={{ duration: 0.3, delay: 0.05 }}
-                          className="line-clamp-2 max-w-[66%] font-serif text-[10px] leading-snug font-semibold tracking-tight text-white transition-transform duration-300 group-hover:-translate-y-1 min-[380px]:max-w-[68%] min-[380px]:text-[11px] md:max-w-[70%] md:text-xs"
+                          className="line-clamp-2 max-w-[66%] rounded bg-black/55 px-1.5 py-1 font-serif text-[10px] leading-snug font-semibold tracking-tight text-white backdrop-blur-sm transition-transform duration-300 group-hover:-translate-y-1 min-[380px]:max-w-[68%] min-[380px]:rounded-md min-[380px]:px-2 min-[380px]:text-[11px] md:max-w-[70%] md:text-xs"
                         >
                           {displayTitle}
                         </motion.h3>
@@ -207,7 +207,7 @@ export function VerticalCarousel({
                           {tag}
                         </span>
                       </div>
-                      <div className="absolute right-0 bottom-0 left-0 p-2 min-[380px]:p-3 md:p-4">
+                      <div className="absolute right-0 bottom-0 left-0 z-[2] p-2 min-[380px]:p-3 md:p-4">
                         <motion.div
                           initial={{ opacity: 0, y: 8 }}
                           whileInView={{ opacity: 1, y: 0 }}
@@ -247,7 +247,7 @@ export function VerticalCarousel({
                       </div>
                     </>
                   ) : (
-                    <div className="absolute right-1 bottom-1 left-1 min-[380px]:right-1.5 min-[380px]:bottom-1.5 min-[380px]:left-1.5 min-[420px]:right-2 min-[420px]:bottom-2 min-[420px]:left-2 md:right-3 md:bottom-3 md:left-3">
+                    <div className="absolute right-1 bottom-1 left-1 z-[2] min-[380px]:right-1.5 min-[380px]:bottom-1.5 min-[380px]:left-1.5 min-[420px]:right-2 min-[420px]:bottom-2 min-[420px]:left-2 md:right-3 md:bottom-3 md:left-3">
                       <motion.div
                         initial={{ opacity: 0, y: 8 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -265,7 +265,7 @@ export function VerticalCarousel({
                     </div>
                   )}
 
-                  <div className="absolute inset-0 flex flex-col justify-between p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:p-4 lg:p-5">
+                  <div className="absolute inset-0 z-[2] flex flex-col justify-between p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:p-4 lg:p-5">
                     {/* Expand indicator - optimized for mobile */}
                     <div className="absolute top-1.5 right-1.5 md:top-2 md:right-2">
                       <div className="rounded-full bg-white/20 p-1 backdrop-blur-sm md:p-1.5">

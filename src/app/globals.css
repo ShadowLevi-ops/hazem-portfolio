@@ -868,6 +868,26 @@ video::-webkit-media-controls {
   padding-right: 0.125rem;
 }
 
+.lightbox-stills-strip {
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.lightbox-stills-strip::-webkit-scrollbar {
+  height: 6px;
+}
+
+.lightbox-stills-strip::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
+}
+
+.lightbox-stills-strip::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .animated-bg-gradient {
   background:
     radial-gradient(

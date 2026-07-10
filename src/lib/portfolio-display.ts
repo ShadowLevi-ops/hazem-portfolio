@@ -4,6 +4,7 @@ import {
   projectCardIndustry,
   projectFullscreenBrief,
 } from '@/lib/project-card-labels';
+import { VIDEO_FOOTAGE_STILLS } from '@/data/video-stills';
 
 const TYPE_LABEL: Record<PortfolioItem['type'], string> = {
   photography: 'Photography',
@@ -29,6 +30,22 @@ const PLACEHOLDER_PROJECT_DETAILS = new Set([
 function isPlaceholderProjectDetails(value?: string): boolean {
   const s = value?.trim().toLowerCase();
   return !s || PLACEHOLDER_PROJECT_DETAILS.has(s);
+}
+
+/**
+ * Stills shown in the lightbox strip: curated campaign stills when provided,
+ * otherwise hand-picked frames clipped from the footage.
+ */
+export function portfolioStills(item: PortfolioItem): string[] | undefined {
+  if (item.stills && item.stills.length > 0) return item.stills;
+
+  const frames = VIDEO_FOOTAGE_STILLS[item.id];
+  if (!frames || frames.length === 0) return undefined;
+
+  const idMatch = item.id.match(/^video-(\d+)$/);
+  if (!idMatch) return undefined;
+
+  return frames.map(i => `/videos/stills/${idMatch[1]}-${i}.webp`);
 }
 
 /** 16:9 landscape clips — lightbox uses 1920×1080 (portfolio grid cards stay vertical). */

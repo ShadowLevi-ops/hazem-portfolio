@@ -19,6 +19,11 @@ export const CARD_TEASERS: Record<string, string> = {
   'photo-15': 'Clean product still with premium styling.',
   'photo-16': 'Alternate product angle focused on detail.',
   'photo-17': 'Hero product frame for campaign use.',
+  'photo-18': 'Moody red key visual anchoring the Safawi story.',
+  'photo-19': 'Cinematic profile still with campaign typography.',
+  'photo-20': 'Stadium screen moment tying past glory to the story.',
+  'photo-21': 'Warm interior portrait with quiet narrative tension.',
+  'photo-22': 'On-track conversation frame from the shoot.',
   'video-1': 'Cinematic travel short of iconic city moments.',
   'video-2': 'Commercial tower reel with a premium city feel.',
   'video-3': 'Match-day sports short with fan energy.',
@@ -40,6 +45,10 @@ export const CARD_TEASERS: Record<string, string> = {
   'video-19': 'Athlete profile focused on growth and ambition.',
   'video-20':
     'Social feature spotlighting Fuvahmulah dive tourism and local economic growth.',
+  'video-21':
+    'Safawi Rasid x Manchester United story feature, cut vertical-first.',
+  'video-22':
+    'Second Safawi x Man United episode weaving archive and present day.',
 };
 
 /** Richer project brief copy for fullscreen/footer detail sections. */
@@ -76,6 +85,16 @@ export const FULLSCREEN_BRIEFS: Record<string, string> = {
   'photo-16': 'Alternate product hero angle designed for campaign consistency.',
   'photo-17':
     'Final hero product frame optimized for digital and social deployment.',
+  'photo-18':
+    'Key campaign visual from United Stories—the Safawi Rasid x Manchester United collaboration—with low-key red lighting and gothic title treatment setting the series tone.',
+  'photo-19':
+    'Cinematic profile still from the Safawi x Manchester United shoot, pairing retro kit styling with the campaign title lockup.',
+  'photo-20':
+    'Stadium big-screen moment connecting Manchester United history to Safawi’s personal story within the episode.',
+  'photo-21':
+    'Warm, low-light portrait still capturing the quieter narrative beats of the Safawi x Manchester United feature.',
+  'photo-22':
+    'On-location conversation frame from the stadium shoot, grounding the collaboration in candid documentary tone.',
   'video-1':
     'Cinematic travel short combining iconic landmarks with social-native pacing.',
   'video-2':
@@ -116,6 +135,10 @@ export const FULLSCREEN_BRIEFS: Record<string, string> = {
     'Athlete journey profile highlighting progression, ambition, and next-step narrative.',
   'video-20':
     'Social media feature positioning Extreme Dive Fuvahmulah at the forefront of tiger shark diving in Fuvahmulah, Maldives—showcasing the centre as a driver of island tourism, community visibility, and local economic momentum.',
+  'video-21':
+    'Episode one of United Stories—a Manchester United collaboration featuring Malaysian footballer Safawi Rasid. A vertical-first story feature following Safawi from match-day intensity to reflective off-pitch moments, styled with retro kits and cinematic lighting.',
+  'video-22':
+    'Episode two of the Safawi Rasid x Manchester United collaboration—weaving iconic United archive moments with present-day storytelling to connect Safawi’s journey to the club’s history.',
 };
 
 export const CARD_CLIENTS: Record<string, string> = {
@@ -138,6 +161,8 @@ export const CARD_CLIENTS: Record<string, string> = {
   'video-18': 'Tottenham Hotspurs',
   'video-19': 'Tottenham Hotspurs',
   'video-20': 'Extreme Dive Fuvahmulah',
+  'video-21': 'Manchester United',
+  'video-22': 'Manchester United',
 };
 
 export const CARD_INDUSTRIES: Record<string, string> = {
@@ -160,6 +185,8 @@ export const CARD_INDUSTRIES: Record<string, string> = {
   'video-18': 'Sports / Entertainment',
   'video-19': 'Sports / Entertainment',
   'video-20': 'Travel',
+  'video-21': 'Sports/Lifestyle',
+  'video-22': 'Sports/Lifestyle',
 };
 
 export function projectCardTag(item: PortfolioItem): string {

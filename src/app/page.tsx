@@ -23,6 +23,7 @@ import {
   isHorizontalVideoItem,
   lightboxCaptionDescription,
   portfolioDisplayTitle,
+  portfolioStills,
 } from '@/lib/portfolio-display';
 import { getWhatsAppUrl, CONTACT_WHATSAPP_MESSAGE } from '@/lib/whatsapp';
 
@@ -34,6 +35,7 @@ type PortfolioVideoSlide = {
   height?: number;
   title?: string;
   description?: string;
+  stills?: string[];
 };
 
 type PortfolioSlide = Slide | PortfolioVideoSlide;
@@ -91,11 +93,110 @@ const Lightbox = dynamic(() => import('yet-another-react-lightbox'), {
   loading: () => null,
 });
 
+/** Horizontally scrollable campaign stills inside the lightbox footer. */
+function LightboxStillsStrip({
+  stills,
+  title,
+  onStillClick,
+}: {
+  stills: string[];
+  title?: string | undefined;
+  onStillClick?: ((src: string) => void) | undefined;
+}) {
+  return (
+    <div className="mt-3">
+      <p className="text-[9px] tracking-[0.1em] text-white/60 uppercase sm:text-[10px]">
+        Stills · {stills.length}
+      </p>
+      <div className="lightbox-stills-strip mt-2 flex gap-2 overflow-x-auto pb-2">
+        {stills.map((src, index) => (
+          <button
+            key={src}
+            type="button"
+            onClick={() => onStillClick?.(src)}
+            aria-label={`View still ${index + 1} fullscreen`}
+            className="focus-visible:ring-primary/70 relative h-28 shrink-0 cursor-zoom-in overflow-hidden rounded-md border border-white/10 bg-black/40 transition-transform duration-200 hover:scale-[1.03] hover:border-white/30 focus-visible:ring-2 focus-visible:outline-none sm:h-36"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={src}
+              alt={`${title || 'Campaign'} still ${index + 1}`}
+              loading="lazy"
+              draggable={false}
+              className="h-full w-auto object-cover select-none"
+            />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** Fullscreen viewer for a single campaign still, layered above the lightbox. */
+function FullscreenStillViewer({
+  src,
+  onBack,
+}: {
+  src: string;
+  onBack: () => void;
+}) {
+  React.useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        // Capture phase + stopPropagation so the lightbox behind stays open.
+        event.stopPropagation();
+        event.preventDefault();
+        onBack();
+      }
+    };
+    document.addEventListener('keydown', onKeyDown, true);
+    return () => document.removeEventListener('keydown', onKeyDown, true);
+  }, [onBack]);
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/95 backdrop-blur-sm"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+    >
+      {/* Click-to-dismiss backdrop; keyboard users close via the Back button or Escape. */}
+      <div className="absolute inset-0" aria-hidden="true" onClick={onBack} />
+      <button
+        type="button"
+        onClick={onBack}
+        className="absolute top-4 left-4 z-10 flex items-center gap-2 rounded-full border border-white/25 bg-black/60 px-4 py-2 text-xs font-semibold tracking-[0.12em] text-white uppercase backdrop-blur-md transition-colors hover:bg-white/15 sm:top-6 sm:left-6 sm:text-sm"
+      >
+        <span aria-hidden="true">←</span> Back
+      </button>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt="Campaign still fullscreen"
+        draggable={false}
+        className="pointer-events-none relative max-h-[92dvh] max-w-[94vw] rounded-md object-contain shadow-2xl select-none"
+      />
+    </motion.div>
+  );
+}
+
 /** Fullscreen info footer rendered under footage (no overlap). */
-function PortfolioLightboxSlideFooter({ slide }: { slide: Slide }) {
-  const { title, description: desc } = slide as Slide & {
+function PortfolioLightboxSlideFooter({
+  slide,
+  onStillClick,
+}: {
+  slide: Slide;
+  onStillClick?: ((src: string) => void) | undefined;
+}) {
+  const {
+    title,
+    description: desc,
+    stills,
+  } = slide as Slide & {
     title?: React.ReactNode;
     description?: React.ReactNode;
+    stills?: string[];
   };
   const hasTitle =
     title != null && (typeof title !== 'string' || title.trim().length > 0);
@@ -154,6 +255,14 @@ function PortfolioLightboxSlideFooter({ slide }: { slide: Slide }) {
           </p>
         ) : null}
 
+        {stills && stills.length > 0 ? (
+          <LightboxStillsStrip
+            stills={stills}
+            title={typeof title === 'string' ? title : undefined}
+            onStillClick={onStillClick}
+          />
+        ) : null}
+
         {caseStudyRow || detailRows.length > 0 ? (
           <div className="lightbox-portfolio-footer-details mt-3 space-y-3">
             {caseStudyRow ? (
@@ -199,6 +308,7 @@ function PortfolioLightboxSlideFooter({ slide }: { slide: Slide }) {
 export default function Home() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [fullscreenStill, setFullscreenStill] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState('all');
   const portfolioItemsVisible = useMemo(
     () => portfolioItems.filter(item => item.id !== 'video-11'),
@@ -280,6 +390,10 @@ export default function Home() {
         title: portfolioDisplayTitle(item),
         description: lightboxCaptionDescription(item),
         poster: item.thumbnailUrl || '/videos/VT-1.webp',
+        ...(() => {
+          const stills = portfolioStills(item);
+          return stills ? { stills } : {};
+        })(),
         ...(isHorizontalVideoItem(item)
           ? { width: 1920, height: 1080 }
           : { width: 1080, height: 1920 }),
@@ -447,7 +561,10 @@ export default function Home() {
           slideContainer: ({ slide, children }) => (
             <div className="lightbox-portfolio-slide">
               <div className="lightbox-portfolio-media">{children}</div>
-              <PortfolioLightboxSlideFooter slide={slide} />
+              <PortfolioLightboxSlideFooter
+                slide={slide}
+                onStillClick={setFullscreenStill}
+              />
             </div>
           ),
           slide: ({ slide, offset }) => {
@@ -478,6 +595,15 @@ export default function Home() {
         }}
         controller={{ closeOnBackdropClick: true, closeOnPullDown: true }}
       />
+
+      <AnimatePresence>
+        {fullscreenStill ? (
+          <FullscreenStillViewer
+            src={fullscreenStill}
+            onBack={() => setFullscreenStill(null)}
+          />
+        ) : null}
+      </AnimatePresence>
 
       {/* Contact Section */}
       <section id="contact" className="section-shell section-block">

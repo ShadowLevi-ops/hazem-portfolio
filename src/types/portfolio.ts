@@ -22,4 +22,6 @@ export interface PortfolioItem {
   captionsUrl?: string; // Optional VTT captions for videos
   /** Landscape 16:9 vs portrait 9:16 — affects fullscreen lightbox sizing (grid stays portrait). Default portrait. */
   mediaOrientation?: 'horizontal' | 'vertical';
+  /** Optional campaign stills shown as a scrollable strip in the fullscreen lightbox footer. */
+  stills?: string[];
 }
