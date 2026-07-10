@@ -197,9 +197,9 @@ export function AnimatedHero() {
               className={`${montserrat.className} hero-title mx-auto max-w-3xl text-center text-base leading-snug font-semibold tracking-[0.04em] uppercase sm:text-lg md:text-xl`}
               variants={itemVariants}
             >
-              Your launch date won&apos;t wait.
+              When you see sports,
               <span className="text-primary block sm:inline sm:px-1.5">
-                Neither do we.
+                we see a hundred ways to tell the story.
               </span>
             </motion.h1>
 
@@ -207,9 +207,10 @@ export function AnimatedHero() {
               className="text-muted-foreground mx-auto max-w-2xl px-2 text-center font-sans text-sm leading-relaxed md:text-base"
               variants={itemVariants}
             >
-              GiltMedia is a KL production team for brands with a launch date.
-              We shoot campaign film and social cutdowns in one go — premium
-              look, feed-ready delivery.
+              Everything is worth telling — when you know how to write it.
+              GiltMedia is a KL production team crafting campaign films and
+              social cutdowns that turn your moments into stories people watch.
+              Let us do it.
             </motion.p>
           </motion.div>
 
