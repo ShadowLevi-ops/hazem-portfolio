@@ -108,12 +108,23 @@ function LightboxStillsStrip({
       <p className="text-[9px] tracking-[0.1em] text-white/60 uppercase sm:text-[10px]">
         Stills · {stills.length}
       </p>
-      <div className="lightbox-stills-strip mt-2 flex gap-2 overflow-x-auto pb-2">
+      {/* Contain pointer events so the lightbox doesn't treat still clicks as backdrop clicks and close. */}
+      <div
+        className="lightbox-stills-strip mt-2 flex gap-2 overflow-x-auto pb-2"
+        onPointerDown={event => event.stopPropagation()}
+        onPointerUp={event => event.stopPropagation()}
+        onClick={event => event.stopPropagation()}
+        onKeyDown={event => event.stopPropagation()}
+        role="presentation"
+      >
         {stills.map((src, index) => (
           <button
             key={src}
             type="button"
-            onClick={() => onStillClick?.(src)}
+            onClick={event => {
+              event.stopPropagation();
+              onStillClick?.(src);
+            }}
             aria-label={`View still ${index + 1} fullscreen`}
             className="focus-visible:ring-primary/70 relative h-28 shrink-0 cursor-zoom-in overflow-hidden rounded-md border border-white/10 bg-black/40 transition-transform duration-200 hover:scale-[1.03] hover:border-white/30 focus-visible:ring-2 focus-visible:outline-none sm:h-36"
           >

@@ -54,10 +54,10 @@ function ServiceCard({
 
       <div className="services-card-foot">
         <span className="services-card-hint md:hidden">
-          {isActive ? 'Deliverables' : 'Tap for deliverables'}
+          {isActive ? 'Asset stack' : 'Tap for assets'}
         </span>
         <span className="services-card-hint hidden md:inline">
-          {isActive ? 'Deliverables' : 'Hover for deliverables'}
+          {isActive ? 'Asset stack' : 'Hover for assets'}
         </span>
         {service.href ? (
           <span className="services-card-link-icon" aria-hidden>
@@ -135,13 +135,13 @@ export function ServicesSection() {
         transition={{ duration: 0.45 }}
       >
         <div className="section-header">
-          <p className="section-kicker">On set &amp; in edit</p>
+          <p className="section-kicker">Campaign rollout</p>
           <h2 id="services-heading" className="section-title">
             Services
           </h2>
           <p className="section-copy">
-            One shoot day. Hero film, Reels, Stories, cutdowns. Built to ship,
-            not sit in a folder.
+            Data-driven 4-phase stack. 22 core assets. Built to ship in waves —
+            not dump and pray.
           </p>
         </div>
 
@@ -173,7 +173,7 @@ export function ServicesSection() {
           />
 
           <p className="services-board-stamp font-marker" aria-hidden>
-            SHOOT DAY STACK // GM-SVC
+            ROLLOUT STACK // GM-22
           </p>
 
           {SERVICES.map((service, index) => (
@@ -198,7 +198,7 @@ export function ServicesSection() {
         </div>
 
         <p className="services-board-footer text-muted-foreground mt-6 text-center text-xs tracking-[0.14em] uppercase md:text-[11px]">
-          Pick a lane — or book the full stack for launch week.
+          Refresh cycle · Audit · Scale · Recut — full brief on booking.
         </p>
       </motion.div>
     </section>
