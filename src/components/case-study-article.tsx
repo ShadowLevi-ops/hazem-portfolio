@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { CaseStudyVideo } from '@/components/case-study-video';
+import { CaseStudyStills } from '@/components/case-study-stills';
 import { getCaseStudyPortfolioItem, type CaseStudy } from '@/data/case-studies';
+import { portfolioStills } from '@/lib/portfolio-display';
 
 type CaseStudyArticleProps = {
   study: CaseStudy;
@@ -11,6 +13,7 @@ export function CaseStudyArticle({ study }: CaseStudyArticleProps) {
   const item = getCaseStudyPortfolioItem(study);
   const videoSrc = item?.mediaUrl ?? '';
   const poster = item?.thumbnailUrl;
+  const stills = item ? portfolioStills(item) : undefined;
 
   return (
     <main className="section-shell section-block">
@@ -27,10 +30,20 @@ export function CaseStudyArticle({ study }: CaseStudyArticleProps) {
           <p className="section-kicker">Case Study</p>
           <h1 className="section-title">{study.title}</h1>
           <p className="section-copy">{study.summary}</p>
+          {study.budget ? (
+            <p className="border-primary/40 bg-primary/10 text-primary mx-auto mt-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-[11px] font-semibold tracking-[0.14em] uppercase">
+              <span className="text-muted-foreground">Budget</span>
+              {study.budget}
+            </p>
+          ) : null}
         </header>
 
         {videoSrc ? (
           <CaseStudyVideo src={videoSrc} poster={poster} title={study.title} />
+        ) : null}
+
+        {stills && stills.length > 0 ? (
+          <CaseStudyStills stills={stills} title={study.title} />
         ) : null}
 
         <section className="surface-card space-y-4 rounded-xl p-6">

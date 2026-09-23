@@ -21,6 +21,7 @@ export type CaseStudy = {
   challenge: string;
   approach: string;
   outcome: string;
+  budget?: string;
   results?: CaseStudyResults;
   relatedService: {
     label: string;
@@ -41,6 +42,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       'We shot and cut around contrast: pitch energy against low-key red portrait lighting, then locked the brand line on a training close-up. On the director side: vertical framing, hook-first motion, and a grade that kept the adidas lockup readable on mobile. On the campaign side: one master built for feed, with still-extractable frames for Stories and paid social.',
     outcome:
       'A campaign-ready vertical film that reads as athlete storytelling first, sponsorship second—Safawi’s presence carrying the adidas line without extra reshoots.',
+    budget: 'Under RM1,000',
     relatedService: {
       label: 'Videography',
       href: '/services/videography',

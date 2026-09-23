@@ -23,5 +23,5 @@ export const VIDEO_FOOTAGE_STILLS: Record<string, number[]> = {
   'video-18': [1, 2, 5],
   'video-19': [1, 2, 3, 5],
   'video-20': [1, 2, 3, 4, 5],
-  'video-22': [1, 2, 3, 4, 5],
+  'video-22': [1, 6, 7, 2, 8, 3, 9, 10, 4, 5],
 };
