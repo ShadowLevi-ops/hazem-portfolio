@@ -47,8 +47,7 @@ export const CARD_TEASERS: Record<string, string> = {
     'Social feature spotlighting Fuvahmulah dive tourism and local economic growth.',
   'video-21':
     'Safawi Rasid x Manchester United story feature, cut vertical-first.',
-  'video-22':
-    'Second Safawi x Man United episode weaving archive and present day.',
+  'video-22': 'Athlete film for adidas-sponsored footballer Safawi Rasid.',
 };
 
 /** Richer project brief copy for fullscreen/footer detail sections. */
@@ -138,7 +137,7 @@ export const FULLSCREEN_BRIEFS: Record<string, string> = {
   'video-21':
     'Episode one of United Stories—a Manchester United collaboration featuring Malaysian footballer Safawi Rasid. A vertical-first story feature following Safawi from match-day intensity to reflective off-pitch moments, styled with retro kits and cinematic lighting.',
   'video-22':
-    'Episode two of the Safawi Rasid x Manchester United collaboration—weaving iconic United archive moments with present-day storytelling to connect Safawi’s journey to the club’s history.',
+    'Vertical-first athlete film shot for Safawi Rasid, an adidas-sponsored footballer—pairing match-day motion with cinematic portrait lighting and brand-led supers.',
 };
 
 export const CARD_CLIENTS: Record<string, string> = {
@@ -162,7 +161,7 @@ export const CARD_CLIENTS: Record<string, string> = {
   'video-19': 'Tottenham Hotspurs',
   'video-20': 'Extreme Dive Fuvahmulah',
   'video-21': 'Manchester United',
-  'video-22': 'Manchester United',
+  'video-22': 'adidas',
 };
 
 export const CARD_INDUSTRIES: Record<string, string> = {

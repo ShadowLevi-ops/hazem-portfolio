@@ -30,6 +30,23 @@ export type CaseStudy = {
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
+    slug: 'safawi-rasid-adidas',
+    portfolioId: 'video-22',
+    title: 'Safawi Rasid x adidas',
+    summary:
+      'A vertical-first athlete film shot for Safawi Rasid, an adidas-sponsored footballer. Match-day motion, cinematic portrait lighting, and brand-led supers built as a social-native story—not a product dump.',
+    challenge:
+      'Athlete sponsorship films often split in two: either match footage with a logo slapped on, or a studio portrait that never feels like sport. The brief needed adidas-grade polish at social speed—Safawi as the story, kit and product as texture, and a piece that could lead Reels without looking like a catalogue.',
+    approach:
+      'We shot and cut around contrast: pitch energy against low-key red portrait lighting, then locked the brand line on a training close-up. On the director side: vertical framing, hook-first motion, and a grade that kept the adidas lockup readable on mobile. On the campaign side: one master built for feed, with still-extractable frames for Stories and paid social.',
+    outcome:
+      'A campaign-ready vertical film that reads as athlete storytelling first, sponsorship second—Safawi’s presence carrying the adidas line without extra reshoots.',
+    relatedService: {
+      label: 'Videography',
+      href: '/services/videography',
+    },
+  },
+  {
     slug: 'puma-solewhat-launch',
     portfolioId: 'video-16',
     title: 'PUMA x SOLEWHAT: H Street Line Launch',

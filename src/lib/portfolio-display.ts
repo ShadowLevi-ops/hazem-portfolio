@@ -19,6 +19,8 @@ const HIGHLIGHT_CASE_STUDIES: Record<string, string> = {
     'Tottenham CNY campaign: culturally tuned storytelling delivered under tight timelines while preserving global brand consistency across social placements.',
   'video-17':
     'Gallifuoco profile interview: academy-to-ASEAN narrative structured for editorial clarity, with extractable social hooks and Tottenham-grade production on a talking-head format.',
+  'video-22':
+    'Safawi Rasid x adidas: athlete-first vertical film pairing match-day motion with cinematic portrait lighting and brand-led supers for social rollout.',
 };
 
 /** Data-entry placeholders — hide from portfolio info copy */

@@ -10,7 +10,7 @@ const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION;
 
 export const metadata: Metadata = {
   title: {
-    default: 'GiltMedia | Social Campaign Film & Videography',
+    default: 'GiltMedia | Production Team & Videography',
     template: '%s | GiltMedia',
   },
   description: SITE_DESCRIPTION,
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: '/',
-    title: 'GiltMedia | Social Campaign Film & Videography',
+    title: 'GiltMedia | Production Team & Videography',
     description: SITE_DESCRIPTION,
     siteName: 'GiltMedia',
     images: [

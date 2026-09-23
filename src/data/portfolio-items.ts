@@ -359,11 +359,11 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 'video-22',
-    title: 'United Stories: Safawi Rasid x Manchester United — Episode 2',
+    title: 'Safawi Rasid x adidas',
     type: 'videography',
     mediaUrl: '/videos/22.mp4',
     thumbnailUrl: '/videos/VT-22.webp',
-    client: 'Manchester United',
+    client: 'adidas',
     projectDetails: 'Sports/Lifestyle',
   },
 ];

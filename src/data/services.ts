@@ -5,17 +5,8 @@ export type ServiceItem = {
   hook: string;
   deliverables: string[];
   href?: string;
-  /** Bento placement */
-  layout: 'hero' | 'tall' | 'standard' | 'wide';
   format?: string;
 };
-
-export const SERVICE_PIPELINE = [
-  { step: 'Teaser', note: '3 assets · early pull' },
-  { step: 'Unveil', note: '4 assets · intent' },
-  { step: 'Launch', note: '5 assets · convert' },
-  { step: 'Extend', note: '10 assets · proof' },
-] as const;
 
 export const SERVICES: ServiceItem[] = [
   {
@@ -28,7 +19,6 @@ export const SERVICES: ServiceItem[] = [
       'Vibe Video Hook',
       'VIP Pre-Launch Email',
     ],
-    layout: 'hero',
     format: '3 assets',
   },
   {
@@ -42,7 +32,6 @@ export const SERVICES: ServiceItem[] = [
       'Zero-Party Waitlist',
       'Partial Glimpse Teaser',
     ],
-    layout: 'tall',
     format: '4 assets',
   },
   {
@@ -57,7 +46,6 @@ export const SERVICES: ServiceItem[] = [
       'Segmented Launch Blast',
       'Live Q&A Stream',
     ],
-    layout: 'tall',
     format: '5 assets',
   },
   {
@@ -71,7 +59,6 @@ export const SERVICES: ServiceItem[] = [
       'Micro-KOL Reviews',
       'Performance Retargeting',
     ],
-    layout: 'wide',
     format: '10 assets',
   },
 ];

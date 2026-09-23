@@ -4,14 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { useState } from 'react';
-import { SERVICES, SERVICE_PIPELINE, type ServiceItem } from '@/data/services';
-
-const LAYOUT_CLASS: Record<ServiceItem['layout'], string> = {
-  hero: 'services-bento-hero',
-  tall: 'services-bento-tall',
-  standard: 'services-bento-standard',
-  wide: 'services-bento-wide',
-};
+import { SERVICES, type ServiceItem } from '@/data/services';
 
 function ServiceCard({
   service,
@@ -65,19 +58,12 @@ function ServiceCard({
           </span>
         ) : null}
       </div>
-
-      {service.layout === 'hero' ? (
-        <div className="services-card-slate" aria-hidden>
-          <span className="services-slate-take">TAKE</span>
-          <span className="services-slate-num">01</span>
-        </div>
-      ) : null}
     </>
   );
 
-  const className = `services-card group ${LAYOUT_CLASS[service.layout]} ${
-    isActive ? 'is-active' : ''
-  } ${service.href ? 'services-card--linked' : ''}`;
+  const className = `services-card group ${isActive ? 'is-active' : ''} ${
+    service.href ? 'services-card--linked' : ''
+  }`;
 
   const interactionProps = {
     initial: { opacity: 0, y: 16 } as const,
@@ -145,24 +131,11 @@ export function ServicesSection() {
           </p>
         </div>
 
-        <div className="services-pipeline" aria-label="Production pipeline">
-          {SERVICE_PIPELINE.map(({ step, note }, i) => (
-            <div key={step} className="services-pipeline-step">
-              <span className="services-pipeline-index">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <span className="services-pipeline-label">{step}</span>
-              <span className="services-pipeline-note">{note}</span>
-              {i < SERVICE_PIPELINE.length - 1 ? (
-                <span className="services-pipeline-arrow" aria-hidden>
-                  →
-                </span>
-              ) : null}
-            </div>
-          ))}
-        </div>
-
-        <div className="services-bento">
+        <div
+          className="services-bento"
+          role="list"
+          aria-label="Campaign rollout phases"
+        >
           <div
             className="services-film-edge services-film-edge--left"
             aria-hidden
@@ -177,23 +150,33 @@ export function ServicesSection() {
           </p>
 
           {SERVICES.map((service, index) => (
-            <ServiceCard
+            <div
               key={service.id}
-              service={service}
-              index={index}
-              isActive={activeId === service.id}
-              onActivate={() => setActiveId(service.id)}
-              onDeactivate={() =>
-                setActiveId(current =>
-                  current === service.id ? null : current
-                )
-              }
-              onToggle={() =>
-                setActiveId(current =>
-                  current === service.id ? null : service.id
-                )
-              }
-            />
+              className="services-bento-cell"
+              role="listitem"
+            >
+              {index > 0 ? (
+                <span className="services-phase-connector" aria-hidden>
+                  →
+                </span>
+              ) : null}
+              <ServiceCard
+                service={service}
+                index={index}
+                isActive={activeId === service.id}
+                onActivate={() => setActiveId(service.id)}
+                onDeactivate={() =>
+                  setActiveId(current =>
+                    current === service.id ? null : current
+                  )
+                }
+                onToggle={() =>
+                  setActiveId(current =>
+                    current === service.id ? null : service.id
+                  )
+                }
+              />
+            </div>
           ))}
         </div>
 

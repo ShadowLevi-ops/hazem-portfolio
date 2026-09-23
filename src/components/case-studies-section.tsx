@@ -63,7 +63,7 @@ export function CaseStudiesSection() {
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3 md:gap-5">
+        <div className="grid gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-4">
           {studies.map(({ href, item }, index) => {
             const isVideo = item.type === 'videography' || item.type === 'film';
             const fallbackVideoSrc = item.mediaUrl;
