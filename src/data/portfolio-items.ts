@@ -366,4 +366,22 @@ export const portfolioItems: PortfolioItem[] = [
     client: 'adidas',
     projectDetails: 'Sports/Lifestyle',
   },
+  {
+    id: 'video-23',
+    title: 'Cherating: The Cure',
+    type: 'videography',
+    mediaUrl: '/videos/23.mp4',
+    thumbnailUrl: '/videos/VT-23.webp',
+    client: 'GiltMedia',
+    projectDetails: 'Travel/Lifestyle',
+  },
+  {
+    id: 'video-24',
+    title: 'Cherating: Slow Down, The Office Can Wait',
+    type: 'videography',
+    mediaUrl: '/videos/24.mp4',
+    thumbnailUrl: '/videos/VT-24.webp',
+    client: 'GiltMedia',
+    projectDetails: 'Travel/Lifestyle',
+  },
 ];

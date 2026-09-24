@@ -9,7 +9,7 @@ const MAX_WIDTH = 1920;
 
 const SOURCES = [
   ...Array.from({ length: 22 }, (_, idx) => `public/images/p${idx + 1}`),
-  ...Array.from({ length: 22 }, (_, idx) => `public/videos/VT-${idx + 1}`),
+  ...Array.from({ length: 24 }, (_, idx) => `public/videos/VT-${idx + 1}`),
 ];
 
 const EXTENSIONS = ['.png', '.PNG', '.jpg', '.JPG', '.jpeg', '.JPEG'];

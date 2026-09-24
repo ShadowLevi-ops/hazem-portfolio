@@ -48,6 +48,8 @@ export const CARD_TEASERS: Record<string, string> = {
   'video-21':
     'Safawi Rasid x Manchester United story feature, cut vertical-first.',
   'video-22': 'Athlete film for adidas-sponsored footballer Safawi Rasid.',
+  'video-23': 'Film-toned Cherating beach diary shot at golden hour.',
+  'video-24': 'Slow-living Cherating escape, from kopitiam to shoreline.',
 };
 
 /** Richer project brief copy for fullscreen/footer detail sections. */
@@ -138,6 +140,10 @@ export const FULLSCREEN_BRIEFS: Record<string, string> = {
     'Episode one of United Stories—a Manchester United collaboration featuring Malaysian footballer Safawi Rasid. A vertical-first story feature following Safawi from match-day intensity to reflective off-pitch moments, styled with retro kits and cinematic lighting.',
   'video-22':
     'Vertical-first athlete film shot for Safawi Rasid, an adidas-sponsored footballer—pairing match-day motion with cinematic portrait lighting and brand-led supers.',
+  'video-23':
+    'A film-toned travel diary from Cherating, Pahang—sun-bleached rocks, wind on the shoreline, and loose handheld moments graded to feel like a memory you can replay.',
+  'video-24':
+    'A slow-living Cherating escape following friends from the roadside kopitiam to lamp-lit chalets, boat rides, and the beach—built around one idea: slow down, the office can wait.',
 };
 
 export const CARD_CLIENTS: Record<string, string> = {
@@ -162,6 +168,8 @@ export const CARD_CLIENTS: Record<string, string> = {
   'video-20': 'Extreme Dive Fuvahmulah',
   'video-21': 'Manchester United',
   'video-22': 'adidas',
+  'video-23': 'GiltMedia',
+  'video-24': 'GiltMedia',
 };
 
 export const CARD_INDUSTRIES: Record<string, string> = {
@@ -186,6 +194,8 @@ export const CARD_INDUSTRIES: Record<string, string> = {
   'video-20': 'Travel',
   'video-21': 'Sports/Lifestyle',
   'video-22': 'Sports/Lifestyle',
+  'video-23': 'Travel/Lifestyle',
+  'video-24': 'Travel/Lifestyle',
 };
 
 export function projectCardTag(item: PortfolioItem): string {
