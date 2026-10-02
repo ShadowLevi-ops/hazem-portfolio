@@ -16,6 +16,33 @@ export async function attemptVideoPlay(video: HTMLVideoElement) {
   }
 }
 
+type WebkitVideoElement = HTMLVideoElement & {
+  webkitEnterFullscreen?: () => void;
+};
+
+export function unmuteVideo(video: HTMLVideoElement) {
+  video.muted = false;
+  video.removeAttribute('muted');
+  if (video.volume === 0) video.volume = 1;
+  if (video.paused) void video.play().catch(() => undefined);
+}
+
+/** Must run inside a tap/click handler so browsers allow sound and fullscreen. */
+export async function enterVideoFullscreenWithSound(video: HTMLVideoElement) {
+  unmuteVideo(video);
+
+  if (typeof video.requestFullscreen === 'function') {
+    try {
+      await video.requestFullscreen();
+      return;
+    } catch {
+      // iPhone Safari only supports the WebKit video fullscreen below.
+    }
+  }
+
+  (video as WebkitVideoElement).webkitEnterFullscreen?.();
+}
+
 export async function playPreviewVideo(video: HTMLVideoElement) {
   return attemptVideoPlay(video);
 }
@@ -72,7 +99,10 @@ export function attachTouchVideoUnlock() {
   window.addEventListener('click', unlock, { once: true });
 }
 
+/** Bump when preview files are re-encoded; /videos is cached as immutable. */
+export const PREVIEW_ASSET_VERSION = 2;
+
 export function getPreviewVideoSrc(mediaUrl: string, previewMediaUrl?: string) {
   if (previewMediaUrl) return previewMediaUrl;
-  return mediaUrl.replace('/videos/', '/videos/previews/');
+  return `${mediaUrl.replace('/videos/', '/videos/previews/')}?v=${PREVIEW_ASSET_VERSION}`;
 }

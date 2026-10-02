@@ -849,6 +849,15 @@ video::-webkit-media-controls {
   max-width: 100%;
 }
 
+.lightbox-video-shell {
+  position: relative;
+  display: flex;
+  height: 100%;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
 .lightbox-video-player {
   display: block;
   margin: 0 auto;
@@ -856,8 +865,75 @@ video::-webkit-media-controls {
   max-height: 100%;
   max-width: 100%;
   width: auto;
-  height: auto;
+  height: 100%;
   object-fit: contain;
+}
+
+.video-fullscreen-controls {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 3;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.video-fullscreen-controls__button {
+  display: inline-flex;
+  min-width: 2.75rem;
+  height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border: 1px solid rgb(255 255 255 / 0.22);
+  border-radius: 9999px;
+  background: rgb(0 0 0 / 0.55);
+  padding: 0 0.7rem;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.video-fullscreen-controls__button:hover {
+  border-color: color-mix(in oklch, var(--primary) 70%, transparent);
+}
+
+.video-fullscreen-controls__button:active {
+  transform: scale(0.95);
+}
+
+.video-fullscreen-controls__button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.video-fullscreen-controls__button--primary {
+  border-color: color-mix(in oklch, var(--primary) 65%, transparent);
+  background: color-mix(in oklch, var(--primary) 30%, rgb(0 0 0 / 0.6));
+  padding: 0 1rem;
+}
+
+.video-fullscreen-controls__button--primary span {
+  display: none;
+}
+
+@media (pointer: coarse), (max-width: 767px) {
+  .video-fullscreen-controls__button {
+    min-width: 3rem;
+    height: 3rem;
+  }
+
+  .video-fullscreen-controls__button--primary span {
+    display: inline;
+  }
 }
 
 .lightbox-portfolio-footer-details {

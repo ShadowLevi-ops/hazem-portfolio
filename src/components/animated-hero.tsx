@@ -9,9 +9,9 @@ import { Button } from '@/components/ui/button';
 import { analytics } from '@/lib/analytics';
 import { montserrat } from '@/lib/fonts';
 import {
+  PREVIEW_ASSET_VERSION,
   attemptVideoPlay,
   attachTouchVideoUnlock,
-  isCoarsePointerDevice,
   shouldPreferStaticMedia,
 } from '@/lib/video-playback';
 
@@ -30,11 +30,7 @@ export function AnimatedHero() {
   const [heroInView, setHeroInView] = useState(true);
 
   const preferStaticMedia = useMemo(() => shouldPreferStaticMedia(), []);
-  const heroVideoSrc = useMemo(
-    () =>
-      isCoarsePointerDevice() ? '/videos/previews/11.mp4' : '/videos/11.mp4',
-    []
-  );
+  const heroVideoSrc = `/videos/hero.mp4?v=${PREVIEW_ASSET_VERSION}`;
 
   useEffect(() => {
     attachTouchVideoUnlock();

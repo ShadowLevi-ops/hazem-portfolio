@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { VideoFullscreenControls } from '@/components/video-fullscreen-controls';
 import { attemptVideoPlay } from '@/lib/video-playback';
 
 type LightboxVideoPlayerProps = {
@@ -27,7 +28,11 @@ export function LightboxVideoPlayer({
 
     video.load();
     const play = () => {
-      void attemptVideoPlay(video);
+      if (video.muted) {
+        void attemptVideoPlay(video);
+      } else if (video.paused) {
+        void video.play().catch(() => undefined);
+      }
     };
 
     video.addEventListener('canplay', play);
@@ -40,17 +45,20 @@ export function LightboxVideoPlayer({
   }, [src, isActive]);
 
   return (
-    <video
-      ref={videoRef}
-      src={src}
-      poster={poster}
-      controls
-      autoPlay
-      muted
-      playsInline
-      loop
-      preload="auto"
-      className="lightbox-video-player bg-black"
-    />
+    <div className="lightbox-video-shell">
+      <video
+        ref={videoRef}
+        src={src}
+        poster={poster}
+        controls
+        autoPlay
+        muted
+        playsInline
+        loop
+        preload="auto"
+        className="lightbox-video-player bg-black"
+      />
+      <VideoFullscreenControls videoRef={videoRef} />
+    </div>
   );
 }
